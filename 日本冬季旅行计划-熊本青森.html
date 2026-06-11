@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本冬季旅行计划｜熊本 × 青森</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #FAFAF8;
+    --bg-card: #FFFFFF;
+    --bg-alt: #F5F4F0;
+    --text: #1A1A1A;
+    --text-sec: #5A5A5A;
+    --text-light: #8A8A8A;
+    --green: #3D6B50;
+    --green-light: #5A8F6F;
+    --green-pale: #E8F0EB;
+    --green-dark: #2D4F3A;
+    --accent: #C4956A;
+    --accent-light: #F0E6D8;
+    --red: #C75B4A;
+    --border: #E5E3DE;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --radius-lg: 16px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 80px 0 60px;
+    text-align: center;
+    background: linear-gradient(160deg, #2D4F3A 0%, #3D6B50 40%, #4A7D5E 100%);
+    color: #fff;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .hero .sub {
+    font-size: 16px;
+    opacity: 0.85;
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .hero-tags {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  /* Correction banner */
+  .correction {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    margin: 32px 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .correction strong { color: var(--accent); }
+
+  /* Section */
+  .section { padding: 48px 0; }
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--green);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  /* Comparison grid */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .compare-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .compare-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  .compare-card .flag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+  }
+  .flag-green { background: var(--green-pale); color: var(--green-dark); }
+  .flag-accent { background: var(--accent-light); color: #8B6B42; }
+  .compare-card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .compare-card .en {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+  .compare-card ul {
+    list-style: none;
+    font-size: 14px;
+    line-height: 2;
+  }
+  .compare-card li::before {
+    content: '—';
+    margin-right: 8px;
+    color: var(--green);
+    font-weight: 600;
+  }
+  .compare-card .verdict {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-sec);
+    line-height: 1.7;
+  }
+
+  /* Flight comparison */
+  .flight-compare {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+  .flight-compare h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--green-dark);
+  }
+  .flight-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .flight-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: var(--bg-alt);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: var(--text-sec);
+  }
+  .flight-table th:first-child { border-radius: 8px 0 0 8px; }
+  .flight-table th:last-child { border-radius: 0 8px 8px 0; }
+  .flight-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .flight-table tr:last-child td { border-bottom: none; }
+  .flight-table .winner {
+    background: var(--green-pale);
+    font-weight: 600;
+    color: var(--green-dark);
+    border-radius: 4px;
+    padding: 2px 8px;
+    display: inline-block;
+    font-size: 12px;
+  }
+  .flight-table .save {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .flight-note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: var(--green-pale);
+    border-radius: var(--radius);
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--green-dark);
+  }
+
+  /* Destination images gallery */
+  .gallery-section { margin-bottom: 32px; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .gallery-item {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    box-shadow: var(--shadow);
+    background: var(--bg-alt);
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-item .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 12px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .gallery-item .caption small {
+    display: block;
+    font-size: 11px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+
+  /* Budget cards */
+  .budget-section { margin-bottom: 48px; }
+  .budget-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--green);
+  }
+  .budget-header h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .tier-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .tier-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .tier-card .tier-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .tier-economy .tier-label { color: #2E7D32; }
+  .tier-comfort .tier-label { color: #E65100; }
+  .tier-luxury .tier-label { color: #AD1457; }
+  .tier-card .tier-price {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .tier-economy .tier-price { color: #2E7D32; }
+  .tier-comfort .tier-price { color: #E65100; }
+  .tier-luxury .tier-price { color: #AD1457; }
+  .tier-card .tier-price span { font-size: 14px; font-weight: 400; }
+
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-row .label { color: var(--text-sec); }
+  .cost-row .value { font-weight: 600; color: var(--text); }
+
+  .tier-highlights {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .tier-highlights h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+  .tier-highlights ul {
+    list-style: none;
+    font-size: 12.5px;
+    line-height: 1.9;
+    color: var(--text-sec);
+  }
+  .tier-highlights li::before {
+    content: '✦';
+    margin-right: 6px;
+    font-size: 10px;
+  }
+  .tier-economy .tier-highlights li::before { color: #4CAF50; }
+  .tier-comfort .tier-highlights li::before { color: #FF9800; }
+  .tier-luxury .tier-highlights li::before { color: #E91E63; }
+
+  /* Itinerary */
+  .itinerary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+  .itinerary h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--green-dark);
+  }
+  .day-block { margin-bottom: 28px; }
+  .day-block:last-child { margin-bottom: 0; }
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .day-num {
+    background: var(--green);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: 1px;
+  }
+  .day-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .day-content {
+    padding-left: 20px;
+    border-left: 2px solid var(--green-pale);
+    margin-left: 30px;
+  }
+  .time-row {
+    display: flex;
+    gap: 12px;
+    font-size: 13.5px;
+    padding: 4px 0;
+    line-height: 1.7;
+  }
+  .time-row .time {
+    color: var(--green);
+    font-weight: 600;
+    min-width: 52px;
+    flex-shrink: 0;
+  }
+  .time-row .desc { color: var(--text-sec); }
+  .time-row .desc strong { color: var(--text); font-weight: 600; }
+
+  /* Tips */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .tip-card {
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .tip-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--green-dark);
+  }
+  .tip-card p, .tip-card ul {
+    font-size: 13px;
+    color: var(--text-sec);
+    line-height: 1.8;
+  }
+  .tip-card ul { list-style: none; }
+  .tip-card li::before { content: '→'; margin-right: 6px; color: var(--green); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 12px;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .tier-cards { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-eyebrow">Winter Trip Plan 2026-2027</div>
+    <h1>日本冬季旅行计划</h1>
+    <div class="sub">萤火之森的神话入口 × 神去村的森林密语<br>四天三晚 · 香港出发 · 两个方向 · 三档预算</div>
+    <div class="hero-tags">
+      <span class="hero-tag">🌲 森林沉浸</span>
+      <span class="hero-tag">❄️ 冬日体验</span>
+      <span class="hero-tag">♨️ 温泉治愈</span>
+      <span class="hero-tag">🎬 电影取景</span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+<!-- Correction -->
+<div class="correction">
+  <strong>💡 一个纠正：</strong>《哪啊哪啊神去村》实际取景地在<strong>三重县津市美杉町</strong>，不在青森。但青森的白神山地（世界遗产山毛榉原始林）和奥入濑溪流的森林氛围，与电影中那种「被森林吞噬的隐世感」非常接近——甚至更极致。如果追求电影同款，应选三重；如果追求电影氛围 + 冬天体验，青森远胜。
+</div>
+
+<!-- ============ FLIGHT COMPARISON ============ -->
+<section class="section">
+  <div class="section-label">Departure</div>
+  <h2>✈️ 出发地对比：香港 vs 深圳</h2>
+  <div class="flight-compare">
+    <h3>往返机票价格对比（冬季参考）</h3>
+    <table class="flight-table">
+      <thead>
+        <tr>
+          <th>航线</th>
+          <th>深圳出发（SZX）</th>
+          <th>香港出发（HKG）</th>
+          <th>节省</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>→ 福冈</strong>（熊本线）</td>
+          <td>¥2,500-3,500<br><small>多数需经停/转机，无廉航直飞</small></td>
+          <td><span class="winner">¥1,600-2,200</span><br><small>HK Express / 大湾区航空 直飞 3.5h</small></td>
+          <td><span class="save">省 ¥600-900</span></td>
+        </tr>
+        <tr>
+          <td><strong>→ 东京</strong>（青森线）</td>
+          <td>¥2,200-3,500<br><small>海南航/南航直飞 4h</small></td>
+          <td><span class="winner">¥1,700-2,500</span><br><small>HK Express / 捷星 / 香港航空 直飞 4.5h</small></td>
+          <td><span class="save">省 ¥500-1,000</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flight-note">
+      <strong>结论：香港出发全面胜出。</strong>三大优势：① 廉航直飞（HK Express/捷星/大湾区航空），深圳没有廉航直飞日本；② 航班频次高（每天20+班飞东京，7+班飞福冈），时间灵活；③ 去程航班时刻更好（早班机多，不用红眼）。从深圳到香港机场高铁+机场快线约 1.5h，完全可接受。<br>
+      <strong>深圳→香港机场参考：</strong>深圳北站高铁至西九龙（15min）→ 九龙站预办登机（20min）→ 机场快线至机场（22min），全程约 1.5h，费用约 ¥200。
+    </div>
+  </div>
+</section>
+
+<!-- ============ DESTINATION GALLERY ============ -->
+<section class="section">
+  <div class="section-label">Gallery</div>
+  <h2>目的地实景参考</h2>
+
+  <!-- Kumamoto Gallery -->
+  <div class="gallery-section">
+    <h3 style="font-family:'Noto Serif SC',serif; font-size:18px; margin-bottom:14px; color:var(--green-dark);">🌲 熊本线</h3>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="images/Kamishikimi_Kumano_Shrine_in_w_2026-06-10T08-16-25.jpg" alt="上色见熊野座神社">
+        <div class="caption">上色见熊野座神社<small>97座石灯笼参道 · 萤火之森取景地</small></div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/Mount_Aso_Kusasenri_grassland__2026-06-10T08-16-53.jpg" alt="阿苏草千里">
+        <div class="caption">阿苏 草千里<small>冬季雪原覆盖的火山草原</small></div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/Kurokawa_Onsen_outdoor_hot_spr_2026-06-10T08-17-21.jpg" alt="黑川温泉">
+        <div class="caption">黑川温泉<small>米其林二星温泉乡 · 露天风吕</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aomori Gallery -->
+  <div class="gallery-section">
+    <h3 style="font-family:'Noto Serif SC',serif; font-size:18px; margin-bottom:14px; color:var(--green-dark);">❄️ 青森线</h3>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="images/Oirase_Stream_frozen_waterfall_2026-06-10T08-17-48.jpg" alt="奥入濑溪流冰瀑">
+        <div class="caption">奥入濑溪流 · 冰瀑<small>14km原始森林 · 冬季限定冰瀑Tour</small></div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/Mount_Hakkada_snow_monsters_in_2026-06-10T08-18-15.jpg" alt="八甲田山树冰">
+        <div class="caption">八甲田山 · 树冰<small>「雪怪」— 寒雾凝结的巨型冰树</small></div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/Shirakami_Sanchi_primeval_beec_2026-06-10T08-18-42.jpg" alt="白神山地">
+        <div class="caption">白神山地<small>世界遗产 · 最大山毛榉原始林</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison -->
+<section class="section">
+  <div class="section-label">Destination</div>
+  <h2>两个方向，两种冬天</h2>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <span class="flag flag-green">方向 A</span>
+      <h3>熊本 · 阿苏</h3>
+      <div class="en">Kumamoto / Aso</div>
+      <ul>
+        <li>上色见熊野座神社（萤火之森取景地）</li>
+        <li>97座青苔石灯笼 + 异世界参道</li>
+        <li>阿苏火山 + 草千里冬季雪原</li>
+        <li>黑川温泉乡（30家温泉旅馆）</li>
+        <li>高千穗峡谷</li>
+      </ul>
+      <div class="verdict">
+        <strong>冬天程度：★★☆☆☆</strong><br>
+        熊本市区几乎不下雪（5-10°C），阿苏山区有积雪但不算严冬。适合「微冬 + 朝圣」的轻旅行。从福冈新干线仅40分钟。<br><br>
+        <strong>最佳时间：11月下旬-12月</strong>（初冬薄寒 + 红叶尾声，游客少）
+      </div>
+    </div>
+    <div class="compare-card">
+      <span class="flag flag-accent">方向 B</span>
+      <h3>青森 · 十和田</h3>
+      <div class="en">Aomori / Towada</div>
+      <ul>
+        <li>奥入濑溪流（14km原始森林溪谷）</li>
+        <li>冬季限定冰瀑 Tour（12月-3月）</li>
+        <li>白神山地（世界遗产山毛榉林）</li>
+        <li>八甲田山树冰「雪怪」</li>
+        <li>星野奥入濑溪流酒店</li>
+      </ul>
+      <div class="verdict">
+        <strong>冬天程度：★★★★★</strong><br>
+        豪雪地带，1-2月积雪1-2米，真正的北国冬天。奥入濑溪流结冰后是另一种次元的美——冰瀑灯光 Tour 98%好评率。森林氛围感直接拉满，比电影还电影。<br><br>
+        <strong>最佳时间：1月中旬-2月中旬</strong>（冰瀑最壮观）
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLAN A: KUMAMOTO ============ -->
+<section class="section">
+  <div class="section-label">Plan A — Kumamoto</div>
+  <h2>🌲 熊本线：萤火之森朝圣 + 轻冬温泉</h2>
+
+  <div class="budget-section">
+    <div class="budget-header">
+      <h3>三档预算（香港出发）</h3>
+    </div>
+    <div class="tier-cards">
+      <div class="tier-card tier-economy">
+        <div class="tier-label">节俭版</div>
+        <div class="tier-price">¥3,600 <span>/人</span></div>
+        <div class="cost-row"><span class="label">机票 HKG→FUK 往返</span><span class="value">¥1,700</span></div>
+        <div class="cost-row"><span class="label">福冈⇄熊本新干线</span><span class="value">¥340</span></div>
+        <div class="cost-row"><span class="label">住宿 3晚</span><span class="value">¥800</span></div>
+        <div class="cost-row"><span class="label">市内交通</span><span class="value">¥300</span></div>
+        <div class="cost-row"><span class="label">餐饮</span><span class="value">¥360</span></div>
+        <div class="cost-row"><span class="label">门票/体验</span><span class="value">¥100</span></div>
+        <div class="tier-highlights">
+          <h4>住宿方案</h4>
+          <ul>
+            <li>熊本站周边商务酒店 3晚连住</li>
+            <li>东横INN / APA 之类，¥250-300/晚</li>
+            <li>HK Express 廉航往返，不含托运</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card tier-comfort">
+        <div class="tier-label">舒适版</div>
+        <div class="tier-price">¥6,000 <span>/人</span></div>
+        <div class="cost-row"><span class="label">机票 HKG→FUK 往返</span><span class="value">¥2,100</span></div>
+        <div class="cost-row"><span class="label">福冈⇄熊本新干线</span><span class="value">¥340</span></div>
+        <div class="cost-row"><span class="label">住宿 3晚</span><span class="value">¥2,400</span></div>
+        <div class="cost-row"><span class="label">市内交通+租车1天</span><span class="value">¥500</span></div>
+        <div class="cost-row"><span class="label">餐饮</span><span class="value">¥500</span></div>
+        <div class="cost-row"><span class="label">门票/体验</span><span class="value">¥160</span></div>
+        <div class="tier-highlights">
+          <h4>住宿方案</h4>
+          <ul>
+            <li>D1 熊本市内精品酒店</li>
+            <li>D2 黑川温泉旅馆（一泊二食）</li>
+            <li>D3 熊本市内</li>
+            <li>大湾区航空/香港航空直飞</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card tier-luxury">
+        <div class="tier-label">奢享版</div>
+        <div class="tier-price">¥10,200 <span>/人</span></div>
+        <div class="cost-row"><span class="label">机票 HKG→FUK 往返</span><span class="value">¥3,200</span></div>
+        <div class="cost-row"><span class="label">福冈⇄熊本新干线</span><span class="value">¥340</span></div>
+        <div class="cost-row"><span class="label">住宿 3晚</span><span class="value">¥4,200</span></div>
+        <div class="cost-row"><span class="label">租车自驾 2天</span><span class="value">¥800</span></div>
+        <div class="cost-row"><span class="label">餐饮</span><span class="value">¥1,200</span></div>
+        <div class="cost-row"><span class="label">体验项目</span><span class="value">¥460</span></div>
+        <div class="tier-highlights">
+          <h4>住宿方案</h4>
+          <ul>
+            <li>D1 熊本城附近高级酒店</li>
+            <li>D2 黑川温泉 山匠/旅馆常</li>
+            <li>D3 阿苏周边温泉度假酒店</li>
+            <li>国泰航空直飞含行李餐食</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Itinerary -->
+  <div class="itinerary">
+    <h3>🗺️ 参考行程（舒适版）</h3>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 1</span>
+        <span class="day-title">香港 → 福冈 → 熊本</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">07:00</span><span class="desc">深圳北高铁至西九龙（15min），九龙站预办登机</span></div>
+        <div class="time-row"><span class="time">08:30</span><span class="desc">机场快线至香港机场（22min）</span></div>
+        <div class="time-row"><span class="time">10:30</span><span class="desc"><strong>HK Express / 大湾区航空</strong>直飞福冈（约3.5h）</span></div>
+        <div class="time-row"><span class="time">14:30</span><span class="desc">抵达福冈机场，地铁至博多站换乘<strong>新干线</strong>前往熊本（40min）</span></div>
+        <div class="time-row"><span class="time">16:00</span><span class="desc">入住酒店，逛<strong>熊本城</strong>周边（地震修复后部分开放）</span></div>
+        <div class="time-row"><span class="time">18:30</span><span class="desc"><strong>下通商业街</strong>觅食，马肉刺身必试</span></div>
+      </div>
+    </div>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 2</span>
+        <span class="day-title">萤火之森朝圣 · 上色见熊野座神社</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">07:30</span><span class="desc">熊本站乘<strong>快速巴士高森号</strong>前往高森中央（约2h）</span></div>
+        <div class="time-row"><span class="time">10:00</span><span class="desc">转<strong>高森町民巴士</strong>至「中原」站下车（约20min）</span></div>
+        <div class="time-row"><span class="time">10:30</span><span class="desc">📍 <strong>上色见熊野座神社</strong> — 97座石灯笼沿参道排列，苔藓覆盖石阶直入密林深处，冬季薄雾中更像异世界入口</span></div>
+        <div class="time-row"><span class="time">12:30</span><span class="desc">附近简餐/便利店，或返回高森站</span></div>
+        <div class="time-row"><span class="time">14:00</span><span class="desc">前往<strong>黑川温泉</strong>（高森出发约50min车程），入住温泉旅馆</span></div>
+        <div class="time-row"><span class="time">16:00</span><span class="desc">♨️ 露天风吕，看山林暮色。入夜后买<strong>「入汤手形」</strong>巡泡3家旅馆露天浴池</span></div>
+        <div class="time-row"><span class="time">18:30</span><span class="desc">旅馆晚餐（怀石料理），早早就寝</span></div>
+      </div>
+    </div>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 3</span>
+        <span class="day-title">阿苏火山 · 冬之草千里</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">08:00</span><span class="desc">旅馆早餐后出发，乘巴士/自驾前往<strong>阿苏山</strong></span></div>
+        <div class="time-row"><span class="time">10:00</span><span class="desc"><strong>草千里</strong>— 冬季被薄雪覆盖的广阔草原，如画。远眺阿苏五岳</span></div>
+        <div class="time-row"><span class="time">11:30</span><span class="desc"><strong>阿苏火山博物馆</strong>（火山口因气体浓度时常限制进入，博物馆有实时画面）</span></div>
+        <div class="time-row"><span class="time">13:00</span><span class="desc">阿苏站附近午餐，<strong>赤牛丼</strong>是当地名物</span></div>
+        <div class="time-row"><span class="time">14:30</span><span class="desc">返回熊本市内（巴士约1.5h）</span></div>
+        <div class="time-row"><span class="time">16:00</span><span class="desc">逛<strong>上通/下通</strong>，买熊本熊周边，返程前最后采购</span></div>
+        <div class="time-row"><span class="time">19:00</span><span class="desc">宵夜<strong>味千拉面</strong>总店（发源地在熊本！）</span></div>
+      </div>
+    </div>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 4</span>
+        <span class="day-title">熊本 → 福冈 → 香港</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">07:30</span><span class="desc">退房，新干线返回博多（40min）</span></div>
+        <div class="time-row"><span class="time">09:00</span><span class="desc">博多站<strong>一兰拉面</strong>早面（总店在这里）</span></div>
+        <div class="time-row"><span class="time">10:30</span><span class="desc">福冈机场出发 → 香港（直飞约3.5h）</span></div>
+        <div class="time-row"><span class="time">14:00</span><span class="desc">抵港，机场快线+高铁返回深圳</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLAN B: AOMORI ============ -->
+<section class="section">
+  <div class="section-label">Plan B — Aomori</div>
+  <h2>❄️ 青森线：神去村的冬日密林 + 冰瀑奇观</h2>
+
+  <div class="budget-section">
+    <div class="budget-header">
+      <h3>三档预算（香港出发）</h3>
+    </div>
+    <div class="tier-cards">
+      <div class="tier-card tier-economy">
+        <div class="tier-label">节俭版</div>
+        <div class="tier-price">¥4,800 <span>/人</span></div>
+        <div class="cost-row"><span class="label">机票 HKG→TYO 往返</span><span class="value">¥1,800</span></div>
+        <div class="cost-row"><span class="label">东京→青森 新干线</span><span class="value">¥650</span></div>
+        <div class="cost-row"><span class="label">住宿 3晚</span><span class="value">¥900</span></div>
+        <div class="cost-row"><span class="label">市内交通</span><span class="value">¥500</span></div>
+        <div class="cost-row"><span class="label">餐饮</span><span class="value">¥600</span></div>
+        <div class="cost-row"><span class="label">冰瀑Tour + 体验</span><span class="value">¥350</span></div>
+        <div class="tier-highlights">
+          <h4>住宿方案</h4>
+          <ul>
+            <li>青森市内商务酒店 3晚连住</li>
+            <li>选青森站附近，交通最方便</li>
+            <li>¥250-350/晚</li>
+            <li>HK Express / 捷星廉航往返</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card tier-comfort">
+        <div class="tier-label">舒适版</div>
+        <div class="tier-price">¥8,400 <span>/人</span></div>
+        <div class="cost-row"><span class="label">机票 HKG→TYO 往返</span><span class="value">¥2,400</span></div>
+        <div class="cost-row"><span class="label">东京→青森 新干线</span><span class="value">¥650</span></div>
+        <div class="cost-row"><span class="label">住宿 3晚</span><span class="value">¥3,000</span></div>
+        <div class="cost-row"><span class="label">交通（含JR巴士）</span><span class="value">¥800</span></div>
+        <div class="cost-row"><span class="label">餐饮</span><span class="value">¥1,000</span></div>
+        <div class="cost-row"><span class="label">冰瀑Tour + 体验</span><span class="value">¥550</span></div>
+        <div class="tier-highlights">
+          <h4>住宿方案</h4>
+          <ul>
+            <li>D1 青森市内商务酒店</li>
+            <li>D2 十和田/奥入濑温泉旅馆（一泊二食）</li>
+            <li>D3 青森市内</li>
+            <li>香港航空/大湾区航空直飞</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card tier-luxury">
+        <div class="tier-label">奢享版</div>
+        <div class="tier-price">¥15,000 <span>/人</span></div>
+        <div class="cost-row"><span class="label">机票 HKG→TYO 往返</span><span class="value">¥3,800</span></div>
+        <div class="cost-row"><span class="label">东京→青森 新干线</span><span class="value">¥650</span></div>
+        <div class="cost-row"><span class="label">住宿 3晚</span><span class="value">¥7,200</span></div>
+        <div class="cost-row"><span class="label">包车/租车 2天</span><span class="value">¥1,500</span></div>
+        <div class="cost-row"><span class="label">餐饮</span><span class="value">¥1,500</span></div>
+        <div class="cost-row"><span class="label">冰瀑Tour + 全部体验</span><span class="value">¥550</span></div>
+        <div class="tier-highlights">
+          <h4>住宿方案</h4>
+          <ul>
+            <li>D1 青森站附近高级酒店</li>
+            <li>D2 ⭐星野 奥入濑溪流酒店（含早晚餐）</li>
+            <li>D3 星野 青森屋（睡魔主题）</li>
+            <li>国泰/ANA 直飞含行李餐食</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Itinerary -->
+  <div class="itinerary">
+    <h3>🗺️ 参考行程（舒适版）</h3>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 1</span>
+        <span class="day-title">香港 → 东京 → 青森</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">07:00</span><span class="desc">深圳北高铁至西九龙（15min），九龙站预办登机</span></div>
+        <div class="time-row"><span class="time">08:30</span><span class="desc">机场快线至香港机场（22min）</span></div>
+        <div class="time-row"><span class="time">10:30</span><span class="desc"><strong>HK Express / 香港航空</strong>直飞东京羽田/成田（约4.5h）</span></div>
+        <div class="time-row"><span class="time">16:00</span><span class="desc">东京站换乘<strong>东北新干线はやぶさ</strong>前往青森（约3h20min）</span></div>
+        <div class="time-row"><span class="time">19:30</span><span class="desc">抵达<strong>青森站</strong>，入住酒店</span></div>
+        <div class="time-row"><span class="time">20:00</span><span class="desc">青森站前<strong>AugA海鲜市场</strong>晚餐，扇贝和海胆盖饭新鲜到哭</span></div>
+      </div>
+    </div>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 2</span>
+        <span class="day-title">🌲 奥入濑溪流 · 冰瀑夜游</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">07:00</span><span class="desc">青森站前乘<strong>JR巴士</strong>前往十和田湖/奥入濑（约2h）<br>⚠️ 冬季巴士班次极少，务必提前查时刻表</span></div>
+        <div class="time-row"><span class="time">09:30</span><span class="desc">抵达奥入濑溪流馆。白天自由漫步溪流步道</span></div>
+        <div class="time-row"><span class="time">10:00</span><span class="desc">📍 <strong>奥入濑溪流</strong> — 冬季无人，只有你、冰、雪和14公里的原始森林。苔藓覆盖的岩石上结着冰晶，溪水在冰层下流淌——这就是神去村的冬天</span></div>
+        <div class="time-row"><span class="time">12:00</span><span class="desc">奥入濑溪流馆午餐（附近只有这一家餐厅，味道不错）</span></div>
+        <div class="time-row"><span class="time">13:30</span><span class="desc">入住<strong>奥入濑周边温泉旅馆</strong>，午后泡汤休整</span></div>
+        <div class="time-row"><span class="time">18:00</span><span class="desc">旅馆晚餐后出发</span></div>
+        <div class="time-row"><span class="time">19:00</span><span class="desc">❄️ <strong>奥入濑冰瀑夜间 Tour</strong>（约2h）— 5处冰瀑在专业灯光下呈现梦幻色彩，天然导游讲解冰瀑形成和森林生态。获 Good Design 奖 + 日本观光大赏，98%好评率<br>💰 ¥3,300-4,400/人，需提前在 frozen-oirase.com 预约</span></div>
+        <div class="time-row"><span class="time">21:30</span><span class="desc">返回旅馆，再泡一轮露天温泉入睡</span></div>
+      </div>
+    </div>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 3</span>
+        <span class="day-title">八甲田山雪景 · 青森市区</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">07:30</span><span class="desc">旅馆早餐后出发返回青森市</span></div>
+        <div class="time-row"><span class="time">09:30</span><span class="desc">前往<strong>八甲田山</strong>（青森站乘巴士约60min）</span></div>
+        <div class="time-row"><span class="time">10:30</span><span class="desc">📍 <strong>八甲田缆车</strong>登顶（冬季运营至山麓站）— 树冰（雪怪）群在山顶蔓延，1-2月最为壮观。晴天可见津轻海峡</span></div>
+        <div class="time-row"><span class="time">12:30</span><span class="desc">返回青森市区午餐</span></div>
+        <div class="time-row"><span class="time">14:00</span><span class="desc"><strong>青森县立美术馆</strong> — 奈良美智的「青森犬」在这等着你（冬季常设展）</span></div>
+        <div class="time-row"><span class="time">16:00</span><span class="desc"><strong>睡魔之家 WA RASSE</strong> — 看巨大的青森睡魔灯笼，了解东北祭典文化</span></div>
+        <div class="time-row"><span class="time">18:00</span><span class="desc">古川市场「<strong>のっけ丼</strong>」— 自选海鲜盖饭，每一口都是北国的味道</span></div>
+      </div>
+    </div>
+    <div class="day-block">
+      <div class="day-header">
+        <span class="day-num">DAY 4</span>
+        <span class="day-title">青森 → 东京 → 香港</span>
+      </div>
+      <div class="day-content">
+        <div class="time-row"><span class="time">07:00</span><span class="desc">退房，乘新干线はやぶさ返回东京（约3h20min）</span></div>
+        <div class="time-row"><span class="time">11:00</span><span class="desc">东京站午餐，逛<strong>GRANROOF</strong>买手信</span></div>
+        <div class="time-row"><span class="time">14:00</span><span class="desc">成田/羽田 → 香港（直飞约4.5h）</span></div>
+        <div class="time-row"><span class="time">19:00</span><span class="desc">抵港，机场快线+高铁返回深圳</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIPS ============ -->
+<section class="section">
+  <div class="section-label">Tips</div>
+  <h2>实用信息</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <h4>🎫 签证</h4>
+      <p>日本个人旅游签证，深圳户籍走广州领馆，单次签证约¥200-300。建议提前1个月办理。三年多次签现在门槛降低，有需求可以一并办。从香港出发不影响签证申请。</p>
+    </div>
+    <div class="tip-card">
+      <h4>💳 交通卡</h4>
+      <p>ICOCA/Suica 均可，Apple Wallet 直接加。九州地区用 SUGOCA 更方便，但 Suica 全国通用。新干线票建议提前在 SmartEX 预约，有早鸟折扣。</p>
+    </div>
+    <div class="tip-card">
+      <h4>🧥 冬季装备</h4>
+      <ul>
+        <li>熊本线：普通冬装即可，阿苏山区薄羽绒+防风</li>
+        <li>青森线：必须！厚羽绒+雪地靴+暖宝宝+防滑鞋套</li>
+        <li>奥入濑冰瀑 Tour 极寒，零下10-15°C体感</li>
+      </ul>
+    </div>
+    <div class="tip-card">
+      <h4>📱 通讯</h4>
+      <p>eSIM 推荐 Ubigi 或 Airalo，日本流量包很便宜。青森山区信号不稳定，提前下载离线地图（Google Maps 区域下载）。</p>
+    </div>
+    <div class="tip-card">
+      <h4>🚗 自驾建议</h4>
+      <ul>
+        <li>熊本线：推荐！阿苏山区公共交通班次少</li>
+        <li>青森线：冬天不建议自驾！路面结冰严重，且雪道驾驶需要经验</li>
+        <li>日本租车用 Times Car 或 Toyota Rent a Car</li>
+      </ul>
+    </div>
+    <div class="tip-card">
+      <h4>⏰ 关键预约</h4>
+      <ul>
+        <li>冰瀑 Tour：frozen-oirase.com，12月开抢</li>
+        <li>星野奥入濑：提前3个月预约</li>
+        <li>新干线：SmartEX 提前1个月有早鸟折扣</li>
+        <li>机票：HK Express 促销关注官网/小程序</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Final verdict -->
+<section class="section">
+  <div class="section-label">My Pick</div>
+  <h2>Mona 的判断</h2>
+  <div style="background: var(--bg-card); border:1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow); line-height:2;">
+    <p style="font-size:16px; margin-bottom:16px;">
+      <strong style="color:var(--green);">如果只能选一个 → 青森。</strong>
+    </p>
+    <p style="font-size:14.5px; color:var(--text-sec); margin-bottom:12px;">
+      理由很简单：你说想「体验冬天」，那熊本给不了你真正的冬天。阿苏山区零星积雪和青森1-2米的豪雪完全不是一个量级。奥入濑溪流冬季无人的14公里森林，加上冰瀑夜游——这种体验是「来了才懂」的级别。
+    </p>
+    <p style="font-size:14.5px; color:var(--text-sec); margin-bottom:12px;">
+      而萤火之森的朝圣感确实独特，但上色见熊野座神社冬天去少了夏天的绿意苔藓，视觉冲击会打折。如果执念很深，可以选一个秋天（10-11月）单独去，那时候的苔藓和光影才是最接近动画的。
+    </p>
+    <p style="font-size:14.5px; color:var(--text-sec); margin-bottom:12px;">
+      <strong>省钱要点：</strong>香港出发比深圳出发每趟省 ¥500-1,000 机票钱，廉航选择多、航班频次高，这个优势是实打实的。别忘了 HK Express 经常有促销——提前关注小程序抢票。
+    </p>
+    <p style="font-size:14.5px; color:var(--text-sec);">
+      <strong>折中方案：</strong>十一后（11月）去熊本做萤火之森朝圣（秋末冬初苔藓还绿），过年（1-2月）去青森做深度冬旅。两次四天三晚，预算可控在 <strong>¥9,000-15,000/人</strong>（根据选的档次）。
+    </p>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <p>Mona × 家辉 · 2026-2027 冬季日本旅行规划 · 香港出发 · 数据截至 2026年6月，实际价格以预订时为准</p>
+</footer>
+
+</body>
+</html>

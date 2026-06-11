@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>旅行方案</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+  background: #0f1419;
+  color: #e7e9ea;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #8bc34a;
+  margin-bottom: 32px;
+  letter-spacing: 1px;
+}
+.card {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  background: #1a1f25;
+  border: 1px solid #2a3040;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  text-decoration: none;
+  color: #e7e9ea;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.card:active { transform: scale(0.98); }
+.card:hover { border-color: #8bc34a; }
+.card h2 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.card p { font-size: 14px; color: #8899a6; line-height: 1.5; }
+.card .tag {
+  display: inline-block;
+  font-size: 12px;
+  background: rgba(139,195,74,0.15);
+  color: #8bc34a;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 12px;
+}
+</style>
+</head>
+<body>
+<h1>🗺 旅行方案</h1>
+<a class="card" href="肇兴侗寨出行方案.html">
+  <h2>肇兴侗寨</h2>
+  <p>6月18-20日 · 3天2晚 · 贵州</p>
+  <span class="tag">即将出发</span>
+</a>
+<a class="card" href="日本冬季旅行计划-熊本青森.html">
+  <h2>日本冬季旅行</h2>
+  <p>2026年冬 · 4天3晚 · 熊本 / 青森</p>
+  <span class="tag">规划中</span>
+</a>
+</body>
+</html>
