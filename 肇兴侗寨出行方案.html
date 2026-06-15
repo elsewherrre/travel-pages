@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>肇兴侗寨 · 三日行程</title>
+<script src="https://map.qq.com/api/gljs?v=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></script>
 <style>
   :root {
     --paper: #faf8f5;
@@ -509,6 +510,23 @@
     .callout { margin-left: 72px; }
     .prep-grid { grid-template-columns: 1fr; }
   }
+
+  /* ─── Interactive Map ─── */
+  .map-section { margin-bottom: 52px; background: var(--white); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-card); }
+  .map-tabs { display: flex; border-bottom: 1px solid var(--line); background: var(--paper-warm); }
+  .map-tab { flex: 1; padding: 14px 0; text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--ink-muted); cursor: pointer; transition: all 0.25s; border-bottom: 2px solid transparent; user-select: none; }
+  .map-tab:hover { color: var(--ink-soft); background: rgba(0,0,0,0.02); }
+  .map-tab.active { color: var(--moss); border-bottom-color: var(--moss); background: rgba(107,138,94,0.04); }
+  #trip-map { width: 100%; height: 420px; }
+  .map-cards { display: flex; gap: 10px; padding: 14px 16px; overflow-x: auto; border-top: 1px solid var(--line-soft); background: var(--paper-warm); }
+  .map-card { flex-shrink: 0; padding: 10px 16px; background: var(--white); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+  .map-card:hover { border-color: var(--moss); color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .map-card .mc-num { display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; border-radius: 50%; font-size: 10px; font-weight: 700; color: #fff; margin-right: 6px; vertical-align: middle; }
+  .map-card.d1 .mc-num { background: #4A90D9; }
+  .map-card.d2 .mc-num { background: #6B8A5E; }
+  .map-card.d3 .mc-num { background: #B88A44; }
+
+  @media (max-width: 640px) { #trip-map { height: 300px; } .map-card { padding: 8px 12px; font-size: 11px; } }
 </style>
 </head>
 <body>
@@ -615,6 +633,17 @@
   <div class="reminder-item"><strong>6 月 20 日（周六）12:00</strong> — 退房，民宿送站，18:15 从江发车</div>
 </div>
 
+<!-- ═══════════ Interactive Map ═══════════ -->
+<div class="map-section">
+  <div class="map-tabs">
+    <div class="map-tab active" data-day="0">DAY 1 · 6.18</div>
+    <div class="map-tab" data-day="1">DAY 2 · 6.19</div>
+    <div class="map-tab" data-day="2">DAY 3 · 6.20</div>
+  </div>
+  <div id="trip-map"></div>
+  <div class="map-cards" id="map-cards"></div>
+</div>
+
 <!-- ═══════════ DAY 1 ═══════════ -->
 <div class="day">
   <div class="day-header">
@@ -668,7 +697,7 @@
     <div class="node-body">
       <div class="what">寨内漫步</div>
       <div class="detail">鼓楼广场 → 风雨桥 → 仁团寨 / 义团寨简走一圈。6 月傍晚光线最好，拍照黄金时段。</div>
-      <div class="node-img"><img src="images/Wind_rain_bridge_in_Zhao_2026-06-11T09-27-32.jpg" alt="风雨桥"></div>
+      <div class="node-img"><img src="images/wind-rain-bridge-zhaoxing.png" alt="风雨桥"></div>
       <a class="xhs-link" href="javascript:void(0)" onclick="openXhs('肇兴侗寨 鼓楼 风雨桥 游玩攻略')">小红书看攻略 <span class="arrow">↗</span></a>
       <div class="photo-guide">
         <span class="pg-icon">📸</span>
@@ -686,7 +715,7 @@
     <div class="node-body">
       <div class="what">侗族酸汤鱼</div>
       <div class="detail">寨内找一家评分高的。点单建议：酸汤鱼 + 腌鱼腌肉 + 糯米饭 + 侗家米酒。</div>
-      <div class="node-img"><img src="images/Food_photography_Guizhou_sour_2026-06-11T09-26-02.jpg" alt="酸汤鱼"></div>
+      <div class="node-img"><img src="images/sour-soup-fish-guizhou.png" alt="酸汤鱼"></div>
     </div>
   </div>
 
@@ -695,7 +724,7 @@
     <div class="node-body">
       <div class="what">篝火广场</div>
       <div class="detail">民宿出门就到。篝火 + 侗族歌舞，第一天不赶，感受寨子的夜晚就好。</div>
-      <div class="node-img"><img src="images/Night_bonfire_in_Zhaoxing_Dong_2026-06-11T09-27-01.jpg" alt="篝火广场"></div>
+      <div class="node-img"><img src="images/bonfire-zhaoxing-night.png" alt="篝火广场"></div>
       <a class="xhs-link" href="javascript:void(0)" onclick="openXhs('肇兴侗寨 篝火晚会 体验')">小红书看攻略 <span class="arrow">↗</span></a>
     </div>
   </div>
@@ -714,7 +743,7 @@
     <div class="node-body">
       <div class="what">晨走，拍鼓楼晨雾</div>
       <div class="detail">趁游客还没到，穿寨子小巷，仁团 / 义团寨内部最出片。晨雾 + 鼓楼 = 这趟最值得的一张照片。</div>
-      <div class="node-img"><img src="images/Morning_mist_over_Zhaoxing_Don_2026-06-11T09-27-01.jpg" alt="晨雾鼓楼"></div>
+      <div class="node-img"><img src="images/morning-mist-zhaoxing.png" alt="晨雾鼓楼"></div>
       <a class="xhs-link" href="javascript:void(0)" onclick="openXhs('肇兴侗寨 清晨 晨雾 拍照机位')">小红书看攻略 <span class="arrow">↗</span></a>
       <div class="photo-guide">
         <span class="pg-icon">📸</span>
@@ -740,7 +769,7 @@
     <div class="node-body">
       <div class="what">五鼓楼 · 五风雨桥</div>
       <div class="detail">礼团 → 智团 → 信团逐一走。每个鼓楼风格不同，里面常有阿婆织侗布。坐一坐，听听平常的聚唱。</div>
-      <div class="node-img"><img src="images/Travel_photo_Zhaoxing_Dong_Vi_2026-06-11T09-25-33.jpg" alt="鼓楼全景"></div>
+      <div class="node-img"><img src="images/zhaoxing-dong-village-overview.png" alt="鼓楼全景"></div>
       <a class="xhs-link" href="javascript:void(0)" onclick="openXhs('肇兴侗寨 五鼓楼 打卡路线')">小红书看攻略 <span class="arrow">↗</span></a>
       <div class="photo-guide">
         <span class="pg-icon">📸</span>
@@ -766,7 +795,7 @@
     <div class="node-body">
       <div class="what">堂安梯田徒步</div>
       <div class="detail">肇兴寨 → 石板路上山 → 堂安侗寨，约 <strong>7km，爬升 300m，单程 1.5–2 小时</strong>。6 月稻子全绿，堂安是整个黔东南梯田最美的时候。带水，穿徒步鞋，手机充好电。</div>
-      <div class="node-img"><img src="images/Tang_an_rice_terraces_hiking_t_2026-06-11T09-26-30.jpg" alt="堂安梯田徒步"></div>
+      <div class="node-img"><img src="images/tangan-rice-terraces-hiking.png" alt="堂安梯田徒步"></div>
       <a class="xhs-link" href="javascript:void(0)" onclick="openXhs('堂安梯田 徒步 路线 攻略')">小红书看攻略 <span class="arrow">↗</span></a>
       <div class="photo-guide">
         <span class="pg-icon">📸</span>
@@ -784,7 +813,7 @@
     <div class="node-body">
       <div class="what">侗族大歌</div>
       <div class="detail">傍晚各鼓楼广场轮番上演，<strong>免费，不用买票</strong>。侗族无伴奏多声部合唱，真正的天籁。</div>
-      <div class="node-img"><img src="images/Dong_Grand_Song_performance_2026-06-11T09-27-01.jpg" alt="侗族大歌"></div>
+      <div class="node-img"><img src="images/dong-grand-song-performance.png" alt="侗族大歌"></div>
       <a class="xhs-link" href="javascript:void(0)" onclick="openXhs('肇兴侗寨 侗族大歌 免费观看')">小红书看攻略 <span class="arrow">↗</span></a>
     </div>
   </div>
@@ -847,7 +876,7 @@
     <div class="node-body">
       <div class="what">从江县城 · 午饭 + 闲逛</div>
       <div class="detail">从江站存包，打车去县城。<strong>从江农贸市场</strong>看本地生活 — 糯米、腌鱼、侗布，不是景点但有活人气。<strong>都柳江边</strong>走一走。县城馆子比寨里便宜一半。</div>
-      <div class="node-img"><img src="images/Duliu_River_flowing_thro_2026-06-11T09-27-32.jpg" alt="都柳江"></div>
+      <div class="node-img"><img src="images/duliu-river-congjiang.png" alt="都柳江"></div>
       <a class="xhs-link" href="javascript:void(0)" onclick="openXhs('从江县城 美食 攻略')">小红书看攻略 <span class="arrow">↗</span></a>
     </div>
   </div>
@@ -940,6 +969,188 @@ function openXhs(keyword) {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
     });
   });
+})();
+</script>
+
+<!-- ═══════════ Interactive Map JS ═══════════ -->
+<script>
+(function(){
+  // ─── Data: all POIs grouped by day ───
+  var dayData = [
+    { // Day 1
+      color: '#4A90D9', center: [26.3, 111.5], zoom: 7,
+      pois: [
+        { name: '深圳北站', lat: 22.6096, lng: 114.0292, icon: '🚄' },
+        { name: '广州南站', lat: 22.9886, lng: 113.2693, icon: '🔄' },
+        { name: '从江站', lat: 25.9096, lng: 109.1146, icon: '🚄' },
+        { name: '肇兴侗寨', lat: 25.9065, lng: 109.1675, icon: '🏘️' },
+        { name: '非花驿民宿 & 篝火', lat: 25.9072, lng: 109.1753, icon: '🏠' },
+      ]
+    },
+    { // Day 2
+      color: '#6B8A5E', center: [25.906, 109.19], zoom: 14,
+      pois: [
+        { name: '仁团鼓楼 · 晨雾', lat: 25.9065, lng: 109.1842, icon: '🌫️' },
+        { name: '礼团鼓楼 · 五鼓楼', lat: 25.9062, lng: 109.1823, icon: '🏯' },
+        { name: '堂安侗寨 · 梯田徒步', lat: 25.8988, lng: 109.2157, icon: '🌾' },
+        { name: '鼓楼广场 · 侗族大歌', lat: 25.9072, lng: 109.1753, icon: '🎵' },
+      ]
+    },
+    { // Day 3
+      color: '#B88A44', center: [25.83, 109.0], zoom: 11,
+      pois: [
+        { name: '从江县城 · 午饭', lat: 25.7546, lng: 108.905, icon: '🍜' },
+        { name: '从江站 · 返程', lat: 25.9096, lng: 109.1146, icon: '🚄' },
+      ]
+    }
+  ];
+
+  var currentDay = 0;
+  var map = null;
+  var markerLayer = null;
+  var polylineLayer = null;
+
+  function initMap() {
+    var d = dayData[0];
+    map = new TMap.Map('trip-map', {
+      center: new TMap.LatLng(d.center[0], d.center[1]),
+      zoom: d.zoom,
+      mapStyleId: 'style1',
+      baseMap: { type: 'vector', features: ['base', 'label'] }
+    });
+    renderDay(0);
+  }
+
+  function renderDay(dayIdx) {
+    currentDay = dayIdx;
+    var d = dayData[dayIdx];
+    if (!d) return;
+
+    // Clear old layers
+    if (markerLayer) { markerLayer.setMap(null); markerLayer = null; }
+    if (polylineLayer) { polylineLayer.setMap(null); polylineLayer = null; }
+
+    var color = d.color;
+
+    // Build marker geometries
+    var geometries = d.pois.map(function(p, i) {
+      return {
+        id: 'm' + dayIdx + '_' + i,
+        styleId: 'markerStyle',
+        position: new TMap.LatLng(p.lat, p.lng),
+        properties: { title: p.name, num: i + 1, icon: p.icon }
+      };
+    });
+
+    // Build polyline
+    var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
+    var polyGeom = [{ id: 'poly_' + dayIdx, styleId: 'lineStyle', paths: paths }];
+
+    // Style: numbered circle marker
+    markerLayer = new TMap.MultiMarker({
+      map: map,
+      styles: {
+        markerStyle: new TMap.MarkerStyle({
+          width: 34, height: 34,
+          anchor: { x: 17, y: 34 },
+          src: createMarkerSVG(color)
+        })
+      },
+      geometries: geometries
+    });
+
+    // InfoWindow on click
+    markerLayer.on('click', function(evt) {
+      var props = evt.geometry.properties;
+      var infoWin = new TMap.InfoWindow({
+        map: map,
+        position: evt.geometry.position,
+        content: '<div style="padding:6px 12px;font-size:13px;white-space:nowrap;color:#2c2416;">' + props.icon + ' <strong>' + props.title + '</strong></div>'
+      });
+      infoWin.open();
+      setTimeout(function() { infoWin.close(); }, 2000);
+    });
+
+    // Polyline
+    polylineLayer = new TMap.MultiPolyline({
+      map: map,
+      styles: {
+        lineStyle: new TMap.PolylineStyle({
+          color: color,
+          width: 3,
+          borderWidth: 0,
+          lineCap: 'round',
+          dashArray: dayIdx === 0 ? [10, 6] : null
+        })
+      },
+      geometries: polyGeom
+    });
+
+    // Ease to center
+    map.easeTo({ center: new TMap.LatLng(d.center[0], d.center[1]), zoom: d.zoom }, { duration: 600 });
+
+    // Render cards
+    renderCards(dayIdx);
+  }
+
+  // Generate SVG data URI for numbered circle markers
+  function createMarkerSVG(color) {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="42" viewBox="0 0 34 42">'
+      + '<defs><filter id="sh"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.25"/></filter></defs>'
+      + '<circle cx="17" cy="16" r="14" fill="' + color + '" filter="url(#sh)"/>'
+      + '<text x="17" y="21" text-anchor="middle" fill="white" font-size="13" font-weight="bold" font-family="SF Mono,Menlo,Consolas,monospace"></text>'
+      + '<polygon points="17,34 12,28 22,28" fill="' + color + '"/>'
+      + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  function renderCards(dayIdx) {
+    var d = dayData[dayIdx];
+    var container = document.getElementById('map-cards');
+    var html = '';
+    d.pois.forEach(function(p, i) {
+      html += '<div class="map-card d' + (dayIdx + 1) + '" data-idx="' + i + '">'
+        + '<span class="mc-num">' + (i + 1) + '</span>'
+        + p.icon + ' ' + p.name
+        + '</div>';
+    });
+    container.innerHTML = html;
+
+    // Click card → fly to marker
+    container.querySelectorAll('.map-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var idx = parseInt(this.dataset.idx);
+        var p = d.pois[idx];
+        map.easeTo({ center: new TMap.LatLng(p.lat, p.lng), zoom: Math.max(map.getZoom(), d.zoom + 1) }, { duration: 500 });
+        // Brief flash: show info window
+        var infoWin = new TMap.InfoWindow({
+          map: map,
+          position: new TMap.LatLng(p.lat, p.lng),
+          content: '<div style="padding:6px 12px;font-size:13px;white-space:nowrap;color:#2c2416;">' + p.icon + ' <strong>' + p.name + '</strong></div>'
+        });
+        infoWin.open();
+        setTimeout(function() { infoWin.close(); }, 2000);
+      });
+    });
+  }
+
+  // Tab switching
+  document.querySelectorAll('.map-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.map-tab').forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+      renderDay(parseInt(this.dataset.day));
+    });
+  });
+
+  // Init when Tencent Maps API is ready
+  if (typeof TMap !== 'undefined') {
+    initMap();
+  } else {
+    window.addEventListener('load', function() {
+      if (typeof TMap !== 'undefined') initMap();
+    });
+  }
 })();
 </script>
 </html>
