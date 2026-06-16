@@ -1075,21 +1075,19 @@ function openXhs(keyword) {
     if (markerLayer) { markerLayer.setMap(null); markerLayer = null; }
     if (polylineLayer) { polylineLayer.setMap(null); polylineLayer = null; }
 
-    // ── Polyline ──
+    // ── Polyline: actual routes for Day2/3, direct line for Day1 ──
     if (d.pois.length >= 2) {
-      var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
-      polylineLayer = new TMap.MultiPolyline({
-        map: map,
-        styles: {
-          routeLine: new TMap.PolylineStyle({
-            color: color, width: 6, borderWidth: 0,
-            lineCap: 'round', lineJoin: 'round',
-            showArrow: dayIdx === 0,
-            arrowOptions: { width: 8, height: 6, space: 80 }
-          })
-        },
-        geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: paths }]
-      });
+      if (dayIdx === 0) {
+        // Day 1: conceptual train route — dashed straight lines
+        var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
+        polylineLayer = new TMap.MultiPolyline({
+          map: map, styles: { routeLine: new TMap.PolylineStyle({ color: color, width: 4, borderWidth: 0, lineCap: 'round', lineJoin: 'round', dashArray: [8, 4] }) },
+          geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: paths }]
+        });
+      } else {
+        // Day 2/3: fetch actual walking/driving routes from Tencent Directions API
+        drawRealRoutes(d, color, dayIdx);
+      }
     }
 
     // ── Markers: per-number style ──
@@ -1135,7 +1133,88 @@ function openXhs(keyword) {
     renderFooter(dayIdx);
   }
 
-  // ── Build per-marker styles (each with its number) ──  // ── Render footer chips ──
+  // ── Fetch actual roads/paths from Tencent Directions API ──
+  function drawRealRoutes(d, color, dayIdx) {
+    var serviceType = dayIdx === 1 ? 'walking' : 'driving';
+    var segments = [];
+    for (var i = 1; i < d.pois.length; i++) {
+      segments.push({ from: d.pois[i - 1], to: d.pois[i] });
+    }
+
+    // Fetch all segments in parallel
+    var fetches = segments.map(function(seg) {
+      return fetchSingleRoute(seg.from, seg.to, serviceType);
+    });
+
+    Promise.all(fetches).then(function(results) {
+      // Combine all path coordinates
+      var allCoords = [];
+      results.forEach(function(pts) {
+        if (pts && pts.length > 0) {
+          for (var k = 0; k < pts.length; k++) {
+            allCoords.push(new TMap.LatLng(pts[k].lat, pts[k].lng));
+          }
+        }
+      });
+
+      // If we got real route data, draw it
+      if (allCoords.length > 1) {
+        if (polylineLayer) { polylineLayer.setMap(null); }
+        polylineLayer = new TMap.MultiPolyline({
+          map: map,
+          styles: { routeLine: new TMap.PolylineStyle({ color: color, width: 5, borderWidth: 2, borderColor: 'rgba(255,255,255,0.6)', lineCap: 'round', lineJoin: 'round' }) },
+          geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: allCoords }]
+        });
+      } else {
+        // Fallback: direct line
+        drawFallbackLine(d, color, dayIdx);
+      }
+    }).catch(function() {
+      drawFallbackLine(d, color, dayIdx);
+    });
+  }
+
+  function fetchSingleRoute(from, to, type) {
+    return new Promise(function(resolve) {
+      try {
+        var Service = type === 'walking' ? TMap.service.Walking : TMap.service.Driving;
+        // Driving needs policy, Walking doesn't
+        var searchOpts = {
+          from: new TMap.LatLng(from.lat, from.lng),
+          to: new TMap.LatLng(to.lat, to.lng)
+        };
+        if (type === 'driving') searchOpts.policy = 'LEAST_TIME';
+
+        var svc = new Service();
+        svc.search(searchOpts).then(function(result) {
+          if (result.status === 0 && result.result && result.result.routes && result.result.routes.length > 0) {
+            var poly = result.result.routes[0].polyline;
+            if (Array.isArray(poly) && poly.length > 0) {
+              resolve(poly);
+            } else {
+              resolve([]);
+            }
+          } else {
+            resolve([]);
+          }
+        }).catch(function() { resolve([]); });
+      } catch(e) {
+        resolve([]);
+      }
+    });
+  }
+
+  function drawFallbackLine(d, color, dayIdx) {
+    var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
+    if (polylineLayer) { polylineLayer.setMap(null); }
+    polylineLayer = new TMap.MultiPolyline({
+      map: map,
+      styles: { routeLine: new TMap.PolylineStyle({ color: color, width: 3, borderWidth: 0, lineCap: 'round', lineJoin: 'round', dashArray: [6, 4] }) },
+      geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: paths }]
+    });
+  }
+
+  // ── Render footer chips ──
   function renderFooter(dayIdx) {
     var d = dayData[dayIdx];
     var color = COLORS[dayIdx];
