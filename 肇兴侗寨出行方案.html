@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>肇兴侗寨 · 三日行程</title>
-<script src="https://map.qq.com/api/gljs?v=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></script>
 <style>
   :root {
     --paper: #faf8f5;
@@ -511,30 +510,55 @@
     .prep-grid { grid-template-columns: 1fr; }
   }
 
-  /* ─── Interactive Map ─── */
-  .map-section { margin-bottom: 52px; background: var(--white); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-card); }
-  .map-tabs { display: flex; gap: 8px; padding: 12px 16px 0; background: var(--white); }
-  .map-tab { padding: 8px 20px; text-align: center; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; user-select: none; border-radius: 20px; background: #f5f5f5; border: 1px solid transparent; }
-  .map-tab:hover { color: var(--ink); background: #eee; }
-  .map-tab.active { color: #fff; background: #00B8D4; border-color: #00B8D4; }
-  #trip-map { width: 100%; height: 460px; }
-  .map-footer { padding: 14px 16px; background: #f8fcfe; border-top: 1px solid #e8f4f8; }
-  .map-route-info { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-  .map-route-info .route-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; }
-  .map-route-info .route-badge.day1 { background: #e0f7fa; color: #00838f; }
-  .map-route-info .route-badge.day2 { background: #e8f5e9; color: #2e7d32; }
-  .map-route-info .route-badge.day3 { background: #fff3e0; color: #e65100; }
-  .map-route-info .route-meta { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.3px; }
-  .map-poi-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .map-poi-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #fff; border: 1px solid #e0e0e0; border-radius: 18px; cursor: pointer; transition: all 0.2s; font-size: 12px; color: var(--ink-soft); user-select: none; }
-  .map-poi-chip:hover { border-color: #00B8D4; color: var(--ink); box-shadow: 0 1px 4px rgba(0,184,212,0.12); }
-  .map-poi-chip .chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .map-poi-chip .chip-num { width: 18px; height: 18px; line-height: 18px; text-align: center; border-radius: 50%; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
-  .map-poi-chip.d1 .chip-dot, .map-poi-chip.d1 .chip-num { background: #00ACC1; }
-  .map-poi-chip.d2 .chip-dot, .map-poi-chip.d2 .chip-num { background: #43A047; }
-  .map-poi-chip.d3 .chip-dot, .map-poi-chip.d3 .chip-num { background: #FB8C00; }
+  /* ─── Timeline Quick Nav ─── */
+  .timeline-nav { margin-bottom: 40px; }
+  .timeline-scroll { display: flex; gap: 0; overflow-x: auto; padding: 8px 0 16px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .timeline-scroll::-webkit-scrollbar { display: none; }
+  .timeline-node { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 80px; cursor: pointer; position: relative; padding: 0 6px; transition: transform 0.2s; }
+  .timeline-node:hover { transform: translateY(-2px); }
+  .timeline-node .tn-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); transition: all 0.25s; position: relative; z-index: 1; }
+  .timeline-node .tn-dot.d1 { background: #b0d4d8; }
+  .timeline-node .tn-dot.d2 { background: #b8ccae; }
+  .timeline-node .tn-dot.d3 { background: #e0c89e; }
+  .timeline-node.active .tn-dot { transform: scale(1.5); }
+  .timeline-node.active .tn-dot.d1 { background: #00ACC1; }
+  .timeline-node.active .tn-dot.d2 { background: #43A047; }
+  .timeline-node.active .tn-dot.d3 { background: #FB8C00; }
+  .timeline-node .tn-time { font-size: 11px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.3px; white-space: nowrap; }
+  .timeline-node .tn-label { font-size: 10px; color: var(--ink-muted); white-space: nowrap; text-align: center; line-height: 1.3; }
+  .timeline-line { height: 1px; background: var(--line); margin: 0 -6px; position: relative; top: 0; }
+  .timeline-day-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--ink-muted); padding: 0 6px 6px; white-space: nowrap; text-transform: uppercase; }
+  .tn-segment { display: flex; align-items: center; flex-shrink: 0; }
+  .tn-segment .tn-bar { width: 28px; height: 1px; background: var(--line); flex-shrink: 0; margin: 0 2px; }
 
-  @media (max-width: 640px) { #trip-map { height: 320px; } .map-tab { padding: 6px 16px; font-size: 11px; } .map-poi-chip { padding: 4px 10px; font-size: 11px; } }
+  /* ─── Nav Buttons ─── */
+  .nav-section { margin-bottom: 52px; }
+  .nav-day-group { background: var(--white); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-card); margin-bottom: 16px; }
+  .nav-day-header { padding: 14px 20px; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; gap: 10px; }
+  .nav-day-header .ndh-badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #fff; }
+  .ndh-badge.d1 { background: #00ACC1; }
+  .ndh-badge.d2 { background: #43A047; }
+  .ndh-badge.d3 { background: #FB8C00; }
+  .nav-day-header .ndh-title { font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: 0.5px; }
+  .nav-day-header .ndh-mode { font-size: 11px; color: var(--ink-muted); margin-left: auto; }
+  .nav-poi-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-soft); }
+  .nav-poi-item { background: var(--white); padding: 14px 16px; display: flex; align-items: center; gap: 10px; }
+  .nav-poi-item .npi-icon { font-size: 20px; flex-shrink: 0; opacity: 0.85; }
+  .nav-poi-item .npi-info { flex: 1; min-width: 0; }
+  .nav-poi-item .npi-name { font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav-poi-item .npi-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .nav-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; cursor: pointer; text-decoration: none; border: 1px solid; transition: all 0.2s; }
+  .nav-btn.nav-walk { background: #f0f9f4; color: #2e7d32; border-color: #c8e6c9; }
+  .nav-btn.nav-walk:hover { background: #c8e6c9; }
+  .nav-btn.nav-drive { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
+  .nav-btn.nav-drive:hover { background: #bbdefb; }
+  .nav-btn.nav-marker { background: #fff8e1; color: #e65100; border-color: #ffe082; }
+  .nav-btn.nav-marker:hover { background: #ffe082; }
+
+  @media (max-width: 640px) {
+    .nav-poi-list { grid-template-columns: 1fr; }
+    .timeline-node { min-width: 68px; }
+  }
 </style>
 </head>
 <body>
@@ -641,17 +665,151 @@
   <div class="reminder-item"><strong>6 月 20 日（周六）12:00</strong> — 退房，民宿送站，18:15 从江发车</div>
 </div>
 
-<!-- ═══════════ Interactive Map ═══════════ -->
-<div class="map-section">
-  <div class="map-tabs">
-    <div class="map-tab active" data-day="0">DAY 1 · 6.18 出发</div>
-    <div class="map-tab" data-day="1">DAY 2 · 6.19 寨内</div>
-    <div class="map-tab" data-day="2">DAY 3 · 6.20 返程</div>
+<!-- ═══════════ 快速导览时间线 ═══════════ -->
+<div class="timeline-nav">
+  <div style="display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px" onscroll="this.style.opacity=1">
+    <div class="timeline-day-label" style="color:#00ACC1">DAY 1</div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day1-depart"><div class="tn-dot d1"></div><div class="tn-time">09:50</div><div class="tn-label">深圳北出发</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day1-arrive"><div class="tn-dot d1"></div><div class="tn-time">14:28</div><div class="tn-label">抵达从江</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day1-checkin"><div class="tn-dot d1"></div><div class="tn-time">15:30</div><div class="tn-label">入住民宿</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day1-bonfire"><div class="tn-dot d1"></div><div class="tn-time">19:30</div><div class="tn-label">篝火晚会</div></div>
   </div>
-  <div id="trip-map"></div>
-  <div class="map-footer">
-    <div class="map-route-info" id="map-route-info"></div>
-    <div class="map-poi-chips" id="map-poi-chips"></div>
+  <div style="display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px;margin-top:2px">
+    <div class="timeline-day-label" style="color:#43A047">DAY 2</div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day2-morning"><div class="tn-dot d2"></div><div class="tn-time">07:00</div><div class="tn-label">晨雾拍摄</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day2-drums"><div class="tn-dot d2"></div><div class="tn-time">10:00</div><div class="tn-label">五鼓楼巡礼</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day2-hike"><div class="tn-dot d2"></div><div class="tn-time">14:00</div><div class="tn-label">堂安徒步</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day2-song"><div class="tn-dot d2"></div><div class="tn-time">18:00</div><div class="tn-label">侗族大歌</div></div>
+  </div>
+  <div style="display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px;margin-top:2px">
+    <div class="timeline-day-label" style="color:#FB8C00">DAY 3</div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day3-wake"><div class="tn-dot d3"></div><div class="tn-time">10:00</div><div class="tn-label">自然醒</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day3-county"><div class="tn-dot d3"></div><div class="tn-time">12:00</div><div class="tn-label">从江县城</div></div>
+    <div class="tn-segment"><span class="tn-bar"></span></div>
+    <div class="timeline-node" data-target="day3-return"><div class="tn-dot d3"></div><div class="tn-time">16:00</div><div class="tn-label">返程出发</div></div>
+  </div>
+</div>
+
+<!-- ═══════════ 高德地图导航 ═══════════ -->
+<div class="nav-section">
+  <div class="nav-day-group">
+    <div class="nav-day-header">
+      <span class="ndh-badge d1">DAY 1</span>
+      <span class="ndh-title">深圳 → 从江 · 出发日</span>
+      <span class="ndh-mode">🚄 高铁 + 接站</span>
+    </div>
+    <div class="nav-poi-list">
+      <div class="nav-poi-item">
+        <span class="npi-icon">🚄</span>
+        <span class="npi-name">深圳北站</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=114.0292,22.6096&name=深圳北站&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-drive" href="https://uri.amap.com/navigation?to=114.0292,22.6096,深圳北站&mode=car&callnative=1" target="_blank">🚗</a>
+        </span>
+      </div>
+      <div class="nav-poi-item">
+        <span class="npi-icon">🚄</span>
+        <span class="npi-name">从江站</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.1146,25.9096&name=从江站&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-drive" href="https://uri.amap.com/navigation?to=109.1146,25.9096,从江站&mode=car&callnative=1" target="_blank">🚗</a>
+        </span>
+      </div>
+      <div class="nav-poi-item">
+        <span class="npi-icon">🏠</span>
+        <span class="npi-name">非花驿民宿</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.1753,25.9072&name=非花驿鼓楼全景民宿&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-drive" href="https://uri.amap.com/navigation?to=109.1753,25.9072,非花驿民宿&mode=car&callnative=1" target="_blank">🚗</a>
+        </span>
+      </div>
+      <div class="nav-poi-item">
+        <span class="npi-icon">🏘️</span>
+        <span class="npi-name">肇兴侗寨景区</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.1675,25.9065&name=肇兴侗寨&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-drive" href="https://uri.amap.com/navigation?to=109.1675,25.9065,肇兴侗寨&mode=car&callnative=1" target="_blank">🚗</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-day-group">
+    <div class="nav-day-header">
+      <span class="ndh-badge d2">DAY 2</span>
+      <span class="ndh-title">寨内游玩 · 五鼓楼+徒步</span>
+      <span class="ndh-mode">🥾 步行探索</span>
+    </div>
+    <div class="nav-poi-list">
+      <div class="nav-poi-item">
+        <span class="npi-icon">🌫️</span>
+        <span class="npi-name">仁团鼓楼 · 晨雾</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.1842,25.9065&name=仁团鼓楼&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-walk" href="https://uri.amap.com/navigation?to=109.1842,25.9065,仁团鼓楼&mode=walk&callnative=1" target="_blank">🚶</a>
+        </span>
+      </div>
+      <div class="nav-poi-item">
+        <span class="npi-icon">🏯</span>
+        <span class="npi-name">礼团鼓楼 · 五鼓楼</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.1823,25.9062&name=礼团鼓楼&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-walk" href="https://uri.amap.com/navigation?to=109.1823,25.9062,礼团鼓楼&mode=walk&callnative=1" target="_blank">🚶</a>
+        </span>
+      </div>
+      <div class="nav-poi-item">
+        <span class="npi-icon">🌾</span>
+        <span class="npi-name">堂安侗寨 · 梯田</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.2157,25.8988&name=堂安侗寨&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-walk" href="https://uri.amap.com/navigation?to=109.2157,25.8988,堂安侗寨&mode=walk&callnative=1" target="_blank">🚶</a>
+        </span>
+      </div>
+      <div class="nav-poi-item">
+        <span class="npi-icon">🎵</span>
+        <span class="npi-name">鼓楼广场 · 大歌</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.1753,25.9072&name=肇兴鼓楼广场&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-walk" href="https://uri.amap.com/navigation?to=109.1753,25.9072,鼓楼广场&mode=walk&callnative=1" target="_blank">🚶</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-day-group">
+    <div class="nav-day-header">
+      <span class="ndh-badge d3">DAY 3</span>
+      <span class="ndh-title">县城 + 返程</span>
+      <span class="ndh-mode">🚗 驾车出行</span>
+    </div>
+    <div class="nav-poi-list">
+      <div class="nav-poi-item">
+        <span class="npi-icon">🍜</span>
+        <span class="npi-name">从江县城 · 午饭</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=108.905,25.7546&name=从江县城&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-drive" href="https://uri.amap.com/navigation?to=108.905,25.7546,从江县城&mode=car&callnative=1" target="_blank">🚗</a>
+        </span>
+      </div>
+      <div class="nav-poi-item">
+        <span class="npi-icon">🚄</span>
+        <span class="npi-name">从江站 · 返程</span>
+        <span class="npi-actions">
+          <a class="nav-btn nav-marker" href="https://uri.amap.com/marker?position=109.1146,25.9096&name=从江站&callnative=1" target="_blank">📍</a>
+          <a class="nav-btn nav-drive" href="https://uri.amap.com/navigation?to=109.1146,25.9096,从江站&mode=car&callnative=1" target="_blank">🚗</a>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -663,7 +821,7 @@
     <div class="subtitle">出发 · 入寨 · 篝火</div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day1-depart">
     <div class="node-time"><div class="clock">09:50</div><div class="label">深圳北</div></div>
     <div class="node-body">
       <div class="what">出发</div>
@@ -687,7 +845,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day1-arrive">
     <div class="node-time"><div class="clock">14:28</div><div class="label">从江站</div></div>
     <div class="node-body">
       <div class="what">抵达，民宿司机接站</div>
@@ -695,7 +853,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day1-checkin">
     <div class="node-time"><div class="clock">15:30</div><div class="label">入住</div></div>
     <div class="node-body">
       <div class="what">入住非花驿，休整</div>
@@ -730,7 +888,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day1-bonfire">
     <div class="node-time"><div class="clock">19:30</div><div class="label">篝火</div></div>
     <div class="node-body">
       <div class="what">篝火广场</div>
@@ -749,7 +907,7 @@
     <div class="subtitle">五鼓楼 · 堂安徒步 · 侗族大歌</div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day2-morning">
     <div class="node-time"><div class="clock">07:00</div><div class="label">清晨</div></div>
     <div class="node-body">
       <div class="what">晨走，拍鼓楼晨雾</div>
@@ -775,7 +933,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day2-drums">
     <div class="node-time"><div class="clock">09:00</div><div class="label">打卡</div></div>
     <div class="node-body">
       <div class="what">五鼓楼 · 五风雨桥</div>
@@ -801,7 +959,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day2-hike">
     <div class="node-time"><div class="clock">14:00</div><div class="label">★ 徒步</div></div>
     <div class="node-body">
       <div class="what">堂安梯田徒步</div>
@@ -819,7 +977,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day2-song">
     <div class="node-time"><div class="clock">17:30</div><div class="label">大歌</div></div>
     <div class="node-body">
       <div class="what">侗族大歌</div>
@@ -850,7 +1008,7 @@
     <div class="subtitle">收尾 · 县城 · 返程</div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day3-wake">
     <div class="node-time"><div class="clock">10:00</div><div class="label">起床</div></div>
     <div class="node-body">
       <div class="what">睡到自然醒</div>
@@ -874,7 +1032,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day3-checkout">
     <div class="node-time"><div class="clock">12:00</div><div class="label">退房</div></div>
     <div class="node-body">
       <div class="what">退房，民宿送站</div>
@@ -882,7 +1040,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day3-county">
     <div class="node-time"><div class="clock">13:00</div><div class="label">县城</div></div>
     <div class="node-body">
       <div class="what">从江县城 · 午饭 + 闲逛</div>
@@ -892,7 +1050,7 @@
     </div>
   </div>
 
-  <div class="node">
+  <div class="node" id="day3-return">
     <div class="node-time"><div class="clock">16:00</div><div class="label">候车</div></div>
     <div class="node-body">
       <div class="what">回到从江站，候车</div>
@@ -983,298 +1141,56 @@ function openXhs(keyword) {
 })();
 </script>
 
-<!-- ═══════════ Interactive Map JS ═══════════ -->
+<!-- ═══════════ Timeline Quick Nav JS ═══════════ -->
 <script>
 (function(){
-  // ─── Colors ───
-  var COLORS = ['#00ACC1', '#43A047', '#FB8C00']; // teal, green, amber
-  var LABELS = ['出发日', '寨内游', '返程日'];
+  var nodes = document.querySelectorAll('.timeline-node[data-target]');
 
-  // ─── POI Data ───
-  var dayData = [
-    { // Day 1
-      pois: [
-        { name: '深圳北站', lat: 22.6096, lng: 114.0292, icon: '🚄' },
-        { name: '广州南站', lat: 22.9886, lng: 113.2693, icon: '🔄' },
-        { name: '从江站', lat: 25.9096, lng: 109.1146, icon: '🚄' },
-        { name: '肇兴侗寨', lat: 25.9065, lng: 109.1675, icon: '🏘️' },
-        { name: '非花驿 · 篝火', lat: 25.9072, lng: 109.1753, icon: '🏠' },
-      ]
-    },
-    { // Day 2
-      pois: [
-        { name: '仁团鼓楼 · 晨雾', lat: 25.9065, lng: 109.1842, icon: '🌫️' },
-        { name: '礼团鼓楼 · 五鼓楼', lat: 25.9062, lng: 109.1823, icon: '🏯' },
-        { name: '堂安侗寨 · 梯田', lat: 25.8988, lng: 109.2157, icon: '🌾' },
-        { name: '鼓楼广场 · 大歌', lat: 25.9072, lng: 109.1753, icon: '🎵' },
-      ]
-    },
-    { // Day 3
-      pois: [
-        { name: '从江县城 · 午饭', lat: 25.7546, lng: 108.905, icon: '🍜' },
-        { name: '从江站 · 返程', lat: 25.9096, lng: 109.1146, icon: '🚄' },
-      ]
-    }
-  ];
-
-  // Centre & zoom per day
-  var dayViewports = [
-    { center: [26.3, 111.5], zoom: 7 },
-    { center: [25.906, 109.19], zoom: 15 },
-    { center: [25.83, 109.0], zoom: 11 },
-  ];
-
-  var currentDay = 0;
-  var map = null;
-  var markerLayer = null;
-  var polylineLayer = null;
-
-  // ─── Create SVG marker: numbered circle with white border ───
-  function makeMarkerSVG(color, num) {
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38">'
-      + '<circle cx="19" cy="19" r="18" fill="' + color + '" stroke="#fff" stroke-width="2.5"/>'
-      + '<text x="19" y="25" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="-apple-system,PingFang SC,sans-serif">' + num + '</text>'
-      + '</svg>';
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-  }
-
-  // ─── Create SVG marker for hover/focus state ───
-  function makeMarkerSVGLarge(color, num) {
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">'
-      + '<circle cx="23" cy="23" r="22" fill="' + color + '" stroke="#fff" stroke-width="3"/>'
-      + '<text x="23" y="29" text-anchor="middle" fill="#fff" font-size="17" font-weight="700" font-family="-apple-system,PingFang SC,sans-serif">' + num + '</text>'
-      + '</svg>';
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-  }
-
-  // ─── Initialize map ───
-  function initMap() {
-    var vp = dayViewports[0];
-    map = new TMap.Map('trip-map', {
-      center: new TMap.LatLng(vp.center[0], vp.center[1]),
-      zoom: vp.zoom,
-      mapStyleId: 'style1',
-      viewMode: '2D',
-      showControl: true,
-      baseMap: { type: 'vector', features: ['base', 'label', 'arrow'] }
-    });
-    // Enable built-in controls
-    map.setMapStyleConfig({ hideArrow: false });
-    renderDay(0);
-  }
-
-  // ─── Render a day ───
-  function renderDay(dayIdx) {
-    currentDay = dayIdx;
-    var d = dayData[dayIdx];
-    var vp = dayViewports[dayIdx];
-    var color = COLORS[dayIdx];
-    if (!d) return;
-
-    // Clear old layers
-    if (markerLayer) { markerLayer.setMap(null); markerLayer = null; }
-    if (polylineLayer) { polylineLayer.setMap(null); polylineLayer = null; }
-
-    // ── Polyline: actual routes for Day2/3, direct line for Day1 ──
-    if (d.pois.length >= 2) {
-      if (dayIdx === 0) {
-        // Day 1: conceptual train route — dashed straight lines
-        var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
-        polylineLayer = new TMap.MultiPolyline({
-          map: map, styles: { routeLine: new TMap.PolylineStyle({ color: color, width: 4, borderWidth: 0, lineCap: 'round', lineJoin: 'round', dashArray: [8, 4] }) },
-          geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: paths }]
-        });
-      } else {
-        // Day 2/3: fetch actual walking/driving routes from Tencent Directions API
-        drawRealRoutes(d, color, dayIdx);
+  // Click timeline node → scroll to anchor
+  nodes.forEach(function(node) {
+    node.addEventListener('click', function() {
+      var targetId = this.dataset.target;
+      var target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Highlight
+        nodes.forEach(function(n) { n.classList.remove('active'); });
+        this.classList.add('active');
       }
-    }
-
-    // ── Markers: per-number style ──
-    var markerStyles = {};
-    for (var n = 1; n <= d.pois.length; n++) {
-      markerStyles['s' + n] = new TMap.MarkerStyle({
-        width: 38, height: 38,
-        anchor: { x: 19, y: 19 },
-        src: makeMarkerSVG(color, n)
-      });
-    }
-
-    markerLayer = new TMap.MultiMarker({
-      map: map,
-      styles: markerStyles,
-      geometries: d.pois.map(function(p, i) {
-        return {
-          id: 'm_' + dayIdx + '_' + i,
-          styleId: 's' + (i + 1),
-          position: new TMap.LatLng(p.lat, p.lng),
-          properties: { title: p.name, icon: p.icon, num: i + 1 }
-        };
-      })
-    });
-
-    // ── Click on marker = InfoWindow ──
-    markerLayer.on('click', function(evt) {
-      var p = evt.geometry.properties;
-      var iw = new TMap.InfoWindow({
-        map: map,
-        position: evt.geometry.position,
-        offset: { x: 0, y: -24 },
-        content: '<div style="padding:8px 14px;font-size:13px;white-space:nowrap;color:#2c2416;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">' + p.icon + ' <strong>' + p.title + '</strong></div>'
-      });
-      iw.open();
-      setTimeout(function() { iw.close(); }, 2500);
-    });
-
-    // ── Ease to viewport ──
-    map.easeTo({ center: new TMap.LatLng(vp.center[0], vp.center[1]), zoom: vp.zoom }, { duration: 700 });
-
-    // ── Footer ──
-    renderFooter(dayIdx);
-  }
-
-  // ── Fetch actual roads/paths from Tencent Directions API ──
-  function drawRealRoutes(d, color, dayIdx) {
-    var serviceType = dayIdx === 1 ? 'walking' : 'driving';
-    var segments = [];
-    for (var i = 1; i < d.pois.length; i++) {
-      segments.push({ from: d.pois[i - 1], to: d.pois[i] });
-    }
-
-    // Fetch all segments in parallel
-    var fetches = segments.map(function(seg) {
-      return fetchSingleRoute(seg.from, seg.to, serviceType);
-    });
-
-    Promise.all(fetches).then(function(results) {
-      // Combine all path coordinates
-      var allCoords = [];
-      results.forEach(function(pts) {
-        if (pts && pts.length > 0) {
-          for (var k = 0; k < pts.length; k++) {
-            allCoords.push(new TMap.LatLng(pts[k].lat, pts[k].lng));
-          }
-        }
-      });
-
-      // If we got real route data, draw it
-      if (allCoords.length > 1) {
-        if (polylineLayer) { polylineLayer.setMap(null); }
-        polylineLayer = new TMap.MultiPolyline({
-          map: map,
-          styles: { routeLine: new TMap.PolylineStyle({ color: color, width: 5, borderWidth: 2, borderColor: 'rgba(255,255,255,0.6)', lineCap: 'round', lineJoin: 'round' }) },
-          geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: allCoords }]
-        });
-      } else {
-        // Fallback: direct line
-        drawFallbackLine(d, color, dayIdx);
-      }
-    }).catch(function() {
-      drawFallbackLine(d, color, dayIdx);
-    });
-  }
-
-  function fetchSingleRoute(from, to, type) {
-    return new Promise(function(resolve) {
-      try {
-        var Service = type === 'walking' ? TMap.service.Walking : TMap.service.Driving;
-        // Driving needs policy, Walking doesn't
-        var searchOpts = {
-          from: new TMap.LatLng(from.lat, from.lng),
-          to: new TMap.LatLng(to.lat, to.lng)
-        };
-        if (type === 'driving') searchOpts.policy = 'LEAST_TIME';
-
-        var svc = new Service();
-        svc.search(searchOpts).then(function(result) {
-          if (result.status === 0 && result.result && result.result.routes && result.result.routes.length > 0) {
-            var poly = result.result.routes[0].polyline;
-            if (Array.isArray(poly) && poly.length > 0) {
-              resolve(poly);
-            } else {
-              resolve([]);
-            }
-          } else {
-            resolve([]);
-          }
-        }).catch(function() { resolve([]); });
-      } catch(e) {
-        resolve([]);
-      }
-    });
-  }
-
-  function drawFallbackLine(d, color, dayIdx) {
-    var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
-    if (polylineLayer) { polylineLayer.setMap(null); }
-    polylineLayer = new TMap.MultiPolyline({
-      map: map,
-      styles: { routeLine: new TMap.PolylineStyle({ color: color, width: 3, borderWidth: 0, lineCap: 'round', lineJoin: 'round', dashArray: [6, 4] }) },
-      geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: paths }]
-    });
-  }
-
-  // ── Render footer chips ──
-  function renderFooter(dayIdx) {
-    var d = dayData[dayIdx];
-    var color = COLORS[dayIdx];
-
-    // Route info badge
-    var infoEl = document.getElementById('map-route-info');
-    infoEl.innerHTML = '<span class="route-badge day' + (dayIdx + 1) + '">'
-      + (dayIdx === 0 ? '🚄 高铁 + 接站' : dayIdx === 1 ? '🥾 徒步探索' : '🚗 县城 + 返程')
-      + '</span>'
-      + '<span class="route-meta">' + d.pois.length + ' 个节点 · ' + LABELS[dayIdx] + '</span>';
-
-    // POI chips
-    var chipsEl = document.getElementById('map-poi-chips');
-    var html = '';
-    d.pois.forEach(function(p, i) {
-      var num = i + 1;
-      html += '<div class="map-poi-chip d' + (dayIdx + 1) + '" data-idx="' + i + '">'
-        + '<span class="chip-num">' + num + '</span>'
-        + p.icon + ' ' + p.name
-        + '</div>';
-    });
-    chipsEl.innerHTML = html;
-
-    // Click chip → fly to marker
-    chipsEl.querySelectorAll('.map-poi-chip').forEach(function(chip) {
-      chip.addEventListener('click', function() {
-        var idx = parseInt(this.dataset.idx);
-        var p = d.pois[idx];
-        map.easeTo({
-          center: new TMap.LatLng(p.lat, p.lng),
-          zoom: Math.max(map.getZoom(), dayViewports[dayIdx].zoom + 1)
-        }, { duration: 600 });
-        var infoWin = new TMap.InfoWindow({
-          map: map,
-          position: new TMap.LatLng(p.lat, p.lng),
-          offset: { x: 0, y: -30 },
-          content: '<div style="padding:8px 14px;font-size:13px;white-space:nowrap;color:#2c2416;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">' + p.icon + ' <strong>' + p.name + '</strong></div>'
-        });
-        infoWin.open();
-        setTimeout(function() { infoWin.close(); }, 2500);
-      });
-    });
-  }
-
-  // ── Tab switching ──
-  document.querySelectorAll('.map-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.map-tab').forEach(function(t) { t.classList.remove('active'); });
-      this.classList.add('active');
-      renderDay(parseInt(this.dataset.day));
     });
   });
 
-  // ── Init when TMap ready ──
-  if (typeof TMap !== 'undefined') {
-    initMap();
-  } else {
-    window.addEventListener('load', function() {
-      if (typeof TMap !== 'undefined') initMap();
+  // Highlight active node based on scroll position
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateActiveNode();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  function updateActiveNode() {
+    var bestNode = null;
+    var bestTop = Infinity;
+    nodes.forEach(function(node) {
+      var targetId = node.dataset.target;
+      var target = document.getElementById(targetId);
+      if (target) {
+        var rect = target.getBoundingClientRect();
+        // Pick the node whose target is closest to (but has passed into) the viewport
+        if (rect.top <= 200 && Math.abs(rect.top - 200) < bestTop) {
+          bestTop = Math.abs(rect.top - 200);
+          bestNode = node;
+        }
+      }
     });
+    if (bestNode) {
+      nodes.forEach(function(n) { n.classList.remove('active'); });
+      bestNode.classList.add('active');
+    }
   }
 })();
 </script>
