@@ -513,20 +513,28 @@
 
   /* ─── Interactive Map ─── */
   .map-section { margin-bottom: 52px; background: var(--white); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-card); }
-  .map-tabs { display: flex; border-bottom: 1px solid var(--line); background: var(--paper-warm); }
-  .map-tab { flex: 1; padding: 14px 0; text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--ink-muted); cursor: pointer; transition: all 0.25s; border-bottom: 2px solid transparent; user-select: none; }
-  .map-tab:hover { color: var(--ink-soft); background: rgba(0,0,0,0.02); }
-  .map-tab.active { color: var(--moss); border-bottom-color: var(--moss); background: rgba(107,138,94,0.04); }
-  #trip-map { width: 100%; height: 420px; }
-  .map-cards { display: flex; gap: 10px; padding: 14px 16px; overflow-x: auto; border-top: 1px solid var(--line-soft); background: var(--paper-warm); }
-  .map-card { flex-shrink: 0; padding: 10px 16px; background: var(--white); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
-  .map-card:hover { border-color: var(--moss); color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .map-card .mc-num { display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; border-radius: 50%; font-size: 10px; font-weight: 700; color: #fff; margin-right: 6px; vertical-align: middle; }
-  .map-card.d1 .mc-num { background: #4A90D9; }
-  .map-card.d2 .mc-num { background: #6B8A5E; }
-  .map-card.d3 .mc-num { background: #B88A44; }
+  .map-tabs { display: flex; gap: 8px; padding: 12px 16px 0; background: var(--white); }
+  .map-tab { padding: 8px 20px; text-align: center; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; user-select: none; border-radius: 20px; background: #f5f5f5; border: 1px solid transparent; }
+  .map-tab:hover { color: var(--ink); background: #eee; }
+  .map-tab.active { color: #fff; background: #00B8D4; border-color: #00B8D4; }
+  #trip-map { width: 100%; height: 460px; }
+  .map-footer { padding: 14px 16px; background: #f8fcfe; border-top: 1px solid #e8f4f8; }
+  .map-route-info { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .map-route-info .route-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; }
+  .map-route-info .route-badge.day1 { background: #e0f7fa; color: #00838f; }
+  .map-route-info .route-badge.day2 { background: #e8f5e9; color: #2e7d32; }
+  .map-route-info .route-badge.day3 { background: #fff3e0; color: #e65100; }
+  .map-route-info .route-meta { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.3px; }
+  .map-poi-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .map-poi-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #fff; border: 1px solid #e0e0e0; border-radius: 18px; cursor: pointer; transition: all 0.2s; font-size: 12px; color: var(--ink-soft); user-select: none; }
+  .map-poi-chip:hover { border-color: #00B8D4; color: var(--ink); box-shadow: 0 1px 4px rgba(0,184,212,0.12); }
+  .map-poi-chip .chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .map-poi-chip .chip-num { width: 18px; height: 18px; line-height: 18px; text-align: center; border-radius: 50%; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .map-poi-chip.d1 .chip-dot, .map-poi-chip.d1 .chip-num { background: #00ACC1; }
+  .map-poi-chip.d2 .chip-dot, .map-poi-chip.d2 .chip-num { background: #43A047; }
+  .map-poi-chip.d3 .chip-dot, .map-poi-chip.d3 .chip-num { background: #FB8C00; }
 
-  @media (max-width: 640px) { #trip-map { height: 300px; } .map-card { padding: 8px 12px; font-size: 11px; } }
+  @media (max-width: 640px) { #trip-map { height: 320px; } .map-tab { padding: 6px 16px; font-size: 11px; } .map-poi-chip { padding: 4px 10px; font-size: 11px; } }
 </style>
 </head>
 <body>
@@ -636,12 +644,15 @@
 <!-- ═══════════ Interactive Map ═══════════ -->
 <div class="map-section">
   <div class="map-tabs">
-    <div class="map-tab active" data-day="0">DAY 1 · 6.18</div>
-    <div class="map-tab" data-day="1">DAY 2 · 6.19</div>
-    <div class="map-tab" data-day="2">DAY 3 · 6.20</div>
+    <div class="map-tab active" data-day="0">DAY 1 · 6.18 出发</div>
+    <div class="map-tab" data-day="1">DAY 2 · 6.19 寨内</div>
+    <div class="map-tab" data-day="2">DAY 3 · 6.20 返程</div>
   </div>
   <div id="trip-map"></div>
-  <div class="map-cards" id="map-cards"></div>
+  <div class="map-footer">
+    <div class="map-route-info" id="map-route-info"></div>
+    <div class="map-poi-chips" id="map-poi-chips"></div>
+  </div>
 </div>
 
 <!-- ═══════════ DAY 1 ═══════════ -->
@@ -975,29 +986,30 @@ function openXhs(keyword) {
 <!-- ═══════════ Interactive Map JS ═══════════ -->
 <script>
 (function(){
-  // ─── Data: all POIs grouped by day ───
+  // ─── Colors ───
+  var COLORS = ['#00ACC1', '#43A047', '#FB8C00']; // teal, green, amber
+  var LABELS = ['出发日', '寨内游', '返程日'];
+
+  // ─── POI Data ───
   var dayData = [
     { // Day 1
-      color: '#4A90D9', center: [26.3, 111.5], zoom: 7,
       pois: [
         { name: '深圳北站', lat: 22.6096, lng: 114.0292, icon: '🚄' },
         { name: '广州南站', lat: 22.9886, lng: 113.2693, icon: '🔄' },
         { name: '从江站', lat: 25.9096, lng: 109.1146, icon: '🚄' },
         { name: '肇兴侗寨', lat: 25.9065, lng: 109.1675, icon: '🏘️' },
-        { name: '非花驿民宿 & 篝火', lat: 25.9072, lng: 109.1753, icon: '🏠' },
+        { name: '非花驿 · 篝火', lat: 25.9072, lng: 109.1753, icon: '🏠' },
       ]
     },
     { // Day 2
-      color: '#6B8A5E', center: [25.906, 109.19], zoom: 14,
       pois: [
         { name: '仁团鼓楼 · 晨雾', lat: 25.9065, lng: 109.1842, icon: '🌫️' },
         { name: '礼团鼓楼 · 五鼓楼', lat: 25.9062, lng: 109.1823, icon: '🏯' },
-        { name: '堂安侗寨 · 梯田徒步', lat: 25.8988, lng: 109.2157, icon: '🌾' },
-        { name: '鼓楼广场 · 侗族大歌', lat: 25.9072, lng: 109.1753, icon: '🎵' },
+        { name: '堂安侗寨 · 梯田', lat: 25.8988, lng: 109.2157, icon: '🌾' },
+        { name: '鼓楼广场 · 大歌', lat: 25.9072, lng: 109.1753, icon: '🎵' },
       ]
     },
     { // Day 3
-      color: '#B88A44', center: [25.83, 109.0], zoom: 11,
       pois: [
         { name: '从江县城 · 午饭', lat: 25.7546, lng: 108.905, icon: '🍜' },
         { name: '从江站 · 返程', lat: 25.9096, lng: 109.1146, icon: '🚄' },
@@ -1005,136 +1017,170 @@ function openXhs(keyword) {
     }
   ];
 
+  // Centre & zoom per day
+  var dayViewports = [
+    { center: [26.3, 111.5], zoom: 7 },
+    { center: [25.906, 109.19], zoom: 15 },
+    { center: [25.83, 109.0], zoom: 11 },
+  ];
+
   var currentDay = 0;
   var map = null;
   var markerLayer = null;
   var polylineLayer = null;
 
+  // ─── Create SVG marker: numbered circle with white border ───
+  function makeMarkerSVG(color, num) {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38">'
+      + '<circle cx="19" cy="19" r="18" fill="' + color + '" stroke="#fff" stroke-width="2.5"/>'
+      + '<text x="19" y="25" text-anchor="middle" fill="#fff" font-size="15" font-weight="700" font-family="-apple-system,PingFang SC,sans-serif">' + num + '</text>'
+      + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  // ─── Create SVG marker for hover/focus state ───
+  function makeMarkerSVGLarge(color, num) {
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">'
+      + '<circle cx="23" cy="23" r="22" fill="' + color + '" stroke="#fff" stroke-width="3"/>'
+      + '<text x="23" y="29" text-anchor="middle" fill="#fff" font-size="17" font-weight="700" font-family="-apple-system,PingFang SC,sans-serif">' + num + '</text>'
+      + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  // ─── Initialize map ───
   function initMap() {
-    var d = dayData[0];
+    var vp = dayViewports[0];
     map = new TMap.Map('trip-map', {
-      center: new TMap.LatLng(d.center[0], d.center[1]),
-      zoom: d.zoom,
+      center: new TMap.LatLng(vp.center[0], vp.center[1]),
+      zoom: vp.zoom,
       mapStyleId: 'style1',
-      baseMap: { type: 'vector', features: ['base', 'label'] }
+      viewMode: '2D',
+      showControl: true,
+      baseMap: { type: 'vector', features: ['base', 'label', 'arrow'] }
     });
+    // Enable built-in controls
+    map.setMapStyleConfig({ hideArrow: false });
     renderDay(0);
   }
 
+  // ─── Render a day ───
   function renderDay(dayIdx) {
     currentDay = dayIdx;
     var d = dayData[dayIdx];
+    var vp = dayViewports[dayIdx];
+    var color = COLORS[dayIdx];
     if (!d) return;
 
     // Clear old layers
     if (markerLayer) { markerLayer.setMap(null); markerLayer = null; }
     if (polylineLayer) { polylineLayer.setMap(null); polylineLayer = null; }
 
-    var color = d.color;
+    // ── Polyline ──
+    if (d.pois.length >= 2) {
+      var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
+      polylineLayer = new TMap.MultiPolyline({
+        map: map,
+        styles: {
+          routeLine: new TMap.PolylineStyle({
+            color: color, width: 6, borderWidth: 0,
+            lineCap: 'round', lineJoin: 'round',
+            showArrow: dayIdx === 0,
+            arrowOptions: { width: 8, height: 6, space: 80 }
+          })
+        },
+        geometries: [{ id: 'poly_' + dayIdx, styleId: 'routeLine', paths: paths }]
+      });
+    }
 
-    // Build marker geometries
-    var geometries = d.pois.map(function(p, i) {
-      return {
-        id: 'm' + dayIdx + '_' + i,
-        styleId: 'markerStyle',
-        position: new TMap.LatLng(p.lat, p.lng),
-        properties: { title: p.name, num: i + 1, icon: p.icon }
-      };
-    });
+    // ── Markers: per-number style ──
+    var markerStyles = {};
+    for (var n = 1; n <= d.pois.length; n++) {
+      markerStyles['s' + n] = new TMap.MarkerStyle({
+        width: 38, height: 38,
+        anchor: { x: 19, y: 19 },
+        src: makeMarkerSVG(color, n)
+      });
+    }
 
-    // Build polyline
-    var paths = d.pois.map(function(p) { return new TMap.LatLng(p.lat, p.lng); });
-    var polyGeom = [{ id: 'poly_' + dayIdx, styleId: 'lineStyle', paths: paths }];
-
-    // Style: numbered circle marker
     markerLayer = new TMap.MultiMarker({
       map: map,
-      styles: {
-        markerStyle: new TMap.MarkerStyle({
-          width: 34, height: 34,
-          anchor: { x: 17, y: 34 },
-          src: createMarkerSVG(color)
-        })
-      },
-      geometries: geometries
+      styles: markerStyles,
+      geometries: d.pois.map(function(p, i) {
+        return {
+          id: 'm_' + dayIdx + '_' + i,
+          styleId: 's' + (i + 1),
+          position: new TMap.LatLng(p.lat, p.lng),
+          properties: { title: p.name, icon: p.icon, num: i + 1 }
+        };
+      })
     });
 
-    // InfoWindow on click
+    // ── Click on marker = InfoWindow ──
     markerLayer.on('click', function(evt) {
-      var props = evt.geometry.properties;
-      var infoWin = new TMap.InfoWindow({
+      var p = evt.geometry.properties;
+      var iw = new TMap.InfoWindow({
         map: map,
         position: evt.geometry.position,
-        content: '<div style="padding:6px 12px;font-size:13px;white-space:nowrap;color:#2c2416;">' + props.icon + ' <strong>' + props.title + '</strong></div>'
+        offset: { x: 0, y: -24 },
+        content: '<div style="padding:8px 14px;font-size:13px;white-space:nowrap;color:#2c2416;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">' + p.icon + ' <strong>' + p.title + '</strong></div>'
       });
-      infoWin.open();
-      setTimeout(function() { infoWin.close(); }, 2000);
+      iw.open();
+      setTimeout(function() { iw.close(); }, 2500);
     });
 
-    // Polyline
-    polylineLayer = new TMap.MultiPolyline({
-      map: map,
-      styles: {
-        lineStyle: new TMap.PolylineStyle({
-          color: color,
-          width: 3,
-          borderWidth: 0,
-          lineCap: 'round',
-          dashArray: dayIdx === 0 ? [10, 6] : null
-        })
-      },
-      geometries: polyGeom
-    });
+    // ── Ease to viewport ──
+    map.easeTo({ center: new TMap.LatLng(vp.center[0], vp.center[1]), zoom: vp.zoom }, { duration: 700 });
 
-    // Ease to center
-    map.easeTo({ center: new TMap.LatLng(d.center[0], d.center[1]), zoom: d.zoom }, { duration: 600 });
-
-    // Render cards
-    renderCards(dayIdx);
+    // ── Footer ──
+    renderFooter(dayIdx);
   }
 
-  // Generate SVG data URI for numbered circle markers
-  function createMarkerSVG(color) {
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="42" viewBox="0 0 34 42">'
-      + '<defs><filter id="sh"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.25"/></filter></defs>'
-      + '<circle cx="17" cy="16" r="14" fill="' + color + '" filter="url(#sh)"/>'
-      + '<text x="17" y="21" text-anchor="middle" fill="white" font-size="13" font-weight="bold" font-family="SF Mono,Menlo,Consolas,monospace"></text>'
-      + '<polygon points="17,34 12,28 22,28" fill="' + color + '"/>'
-      + '</svg>';
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-  }
-
-  function renderCards(dayIdx) {
+  // ── Build per-marker styles (each with its number) ──  // ── Render footer chips ──
+  function renderFooter(dayIdx) {
     var d = dayData[dayIdx];
-    var container = document.getElementById('map-cards');
+    var color = COLORS[dayIdx];
+
+    // Route info badge
+    var infoEl = document.getElementById('map-route-info');
+    infoEl.innerHTML = '<span class="route-badge day' + (dayIdx + 1) + '">'
+      + (dayIdx === 0 ? '🚄 高铁 + 接站' : dayIdx === 1 ? '🥾 徒步探索' : '🚗 县城 + 返程')
+      + '</span>'
+      + '<span class="route-meta">' + d.pois.length + ' 个节点 · ' + LABELS[dayIdx] + '</span>';
+
+    // POI chips
+    var chipsEl = document.getElementById('map-poi-chips');
     var html = '';
     d.pois.forEach(function(p, i) {
-      html += '<div class="map-card d' + (dayIdx + 1) + '" data-idx="' + i + '">'
-        + '<span class="mc-num">' + (i + 1) + '</span>'
+      var num = i + 1;
+      html += '<div class="map-poi-chip d' + (dayIdx + 1) + '" data-idx="' + i + '">'
+        + '<span class="chip-num">' + num + '</span>'
         + p.icon + ' ' + p.name
         + '</div>';
     });
-    container.innerHTML = html;
+    chipsEl.innerHTML = html;
 
-    // Click card → fly to marker
-    container.querySelectorAll('.map-card').forEach(function(card) {
-      card.addEventListener('click', function() {
+    // Click chip → fly to marker
+    chipsEl.querySelectorAll('.map-poi-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
         var idx = parseInt(this.dataset.idx);
         var p = d.pois[idx];
-        map.easeTo({ center: new TMap.LatLng(p.lat, p.lng), zoom: Math.max(map.getZoom(), d.zoom + 1) }, { duration: 500 });
-        // Brief flash: show info window
+        map.easeTo({
+          center: new TMap.LatLng(p.lat, p.lng),
+          zoom: Math.max(map.getZoom(), dayViewports[dayIdx].zoom + 1)
+        }, { duration: 600 });
         var infoWin = new TMap.InfoWindow({
           map: map,
           position: new TMap.LatLng(p.lat, p.lng),
-          content: '<div style="padding:6px 12px;font-size:13px;white-space:nowrap;color:#2c2416;">' + p.icon + ' <strong>' + p.name + '</strong></div>'
+          offset: { x: 0, y: -30 },
+          content: '<div style="padding:8px 14px;font-size:13px;white-space:nowrap;color:#2c2416;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">' + p.icon + ' <strong>' + p.name + '</strong></div>'
         });
         infoWin.open();
-        setTimeout(function() { infoWin.close(); }, 2000);
+        setTimeout(function() { infoWin.close(); }, 2500);
       });
     });
   }
 
-  // Tab switching
+  // ── Tab switching ──
   document.querySelectorAll('.map-tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
       document.querySelectorAll('.map-tab').forEach(function(t) { t.classList.remove('active'); });
@@ -1143,7 +1189,7 @@ function openXhs(keyword) {
     });
   });
 
-  // Init when Tencent Maps API is ready
+  // ── Init when TMap ready ──
   if (typeof TMap !== 'undefined') {
     initMap();
   } else {
