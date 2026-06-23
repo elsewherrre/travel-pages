@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 国庆出行方案对比 · 9.25–10.7</title>
+<style>
+:root {
+  --bg: #111111;
+  --bg-card: #1a1a1a;
+  --bg-card-hover: #1f1f1f;
+  --text: #e0e0e0;
+  --text-soft: #a0a0a0;
+  --text-muted: #707070;
+  --moss: #7a9a5e;
+  --moss-bright: #8db86a;
+  --moss-soft: #2a3320;
+  --gold: #c9a75c;
+  --gold-soft: #2a2418;
+  --warn: #d4954a;
+  --line: #2a2a2a;
+  --line-soft: #222222;
+  --radius: 10px;
+  --font-sans: "PingFang SC","苹方",-apple-system,sans-serif;
+  --font-mono: "SF Mono","Menlo","Consolas",monospace;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.header .tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--moss-bright);
+  background: var(--moss-soft);
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.header .sub {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+.header .sub span {
+  color: var(--moss-bright);
+  font-weight: 600;
+}
+
+/* Quick Stats Bar */
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+.quick-stats .stat {
+  background: var(--bg-card);
+  padding: 20px 16px;
+  text-align: center;
+}
+.quick-stats .stat .val {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.quick-stats .stat .lbl {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin: 48px 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  letter-spacing: 1px;
+}
+.section-title:first-of-type {
+  margin-top: 0;
+}
+
+/* Option Card */
+.option-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 32px;
+  border: 1px solid var(--line);
+  transition: border-color 0.2s;
+}
+.option-card:hover {
+  border-color: var(--moss);
+}
+
+.option-hero {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+.option-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.option-hero .overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 28px 20px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+}
+.option-hero .opt-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--moss-bright);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.option-hero .opt-name {
+  font-size: 26px;
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+.option-hero .opt-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  margin-top: 4px;
+}
+
+.option-body {
+  padding: 28px;
+}
+
+/* Budget Grid */
+.budget-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.budget-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 16px;
+}
+.budget-item .bi-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.budget-item .bi-val {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+}
+.budget-item .bi-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.budget-item.highlight {
+  border: 1px solid var(--moss);
+  background: var(--moss-soft);
+}
+.budget-item.highlight .bi-val {
+  color: var(--moss-bright);
+}
+
+/* Total Bar */
+.total-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: var(--gold-soft);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(201,167,92,0.2);
+}
+.total-bar .tb-label {
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 600;
+}
+.total-bar .tb-val {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--gold);
+}
+.total-bar .tb-range {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Pros & Cons */
+.procon {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.procon .col h4 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.procon .pro h4 { color: var(--moss-bright); }
+.procon .con h4 { color: var(--warn); }
+.procon ul {
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.procon ul li::before {
+  content: "· ";
+  color: var(--text-muted);
+}
+
+/* Visa Badge */
+.visa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.visa-easy {
+  background: var(--moss-soft);
+  color: var(--moss-bright);
+  border: 1px solid rgba(122,154,94,0.3);
+}
+.visa-warn {
+  background: var(--gold-soft);
+  color: var(--gold);
+  border: 1px solid rgba(201,167,92,0.3);
+}
+.visa-hard {
+  background: #2a2020;
+  color: var(--warn);
+  border: 1px solid rgba(212,149,74,0.3);
+}
+
+/* Timeline warning */
+.timeline-warn {
+  padding: 14px 18px;
+  background: var(--gold-soft);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-bottom: 16px;
+}
+
+/* Recommendation */
+.reco-box {
+  background: var(--moss-soft);
+  border: 1px solid rgba(122,154,94,0.3);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-top: 48px;
+}
+.reco-box h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--moss-bright);
+  margin-bottom: 12px;
+}
+.reco-box p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-soft);
+}
+.reco-box .reco-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bg);
+  background: var(--moss-bright);
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.footer p {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .page { padding: 24px 16px 60px; }
+  .header h1 { font-size: 24px; }
+  .quick-stats { grid-template-columns: 1fr 1fr; }
+  .option-hero { height: 200px; }
+  .option-hero .opt-name { font-size: 22px; }
+  .budget-grid { grid-template-columns: 1fr; }
+  .procon { grid-template-columns: 1fr; }
+  .option-body { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="header">
+  <div class="tag">2026 国庆出行</div>
+  <h1>三个方案 · 横向对比</h1>
+  <div class="sub">香港出发 · 两人同行 · 预算 <span>¥12,000–25,000</span></div>
+</div>
+
+<!-- Quick Stats -->
+<div class="quick-stats">
+  <div class="stat">
+    <div class="val">9.25 → 10.5</div>
+    <div class="lbl">出行窗口</div>
+  </div>
+  <div class="stat">
+    <div class="val">10–11天</div>
+    <div class="lbl">行程天数</div>
+  </div>
+  <div class="stat">
+    <div class="val">2人</div>
+    <div class="lbl">出行人数</div>
+  </div>
+  <div class="stat">
+    <div class="val">¥12K–25K</div>
+    <div class="lbl">总预算区间</div>
+  </div>
+</div>
+
+<!-- === OPTION 1: BALI === -->
+<div class="section-title">方案一</div>
+<div class="option-card">
+  <div class="option-hero">
+    <img src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Bali rice terraces">
+    <div class="overlay">
+      <div class="opt-num">Option 1</div>
+      <div class="opt-name">巴厘岛 · 印尼</div>
+      <div class="opt-sub">本岛深度 + 佩妮达跳岛 + 巴图尔火山 · 经典海岛之旅</div>
+    </div>
+  </div>
+  <div class="option-body">
+
+    <div class="visa-badge visa-easy">✓ 落地签/电子签 · 在线办理 · 即申即得</div>
+
+    <div class="budget-grid">
+      <div class="budget-item">
+        <div class="bi-label">✈ 往返机票（2人）</div>
+        <div class="bi-val">¥2,800–4,500</div>
+        <div class="bi-note">AirAsia/Scoot/Cebu Pacific 转机 · HKG↔DPS</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">📋 签证（2人）</div>
+        <div class="bi-val">¥460</div>
+        <div class="bi-note">eVOA IDR 500,000/人 · 30天 · 可在线续签</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🏨 住宿 9晚</div>
+        <div class="bi-val">¥3,300–5,100</div>
+        <div class="bi-note">中档泳池酒店/民宿 $50–70/晚</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🍜 餐饮 10天</div>
+        <div class="bi-val">¥3,600–5,800</div>
+        <div class="bi-note">混合本地餐厅+咖啡馆 · $25–40/人/天</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🏝 活动 & 交通</div>
+        <div class="bi-val">¥2,500–3,600</div>
+        <div class="bi-note">佩妮达跳岛+火山徒步+庙宇+摩托/包车</div>
+      </div>
+      <div class="budget-item highlight">
+        <div class="bi-label">💰 两人总预算</div>
+        <div class="bi-val">¥12,660–19,460</div>
+        <div class="bi-note">中档舒适 · 预算内</div>
+      </div>
+    </div>
+
+    <div class="procon">
+      <div class="col pro">
+        <h4>✓ 优势</h4>
+        <ul>
+          <li>签证零门槛 — eVOA 在线秒批，落地也能办</li>
+          <li>体验丰富 — 海滩+梯田+火山+寺庙+跳岛全有</li>
+          <li>消费友好 — 中档体验感远超同价位国内游</li>
+          <li>9月底干季尾巴 — 天气最稳定、游客适中</li>
+          <li>佩妮达+火山是 Instagram 级别的出片地</li>
+        </ul>
+      </div>
+      <div class="col con">
+        <h4>✗ 劣势</h4>
+        <ul>
+          <li>机票需转机 — HKG→DPS 直飞少，多数经吉隆坡/新加坡/马尼拉</li>
+          <li>国庆期间巴厘岛热门区（Canggu/Ubud）可能人多</li>
+          <li>景点分散 — 换酒店频繁，包车/摩托是刚需</li>
+          <li>巴图尔火山需凌晨 2AM 出发看日出</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="total-bar">
+      <div>
+        <div class="tb-label">推荐配置 · 两人总价</div>
+        <div class="tb-range">机票选 AirAsia 转机 + 乌布/仓古各住一半 + 佩妮达 1 日 + 火山 1 日</div>
+      </div>
+      <div class="tb-val">¥14,500</div>
+    </div>
+
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+      * 以上为 9/25 出发、10/5 返回的估算。真实机票价格请以 Skyscanner / Trip.com 实时查询为准，目前参考价 HKG→DPS 往返约 HK$1,500–2,700/人。
+    </p>
+
+  </div>
+</div>
+
+<!-- === OPTION 2: KRABI === -->
+<div class="section-title">方案二</div>
+<div class="option-card">
+  <div class="option-hero">
+    <img src="images/Krabi_Thailand_Railay_Beach_tu_2026-06-23T06-29-06.png" alt="Krabi Railay Beach">
+    <div class="overlay">
+      <div class="opt-num">Option 2</div>
+      <div class="opt-name">甲米 · 泰国</div>
+      <div class="opt-sub">安达曼海跳岛 · 皮皮岛+四岛+宏岛+莱利攀岩</div>
+    </div>
+  </div>
+  <div class="option-body">
+
+    <div class="visa-badge visa-easy">✓ 免签 · 60天 · 零费用</div>
+
+    <div class="budget-grid">
+      <div class="budget-item">
+        <div class="bi-label">✈ 往返机票（2人）</div>
+        <div class="bi-val">¥2,200–3,000</div>
+        <div class="bi-note">HK Express 直飞 3.5h · HKG↔KBV</div>
+      </div>
+      <div class="budget-item highlight">
+        <div class="bi-label">📋 签证（2人）</div>
+        <div class="bi-val">¥0</div>
+        <div class="bi-note">免签 60天 · 仅需 TDAC 电子入境卡（免费）</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🏨 住宿 9晚</div>
+        <div class="bi-val">¥3,600–6,500</div>
+        <div class="bi-note">奥南海滩度假村/泳池酒店 $55–90/晚</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🍜 餐饮 10天</div>
+        <div class="bi-val">¥2,200–3,600</div>
+        <div class="bi-note">夜市+海滨餐厅+街头小吃 · $15–25/人/天</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🏝 活动 & 交通</div>
+        <div class="bi-val">¥2,800–4,000</div>
+        <div class="bi-note">四岛+皮皮岛+宏岛+莱利攀岩+温泉瀑布</div>
+      </div>
+      <div class="budget-item highlight">
+        <div class="bi-label">💰 两人总预算</div>
+        <div class="bi-val">¥10,800–17,100</div>
+        <div class="bi-note">中档舒适 · 预算内甚至可升级</div>
+      </div>
+    </div>
+
+    <div class="procon">
+      <div class="col pro">
+        <h4>✓ 优势</h4>
+        <ul>
+          <li>免签 + HK Express 直飞 — 出发最省心</li>
+          <li>9月雨季尾巴 — 游客少、酒店便宜 30–50%</li>
+          <li>海鲜便宜又好吃 — 奥南海滩人均 ¥30–80 吃撑</li>
+          <li>跳岛灵活 — 一天 4–5 个岛，长尾船氛围感拉满</li>
+          <li>消费最低 — 预算可轻松控制在下限</li>
+        </ul>
+      </div>
+      <div class="col con">
+        <h4>✗ 劣势</h4>
+        <ul>
+          <li>9月底可能有雨 — 安达曼海雨季尾巴，出海看运气</li>
+          <li>风景类型单一 — 全是海岛，缺少火山/梯田等变化</li>
+          <li>国庆期间也有中国游客 — 热门跳岛团可能需要提前订</li>
+          <li>甲米镇到奥南有距离 — 需摩托车或突突车代步</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="total-bar">
+      <div>
+        <div class="tb-label">推荐配置 · 两人总价</div>
+        <div class="tb-range">HK Express 直飞 + 奥南海滩度假村 + 三岛跳岛 + 攀岩 + 剩余预算升级海鲜大餐</div>
+      </div>
+      <div class="tb-val">¥13,200</div>
+    </div>
+
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+      * HK Express HKG→KBV 直飞参考价往返约 HK$1,200–1,600/人。9月底为淡季末，价格友好。9月降雨概率约 50%，但多为午后阵雨，出海通常安排在上午。
+    </p>
+
+  </div>
+</div>
+
+<!-- === OPTION 3: EUROPE === -->
+<div class="section-title">方案三</div>
+
+<!-- 3A: Istanbul -->
+<div class="option-card">
+  <div class="option-hero">
+    <img src="images/Istanbul_Turkey_Blue_Mosque_Ha_2026-06-23T06-29-06.png" alt="Istanbul skyline">
+    <div class="overlay">
+      <div class="opt-num">Option 3A · 最具性价比的"欧洲"</div>
+      <div class="opt-name">土耳其 · 伊斯坦布尔 + 卡帕多奇亚</div>
+      <div class="opt-sub">横跨欧亚 · 热气球+洞穴酒店+博斯普鲁斯海峡</div>
+    </div>
+  </div>
+  <div class="option-body">
+
+    <div class="visa-badge visa-warn">⚠ 电子签 · $60/人 · 在线办理 · 几分钟出签</div>
+
+    <div class="budget-grid">
+      <div class="budget-item">
+        <div class="bi-label">✈ 国际往返（2人）</div>
+        <div class="bi-val">¥5,100–6,500</div>
+        <div class="bi-note">土耳其航空直飞 11h · HKG↔IST</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">✈ 内陆往返（2人）</div>
+        <div class="bi-val">¥870–1,160</div>
+        <div class="bi-note">IST↔ASR（卡帕多奇亚）· 飞马/土耳其航空 1.5h</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">📋 签证（2人）</div>
+        <div class="bi-val">¥870</div>
+        <div class="bi-note">电子签 $60/人 · 180天有效 · 多次入境</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🏨 住宿 9晚</div>
+        <div class="bi-val">¥3,600–5,800</div>
+        <div class="bi-note">伊斯坦布尔精品酒店 + 卡帕洞穴酒店 $55–80/晚</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🍜 餐饮 10天</div>
+        <div class="bi-val">¥2,900–5,100</div>
+        <div class="bi-note">烤肉+海鲜+土耳其早餐 · $20–35/人/天</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🎈 活动 & 交通</div>
+        <div class="bi-val">¥3,500–5,900</div>
+        <div class="bi-note">热气球 $150–250/人 + 景点门票 + 红绿线 tour</div>
+      </div>
+    </div>
+
+    <!-- Budget summary -->
+    <div class="total-bar">
+      <div>
+        <div class="tb-label">两人总预算（含热气球）</div>
+        <div class="tb-range">不建议跳过热气球——那等于白去卡帕多奇亚</div>
+      </div>
+      <div class="tb-val">¥16,840–25,330</div>
+    </div>
+
+    <div class="procon">
+      <div class="col pro">
+        <h4>✓ 优势</h4>
+        <ul>
+          <li>真正的异域体验 — 欧亚文化交汇，出片率极高</li>
+          <li>土耳其航空直飞 — 少折腾，11小时直达</li>
+          <li>9月底天气完美 — 伊斯坦布尔 20°C，卡帕 15°C，舒适</li>
+          <li>热气球是全球 top 级旅行体验</li>
+          <li>电子签几分钟出签 — 不折腾</li>
+        </ul>
+      </div>
+      <div class="col con">
+        <h4>✗ 劣势</h4>
+        <ul>
+          <li>机票占预算大头 — 两人往返 ¥5,000+</li>
+          <li>总预算接近上限 — 热气球就占 ¥2,200–3,600</li>
+          <li>需内陆转机 — IST→开塞利 飞行1.5h，往返耗时半天</li>
+          <li>10天两地略赶 — 伊斯坦布尔4天+卡帕3天+路上2天</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-warn">
+      ⚠ <strong>行程节奏提醒：</strong>伊斯坦布尔至少需要 3 天（老城区+新城区+海峡），卡帕多奇亚 3 天（热气球+红线+绿线），加上两段飞行各半天，10 天刚好。不建议再加棉花堡等其他目的地。
+    </div>
+
+    <p style="font-size:12px;color:var(--text-muted);">
+      * 土耳其航空 HKG→IST 直飞参考价往返约 HK$3,500–4,500/人。内陆 IST→ASR 往返约 ¥450–580/人。热气球需提前预订，旺季常满。
+    </p>
+
+  </div>
+</div>
+
+<!-- 3B: Schengen -->
+<div class="option-card">
+  <div class="option-hero" style="height:200px;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);display:flex;align-items:center;justify-content:center;">
+    <div style="text-align:center;color:rgba(255,255,255,0.4);">
+      <div style="font-size:48px;margin-bottom:8px;">🏰</div>
+      <div style="font-size:14px;">布达佩斯 · 布拉格 · 米兰</div>
+    </div>
+  </div>
+  <div class="option-body">
+
+    <div class="visa-badge visa-hard">⚠ 申根签证 · ¥630/人 · 15–45天审理 · 现在必须申请！</div>
+
+    <div class="timeline-warn">
+      <strong>⏰ 时间紧迫！</strong>今天是 6 月 23 日，距出发还有 <strong>13 周</strong>。申根签证官方建议提前 6 周申请，审理需 15–45 天。如果现在不立刻预约 VFS，可能来不及。2024 年中国申请人拒签率 8%，需准备充分材料。
+    </div>
+
+    <div class="budget-grid">
+      <div class="budget-item">
+        <div class="bi-label">✈ 往返机票（2人）</div>
+        <div class="bi-val">¥4,400–6,500</div>
+        <div class="bi-note">HKG→布达佩斯/米兰/布拉格 · 转机 1 次</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">📋 申根签证（2人）</div>
+        <div class="bi-val">¥1,660</div>
+        <div class="bi-note">€80/人签证费 + 保险 ¥200/人 + VFS 服务费</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🏨 住宿 9晚</div>
+        <div class="bi-val">¥5,100–7,300</div>
+        <div class="bi-note">中欧/东欧公寓/精品酒店 $60–100/晚</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🍜 餐饮 10天</div>
+        <div class="bi-val">¥3,600–5,100</div>
+        <div class="bi-note">中欧消费中等 · $25–35/人/天</div>
+      </div>
+      <div class="budget-item">
+        <div class="bi-label">🏛 活动 & 交通</div>
+        <div class="bi-val">¥3,600–5,800</div>
+        <div class="bi-note">城市间火车/大巴 + 博物馆 + 本地体验</div>
+      </div>
+      <div class="budget-item highlight">
+        <div class="bi-label">💰 两人总预算</div>
+        <div class="bi-val">¥18,360–26,360</div>
+        <div class="bi-note">中档舒适 · 接近甚至略超上限</div>
+      </div>
+    </div>
+
+    <div class="procon">
+      <div class="col pro">
+        <h4>✓ 优势</h4>
+        <ul>
+          <li>真正的欧洲 — 城堡、老城、多瑙河，完全不同量级</li>
+          <li>中欧/东欧消费可控 — 布达佩斯比巴黎便宜 50%+</li>
+          <li>10天可以走 2–3 个城市（布达佩斯+维也纳/布拉格）</li>
+          <li>9月底欧洲秋色初现 — 拍照绝佳</li>
+        </ul>
+      </div>
+      <div class="col con">
+        <h4>✗ 劣势</h4>
+        <ul>
+          <li>⛔ 申根签证时间紧迫 — 今天起必须立刻行动</li>
+          <li>预算大概率超上限 — 申根区内最低 ¥18,000+</li>
+          <li>机票转机耗时 — 没有香港直飞中欧的廉航</li>
+          <li>签证材料繁琐 — 银行流水、在职证明、行程单、保险…</li>
+          <li>拒签风险 8% — 一旦拒签，行程泡汤</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">
+      * HKG→BUD（布达佩斯）参考价往返约 HK$2,500–4,000/人（转机1次）。HKG→MXP（米兰）约 HK$2,300–3,500。推荐中欧路线：布达佩斯 3天 → 维也纳 2天 → CK小镇 1天 → 布拉格 3天。
+    </p>
+
+  </div>
+</div>
+
+<!-- Recommendation -->
+<div class="reco-box">
+  <h3>Mona 的判断</h3>
+  <p style="margin-bottom:16px;">
+    三个方案都在预算区间内，但体验方向完全不同。以下是按优先级排列的推荐：
+  </p>
+  <div style="margin-bottom:12px;">
+    <span class="reco-tag">🥇 首推</span>
+    <strong style="color:#e0e0e0;">巴厘岛（方案一）</strong>
+    <span style="color:var(--text-soft);font-size:13px;">— 预算居中（¥14,500），体验最丰富。梯田+火山+跳岛+寺庙，10天不重样。签证零门槛，干季尾巴天气稳。是三个方案里"性价比+体验深度"最平衡的。</span>
+  </div>
+  <div style="margin-bottom:12px;">
+    <span class="reco-tag">🥈 备选</span>
+    <strong style="color:#e0e0e0;">甲米（方案二）</strong>
+    <span style="color:var(--text-soft);font-size:13px;">— 预算最低（¥13,200），最省心（免签+直飞）。适合"不想动脑子、躺平+跳岛"式的度假。但风景单一，9月可能有雨，少了点"探险感"。</span>
+  </div>
+  <div style="margin-bottom:12px;">
+    <span class="reco-tag">🥉 冲一把</span>
+    <strong style="color:#e0e0e0;">土耳其（方案三A）</strong>
+    <span style="color:var(--text-soft);font-size:13px;">— 预算偏高（¥20,000），但体验独一无二。如果你愿意把预算拉满，"热气球+洞穴酒店+博斯普鲁斯海峡"是可以吹一辈子的旅行。前提是你能接受机票花掉 ¥5,000+。</span>
+  </div>
+  <div>
+    <span class="reco-tag" style="background:#4a4a4a;">❌ 不推荐</span>
+    <strong style="color:var(--text-muted);">申根欧洲（方案三B）</strong>
+    <span style="color:var(--text-muted);font-size:13px;">— 时间紧、签证风险、预算超限。等下次提前 3 个月规划时再考虑。</span>
+  </div>
+</div>
+
+<div class="footer">
+  <p>价格参考日期：2026年6月23日 · 数据来源：Skyscanner / Trip.com / Expedia / KAYAK</p>
+  <p>机票价格为搜索参考价，实际以购买时为准。签证政策请以各国移民局官网最新公告为准。</p>
+  <p style="margin-top:12px;color:var(--moss-bright);">下一步：选定方案后，我帮你做详细的每日行程规划 & HTML 出行手册</p>
+</div>
+
+</div>
+</body>
+</html>
