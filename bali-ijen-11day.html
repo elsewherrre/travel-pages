@@ -16,6 +16,7 @@
     --gold: #c9a96e;
     --border: #262626;
     --tag-bg: #141d14;
+    --booking: #003b95;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -86,12 +87,115 @@
   }
   .flight-tag small { display: block; font-weight: 400; font-size: 11px; color: var(--muted); }
 
-  /* ── Route strip ── */
+  /* ════════════ ROUTE MAP ════════════ */
+  .route-map-section {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .route-map-section h3 {
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .route-map {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 16px 8px;
+  }
+  .route-map::-webkit-scrollbar { display: none; }
+  .map-node-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .map-node-dot {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: border-color 0.3s;
+    position: relative;
+    z-index: 2;
+  }
+  .map-node-wrap .map-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 10px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .map-node-wrap .map-date {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+    white-space: nowrap;
+  }
+  .map-node-wrap .map-nights {
+    font-size: 10px;
+    color: var(--green-glow);
+    margin-top: 2px;
+    white-space: nowrap;
+    background: var(--tag-bg);
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+  .map-connector {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 6px;
+    margin-top: 26px;
+    z-index: 1;
+  }
+  .map-connector .line {
+    width: 48px;
+    height: 1.5px;
+    background: var(--border);
+    position: relative;
+  }
+  .map-connector .line::after {
+    content: "";
+    position: absolute;
+    right: -4px;
+    top: -3px;
+    width: 0; height: 0;
+    border-left: 6px solid var(--green-glow);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+  .map-node-wrap.active .map-node-dot {
+    border-color: var(--green-glow);
+    box-shadow: 0 0 12px rgba(93,138,94,0.2);
+  }
+  @media (max-width: 768px) {
+    .route-map { justify-content: flex-start; padding: 0 8px 8px; }
+    .map-connector .line { width: 28px; }
+    .map-node-dot { width: 42px; height: 42px; font-size: 16px; }
+    .map-node-wrap .map-label { font-size: 12px; }
+  }
+
+  /* ── Route strip (compact) ── */
   .route-strip {
     display: flex;
     gap: 0;
     align-items: stretch;
-    margin: 48px 0 36px;
+    margin: 0 0 36px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -99,9 +203,9 @@
   .route-strip::-webkit-scrollbar { display: none; }
   .route-stop {
     flex: 1;
-    min-width: 120px;
+    min-width: 110px;
     text-align: center;
-    padding: 20px 12px;
+    padding: 16px 10px;
     background: var(--card);
     border: 1px solid var(--border);
     border-right: none;
@@ -110,8 +214,43 @@
   .route-stop:last-child { border-right: 1px solid var(--border); border-radius: 0 10px 10px 0; }
   .route-stop:first-child { border-radius: 10px 0 0 10px; }
   .route-stop .day-range { font-size: 11px; color: var(--green-glow); margin-bottom: 6px; letter-spacing: 0.5px; }
-  .route-stop .stop-name { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-  .route-stop .stop-nights { font-size: 12px; color: var(--muted); }
+  .route-stop .stop-name { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .route-stop .stop-nights { font-size: 11px; color: var(--muted); }
+
+  /* ── Booking button ── */
+  .booking-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    background: rgba(0,59,149,0.1);
+    border: 1px solid rgba(0,59,149,0.25);
+    border-radius: 8px;
+    color: #4d9fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .booking-btn:hover {
+    background: rgba(0,59,149,0.2);
+    border-color: rgba(0,59,149,0.5);
+    color: #7ab8ff;
+  }
+  .booking-btn .bk-icon {
+    width: 16px; height: 16px;
+    background: var(--booking);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
 
   /* ── Section ── */
   .section { padding: 64px 0; }
@@ -121,6 +260,14 @@
     display: flex;
     align-items: flex-start;
     gap: 16px;
+  }
+  .section-header .header-right { flex: 1; }
+  .section-header .header-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    padding-top: 4px;
   }
   .section-num {
     width: 48px; height: 48px;
@@ -192,6 +339,23 @@
     .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; }
     .gallery .g-main { grid-row: 1; grid-column: 1 / 3; }
   }
+  .gallery-single { display: block; margin-top: 24px; }
+  .gallery-single img {
+    width: 100%; height: 360px;
+    object-fit: cover; border-radius: 14px;
+  }
+  @media (max-width: 768px) { .gallery-single img { height: 220px; } }
+  .gallery-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .gallery-2col img {
+    width: 100%; height: 280px;
+    object-fit: cover; border-radius: 12px;
+  }
+  @media (max-width: 768px) { .gallery-2col { grid-template-columns: 1fr; } }
 
   /* ── Small bonus card ── */
   .bonus-card {
@@ -304,38 +468,52 @@
   </div>
 </div>
 
-<!-- ═══════════ ROUTE STRIP ═══════════ -->
-<div class="container">
-  <div class="route-strip">
-    <div class="route-stop">
-      <div class="day-range">9/26</div>
-      <div class="stop-name">新加坡</div>
-      <div class="stop-nights">转机一日</div>
-    </div>
-    <div class="route-stop">
-      <div class="day-range">9/27 — 29</div>
-      <div class="stop-name">水明漾</div>
-      <div class="stop-nights">3晚</div>
-    </div>
-    <div class="route-stop">
-      <div class="day-range">9/30 — 10/1</div>
-      <div class="stop-name">乌布</div>
-      <div class="stop-nights">2晚</div>
-    </div>
-    <div class="route-stop">
-      <div class="day-range">10/1 — 2</div>
-      <div class="stop-name">伊真火山</div>
-      <div class="stop-nights">2天1夜</div>
-    </div>
-    <div class="route-stop">
-      <div class="day-range">10/3 — 4</div>
-      <div class="stop-name">佩妮达岛</div>
-      <div class="stop-nights">1晚</div>
-    </div>
-    <div class="route-stop">
-      <div class="day-range">10/5</div>
-      <div class="stop-name">自由日</div>
-      <div class="stop-nights">返程</div>
+<!-- ═══════════ ROUTE MAP ═══════════ -->
+<div class="route-map-section">
+  <div class="container">
+    <h3>🗺️ 行程路线</h3>
+    <div class="route-map">
+      <div class="map-node-wrap">
+        <div class="map-node-dot">🇸🇬</div>
+        <div class="map-label">新加坡</div>
+        <div class="map-date">9/26</div>
+        <div class="map-nights">转机 1日</div>
+      </div>
+      <div class="map-connector"><div class="line"></div></div>
+      <div class="map-node-wrap">
+        <div class="map-node-dot">🏖️</div>
+        <div class="map-label">水明漾</div>
+        <div class="map-date">9/27 — 29</div>
+        <div class="map-nights">3 晚</div>
+      </div>
+      <div class="map-connector"><div class="line"></div></div>
+      <div class="map-node-wrap">
+        <div class="map-node-dot">🌾</div>
+        <div class="map-label">乌布</div>
+        <div class="map-date">9/30 — 10/1</div>
+        <div class="map-nights">2 晚</div>
+      </div>
+      <div class="map-connector"><div class="line"></div></div>
+      <div class="map-node-wrap active">
+        <div class="map-node-dot">🔥</div>
+        <div class="map-label">伊真火山</div>
+        <div class="map-date">10/1 — 2</div>
+        <div class="map-nights">2天1夜</div>
+      </div>
+      <div class="map-connector"><div class="line"></div></div>
+      <div class="map-node-wrap">
+        <div class="map-node-dot">🏝️</div>
+        <div class="map-label">佩妮达岛</div>
+        <div class="map-date">10/3 — 4</div>
+        <div class="map-nights">1 晚</div>
+      </div>
+      <div class="map-connector"><div class="line"></div></div>
+      <div class="map-node-wrap">
+        <div class="map-node-dot">✈️</div>
+        <div class="map-label">自由日</div>
+        <div class="map-date">10/5</div>
+        <div class="map-nights">返程</div>
+      </div>
     </div>
   </div>
 </div>
@@ -360,9 +538,14 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">1</div>
-      <div>
+      <div class="header-right">
         <h2>水明漾 · 海滩节奏</h2>
         <div class="tagline">9/27 — 29 · 3晚 · 南巴厘最时髦的海岸线</div>
+      </div>
+      <div class="header-actions">
+        <a href="https://www.booking.com/searchresults.html?ss=Seminyak%2C+Bali%2C+Indonesia&amp;checkin=2026-09-27&amp;checkout=2026-09-30" target="_blank" class="booking-btn" rel="noopener">
+          <span class="bk-icon">B</span> 搜索水明漾酒店
+        </a>
       </div>
     </div>
 
@@ -378,13 +561,13 @@
       <div class="day-card">
         <div class="dow">Day 2 · 9/28 周日</div>
         <h4>乌鲁瓦图悬崖 + 火舞</h4>
-        <p>上午 Uluwatu Temple 悬崖庙俯瞰印度洋。午后 Padang Padang 海滩穿岩洞入沙滩。日落时刻悬崖剧场 Kecak Fire Dance — 火与舞在暮色中烧。</p>
+        <p>上午 Uluwatu Temple 悬崖庙俯瞰印度洋。午后 Padang Padang 海滩穿岩洞入沙滩。日落时刻悬崖剧场 Kecak Fire Dance — 火与舞在暮色中燃烧。</p>
         <div class="tag-row"><span class="tag">Uluwatu</span><span class="tag">Kecak 火舞</span><span class="tag">Jimbaran 海鲜</span></div>
       </div>
       <div class="day-card">
         <div class="dow">Day 3 · 9/29 周一</div>
         <h4>Canggu 冲浪日</h4>
-        <p>上午冲浪体验课 2h（Batu Bolong 初学者友好）。午后田间咖啡馆：Crate Cafe 或 Penny Lane 吃 brunch。傍晚 La Brisa 海滩俱乐部日落，Seminyak 最后一夜。</p>
+        <p>上午冲浪体验课 2h（Batu Bolong 初学者友好）。午后田间咖啡馆：Crate Cafe 或 Penny Lane。傍晚 La Brisa 海滩俱乐部日落，Seminyak 最后一夜。</p>
         <div class="tag-row"><span class="tag">冲浪体验课</span><span class="tag">稻田咖啡馆</span></div>
       </div>
       <div class="day-card" style="background:rgba(93,138,94,0.05);border-color:rgba(93,138,94,0.2);">
@@ -404,18 +587,22 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">2</div>
-      <div>
+      <div class="header-right">
         <h2>乌布 · 稻田与文化</h2>
         <div class="tagline">9/30 — 10/1 · 2晚 · 巴厘岛的精神腹地</div>
+      </div>
+      <div class="header-actions">
+        <a href="https://www.booking.com/searchresults.html?ss=Ubud%2C+Bali%2C+Indonesia&amp;checkin=2026-09-30&amp;checkout=2026-10-02" target="_blank" class="booking-btn" rel="noopener">
+          <span class="bk-icon">B</span> 搜索乌布酒店
+        </a>
       </div>
     </div>
 
     <img class="section-hero-img" src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Tegalalang Rice Terraces">
 
-    <div class="gallery">
-      <img class="g-main" src="images/Ubud_Sacred_Monkey_Forest_Bali_2026-06-23T08-00-27.png" alt="Monkey Forest">
-      <img src="images/Uluwatu_Temple_perched_on_stee_2026-06-23T07-02-22.png" alt="Temples">
-      <img src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Rice Terraces">
+    <div class="gallery-2col">
+      <img src="images/Ubud_Sacred_Monkey_Forest_Bali_2026-06-23T08-00-27.png" alt="Monkey Forest">
+      <img src="images/Bamboo_treehouse_eco_lodge_in__2026-06-23T07-04-47.png" alt="Bamboo Treehouse">
     </div>
 
     <div class="day-grid" style="margin-top:24px;">
@@ -440,18 +627,21 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">3</div>
-      <div>
+      <div class="header-right">
         <h2>伊真火山 · 蓝火奇观</h2>
         <div class="tagline">10/1 傍晚 — 10/2 傍晚 · 2天1夜 · 全球唯二蓝色火焰</div>
+      </div>
+      <div class="header-actions">
+        <a href="https://www.booking.com/searchresults.html?ss=Banyuwangi%2C+Indonesia&amp;checkin=2026-10-01&amp;checkout=2026-10-02" target="_blank" class="booking-btn" rel="noopener">
+          <span class="bk-icon">B</span> 搜索巴纽旺宜酒店
+        </a>
       </div>
     </div>
 
     <img class="section-hero-img" src="images/Kawah_Ijen_volcano_blue_fire_p_2026-06-23T07-41-01.png" alt="Ijen Blue Fire">
 
-    <div class="gallery">
-      <img class="g-main" src="images/Kawah_Ijen_crater_lake_panoram_2026-06-23T08-00-27.png" alt="Ijen Crater Lake">
-      <img src="images/Kawah_Ijen_volcano_blue_fire_p_2026-06-23T07-41-01.png" alt="Blue Fire">
-      <img src="images/Kawah_Ijen_crater_lake_panoram_2026-06-23T08-00-27.png" alt="Ijen Panorama">
+    <div class="gallery-single">
+      <img src="images/Kawah_Ijen_crater_lake_panoram_2026-06-23T08-00-27.png" alt="Ijen Crater Lake">
     </div>
 
     <div class="day-grid" style="margin-top:24px;">
@@ -476,29 +666,32 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">4</div>
-      <div>
+      <div class="header-right">
         <h2>佩妮达岛 · 跳岛</h2>
         <div class="tagline">10/3 — 4 · 2天1晚 · 巴厘岛最野的海岸线</div>
+      </div>
+      <div class="header-actions">
+        <a href="https://www.booking.com/searchresults.html?ss=Nusa+Penida%2C+Bali%2C+Indonesia&amp;checkin=2026-10-03&amp;checkout=2026-10-04" target="_blank" class="booking-btn" rel="noopener">
+          <span class="bk-icon">B</span> 搜索佩妮达民宿
+        </a>
       </div>
     </div>
 
     <img class="section-hero-img" src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking Beach">
 
-    <div class="gallery">
-      <img class="g-main" src="images/Diamond_Beach_Nusa_Penida_Bali_2026-06-23T07-03-49.png" alt="Diamond Beach">
-      <img src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking">
-      <img src="images/Diamond_Beach_Nusa_Penida_Bali_2026-06-23T07-03-49.png" alt="Diamond">
+    <div class="gallery-single">
+      <img src="images/Diamond_Beach_Nusa_Penida_Bali_2026-06-23T07-03-49.png" alt="Diamond Beach">
     </div>
 
     <div class="day-grid" style="margin-top:24px;">
       <div class="day-card">
-        <div class="dow">Day 8 · 10/3 周五</div>
+        <div class="dow">Day 7 · 10/3 周五</div>
         <h4>佩妮达西线</h4>
         <p>Sanur 快船 45min 登岛。Kelingking 精灵坠崖 — T-Rex 形状悬崖直插碧海。Angel's Billabong 天然无边泳池 + Broken Beach 断桥拱门。傍晚 Crystal Bay 浮潜，Manta Ray 出没季。</p>
         <div class="tag-row"><span class="tag">Kelingking</span><span class="tag">浮潜</span></div>
       </div>
       <div class="day-card">
-        <div class="dow">Day 9 · 10/4 周六</div>
+        <div class="dow">Day 8 · 10/4 周六</div>
         <h4>佩妮达东线 → 回本岛</h4>
         <p>Diamond Beach 钻石海滩 — 沿峭壁楼梯下到白沙滩。Atuh Beach 双湾海景。午后快船回 Sanur，晚上回到 Seminyak 休整。</p>
         <div class="tag-row"><span class="tag">Diamond Beach</span><span class="tag">Atuh Beach</span></div>
@@ -512,9 +705,14 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">5</div>
-      <div>
+      <div class="header-right">
         <h2>自由日 · 收尾</h2>
         <div class="tagline">10/5 周日 · 最后一天 · 21:40 起飞</div>
+      </div>
+      <div class="header-actions">
+        <a href="https://www.booking.com/searchresults.html?ss=Seminyak%2C+Bali%2C+Indonesia&amp;checkin=2026-10-04&amp;checkout=2026-10-05" target="_blank" class="booking-btn" rel="noopener">
+          <span class="bk-icon">B</span> 搜索水明漾酒店
+        </a>
       </div>
     </div>
 
@@ -540,7 +738,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">¥</div>
-      <div>
+      <div class="header-right">
         <h2>预算 · 两人合计</h2>
         <div class="tagline">¥12,000 — 25,000 内 · 中位 ¥19,220</div>
       </div>
@@ -586,7 +784,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">📋</div>
-      <div>
+      <div class="header-right">
         <h2>落地贴士</h2>
       </div>
     </div>
