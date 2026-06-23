@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巴厘岛深度之旅 · 11天</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    font-family: "PingFang SC", "苹方", -apple-system, sans-serif;
+    background: #faf8f5;
+    color: #2c2c2c;
+    line-height: 1.6;
+    padding: 40px 20px;
+  }
+  :root {
+    --paper-warm: #faf8f5;
+    --white: #ffffff;
+    --ink: #2c2c2c;
+    --ink-soft: #555555;
+    --ink-muted: #999999;
+    --line: #e5e0d8;
+    --line-soft: #f0ebe2;
+    --gold: #b88a44;
+    --gold-soft: #faf6ef;
+    --moss: #6b8a5e;
+    --moss-soft: #f4f8f1;
+    --terracotta: #c4825c;
+    --shadow-card: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 12px; }
+  .header h1 {
+    font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+    font-size: 28px; font-weight: 400; letter-spacing: 2px; color: var(--ink);
+  }
+  .header .dates { margin-top: 8px; font-size: 13px; color: var(--ink-muted); letter-spacing: 1px; }
+
+  .ticket-bar {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+    margin-bottom: 12px; padding: 16px;
+    background: var(--white); border: 1px solid var(--line);
+    border-radius: 10px; box-shadow: var(--shadow-card);
+  }
+  .ticket-leg {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft);
+  }
+  .ticket-leg strong { color: var(--ink); font-weight: 600; }
+  .ticket-arrow { color: var(--ink-muted); font-size: 10px; }
+
+  .hotel-tag { text-align: center; font-size: 12px; color: var(--ink-muted); margin-bottom: 40px; letter-spacing: 0.5px; }
+  .hotel-tag span { color: var(--moss); font-weight: 600; }
+
+  .section-title {
+    font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+    font-size: 18px; font-weight: 400; color: var(--ink);
+    margin: 48px 0 20px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--line); letter-spacing: 1px;
+  }
+  .section-title:first-of-type { margin-top: 0; }
+
+  /* Route Overview */
+  .route-overview {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    margin-bottom: 36px; padding: 16px;
+    background: var(--white); border: 1px solid var(--line);
+    border-radius: 10px; box-shadow: var(--shadow-card);
+  }
+  .route-stop {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; color: var(--ink-soft);
+  }
+  .route-stop strong { color: var(--moss); font-weight: 700; }
+  .route-arrow { color: var(--ink-muted); font-size: 10px; margin: 0 2px; }
+
+  /* Checklists */
+  .prep { margin-bottom: 48px; padding-top: 8px; }
+  .prep-header { text-align: center; margin-bottom: 24px; }
+  .prep-header .label { font-size: 10px; letter-spacing: 3px; color: var(--moss); text-transform: uppercase; margin-bottom: 8px; }
+  .prep-header h2 { font-family: "Noto Serif SC", "Songti SC", "STSong", serif; font-size: 22px; font-weight: 400; color: var(--ink); letter-spacing: 2px; }
+  .prep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .prep-card { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 22px; box-shadow: var(--shadow-card); }
+  .prep-card.full { grid-column: 1 / -1; }
+  .prep-card .cat { font-size: 11px; font-weight: 600; letter-spacing: 1px; color: var(--ink-soft); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; gap: 8px; }
+  .prep-card .cat em { font-style: normal; font-size: 13px; }
+  .prep-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--ink-soft); margin-bottom: 10px; line-height: 1.6; cursor: pointer; user-select: none; transition: color 0.25s; }
+  .prep-item:last-child { margin-bottom: 0; }
+  .prep-item:hover { color: var(--ink); }
+  .prep-item .chk { flex-shrink: 0; width: 20px; height: 20px; border: 1.5px solid var(--line); border-radius: 4px; margin-top: 1px; background: var(--paper-warm); position: relative; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.2); }
+  .prep-item:hover .chk { border-color: var(--moss); background: var(--moss-soft); }
+  .prep-item.checked { color: var(--ink-muted); }
+  .prep-item.checked .chk { background: var(--moss); border-color: var(--moss); }
+  .prep-item.checked .chk::after { content: ''; position: absolute; left: 5.5px; top: 2.5px; width: 6px; height: 10px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .prep-item.checked strong { color: var(--ink-muted); }
+  .prep-item .note { display: block; font-size: 11px; color: var(--ink-muted); margin-top: 1px; }
+  .prep-item strong { color: var(--ink); font-weight: 600; }
+
+  .reminders { margin-bottom: 52px; padding: 20px 24px; background: #faf6ef; border: 1px solid rgba(184,138,68,0.15); border-radius: 10px; }
+  .reminders h2 { font-family: "Noto Serif SC", "Songti SC", "STSong", serif; font-size: 14px; font-weight: 500; color: #b88a44; margin-bottom: 12px; letter-spacing: 1px; }
+  .reminder-item { font-size: 12px; color: var(--ink-soft); line-height: 1.8; margin-bottom: 6px; }
+  .reminder-item:last-child { margin-bottom: 0; }
+  .reminder-item strong { color: var(--ink); font-weight: 600; }
+
+  /* Day Section */
+  .day { margin-bottom: 56px; }
+  .day-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .day-num { font-family: "Noto Serif SC", "Songti SC", "STSong", serif; font-size: 48px; font-weight: 300; color: var(--ink); line-height: 1; }
+  .day-label { font-size: 13px; color: var(--ink-muted); letter-spacing: 1px; }
+  .day-label span { color: var(--moss); font-weight: 600; }
+
+  .node { display: flex; gap: 24px; margin-bottom: 28px; }
+  .node-time { flex-shrink: 0; width: 100px; text-align: right; }
+  .node-time .time { font-family: "SF Mono", "Menlo", "Consolas", monospace; font-size: 26px; font-weight: 500; color: var(--gold); line-height: 1.2; }
+  .node-time .dur { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+  .node-body { flex: 1; background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 20px; box-shadow: var(--shadow-card); }
+  .node-badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .node-badge.place { background: var(--moss-soft); color: var(--moss); }
+  .node-badge.transit { background: #f5f0e8; color: #8a7555; }
+  .node-badge.food { background: #fef7ed; color: #c4883c; }
+  .node-body p { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; }
+  .node-img { margin-top: 8px; border-radius: 8px; overflow: hidden; }
+  .node-img img { width: 100%; display: block; }
+
+  .xhs-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; padding: 6px 12px; background: var(--paper-warm); border: 1px solid var(--line); border-radius: 6px; font-size: 11px; color: var(--terracotta); text-decoration: none; transition: all 0.2s; letter-spacing: 0.3px; }
+  .xhs-link:hover { background: #fef0ec; border-color: var(--terracotta); color: #b05a3a; }
+  .xhs-link .arrow { font-size: 10px; opacity: 0.6; }
+
+  .photo-guide { display: flex; align-items: flex-start; gap: 12px; margin-top: 14px; padding: 14px 16px; background: linear-gradient(135deg, #fdf2f7, #fef9f4); border: 1px solid rgba(196,130,92,0.18); border-radius: 8px; position: relative; overflow: hidden; }
+  .photo-guide::before { content: ''; position: absolute; top: -10px; right: -10px; width: 48px; height: 48px; background: rgba(196,130,92,0.06); border-radius: 50%; }
+  .photo-guide .pg-icon { font-size: 22px; flex-shrink: 0; line-height: 1; }
+  .photo-guide .pg-content { flex: 1; position: relative; z-index: 1; }
+  .photo-guide .pg-label { font-size: 11px; font-weight: 700; color: var(--terracotta); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .photo-guide .pg-tip { font-size: 12px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 6px; }
+
+  .node-transit { padding: 0 0 0 124px; margin-bottom: 16px; }
+  .node-transit .dot-line { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--ink-muted); }
+  .node-transit .dot-line::before { content: ''; width: 6px; height: 6px; background: var(--line); border-radius: 50%; flex-shrink: 0; }
+
+  /* Budget table */
+  .budget-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+  .budget-table th { background: var(--moss-soft); color: var(--moss); padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: 1px; }
+  .budget-table td { padding: 10px 14px; border-bottom: 1px solid var(--line-soft); color: var(--ink-soft); }
+  .budget-table .total td { font-weight: 700; color: var(--ink); border-top: 2px solid var(--line); }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .info-card { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 18px; box-shadow: var(--shadow-card); }
+  .info-card h4 { font-size: 11px; font-weight: 600; color: var(--moss); letter-spacing: 1px; margin-bottom: 8px; }
+  .info-card p { font-size: 12px; color: var(--ink-soft); line-height: 1.7; }
+
+  .footer-note { text-align: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 11px; color: var(--ink-muted); letter-spacing: 1px; line-height: 1.8; }
+
+  @media (max-width: 640px) {
+    body { padding: 24px 16px; }
+    .prep-grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .node { flex-direction: column; gap: 8px; }
+    .node-time { width: auto; text-align: left; display: flex; align-items: baseline; gap: 8px; }
+    .node-time .time { font-size: 22px; }
+    .node-transit { padding-left: 0; }
+    .route-overview { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ====== HEADER ====== -->
+  <div class="header">
+    <h1>巴厘岛深度之旅</h1>
+    <div class="dates">2026年9月25日 – 10月5日 · 香港出发 · 两人同行</div>
+  </div>
+
+  <!-- ====== TICKET BAR ====== -->
+  <div class="ticket-bar">
+    <div class="ticket-leg"><strong>HKG</strong> ✈️ <span class="ticket-arrow">→</span> <strong>DPS</strong></div>
+    <div class="ticket-leg" style="color:var(--ink-muted)">9/25 出发 · 约5-7h（含转机）</div>
+    <div class="ticket-leg"><strong>DPS</strong> ✈️ <span class="ticket-arrow">→</span> <strong>HKG</strong></div>
+    <div class="ticket-leg" style="color:var(--ink-muted)">10/5 返程</div>
+  </div>
+  <div class="hotel-tag">
+    住宿线路：<span>水明漾 2晚</span> → <span>乌布 4晚</span> → <span>罗威那 1晚</span> → <span>树屋 1晚</span> → <span>佩尼达 1晚</span> → <span>蓝梦岛 1晚</span>
+  </div>
+
+  <!-- ====== ROUTE OVERVIEW ====== -->
+  <div class="route-overview">
+    <div class="route-stop"><strong>南部</strong> 海滩·乌鲁瓦图</div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop"><strong>乌布</strong> 梯田·文化</div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop"><strong>巴图尔</strong> 火山日出</div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop"><strong>罗威那</strong> 海豚·瀑布</div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop"><strong>树屋</strong> 丛林之夜</div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop"><strong>佩尼达</strong> 悬崖海滩</div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop"><strong>蓝梦岛</strong> 浮潜·恶魔泪</div>
+  </div>
+
+  <!-- ====== PACKING CHECKLIST ====== -->
+  <div class="prep">
+    <div class="prep-header">
+      <div class="label">Packing List</div>
+      <h2>行前准备清单</h2>
+    </div>
+    <div class="prep-grid">
+      <div class="prep-card">
+        <div class="cat"><em>👕</em> 衣物鞋帽</div>
+        <div class="prep-item"><span class="chk"></span><span><strong>泳衣 ×2</strong><span class="note">几乎每天用，轮换晾干</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>轻薄T恤/衬衫 ×4</strong><span class="note">速干面料优先</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>透气短裤/长裙 ×3</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>薄外套/连帽衫</strong><span class="note">火山日出15°C+空调车必备</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>运动鞋</strong><span class="note">火山徒步抓地力要好</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>人字拖/凉鞋</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>纱笼/围巾</strong><span class="note">进寺庙必须围腰</span></span></div>
+      </div>
+      <div class="prep-card">
+        <div class="cat"><em>🧴</em> 日用防护</div>
+        <div class="prep-item"><span class="chk"></span><span><strong>珊瑚礁安全防晒霜 SPF50+</strong><span class="note">紫外线极强，禁止普通防晒下水</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>遮阳帽+墨镜</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>驱蚊剂</strong><span class="note">乌布稻田+树屋蚊虫多</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>防水手机套</strong><span class="note">快艇+浮潜防海水</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>轻便雨衣</strong><span class="note">9月底偶有阵雨</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>可重复使用水瓶</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>基础药品</strong><span class="note">肠胃药·晕船药·创可贴</span></span></div>
+      </div>
+      <div class="prep-card">
+        <div class="cat"><em>📱</em> 证件电子</div>
+        <div class="prep-item"><span class="chk"></span><span><strong>护照（6个月以上有效期）</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>eVOA 打印件</strong><span class="note">电子落地签，提前办好</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>往返机票行程单</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>旅行保险单</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>国际驾照翻译件</strong><span class="note">如需租摩托车</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>欧标电源转换器</strong><span class="note">Type C/F 圆头</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>充电宝</strong></span></div>
+      </div>
+      <div class="prep-card">
+        <div class="cat"><em>📷</em> 摄影装备</div>
+        <div class="prep-item"><span class="chk"></span><span><strong>手机 + 广角镜头夹</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>GoPro/防水相机</strong><span class="note">浮潜拍 Manta Ray</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>便携三脚架/自拍杆</strong></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>备用 SD 卡</strong></span></div>
+      </div>
+      <div class="prep-card full">
+        <div class="cat"><em>✅</em> 出发前确认</div>
+        <div class="prep-item"><span class="chk"></span><span><strong>eVOA 已在线办理并打印</strong><span class="note">molina.imigrasi.go.id，IDR 500,000/人</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>巴图尔火山徒步 tour 已预订</strong><span class="note">提前 3-5 天 Klook/酒店预定</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>树屋已预订</strong><span class="note">经济型树屋抢手，尽早订</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>下载 Gojek + Grab</strong><span class="note">注册绑定信用卡</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>下载 Google Maps 离线地图</strong><span class="note">佩尼达信号差</span></span></div>
+        <div class="prep-item"><span class="chk"></span><span><strong>换汇 ¥500 等值印尼盾应急</strong><span class="note">到 Ubud 正规点再换大额</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== REMINDERS ====== -->
+  <div class="reminders">
+    <h2>⏰ 关键时间节点</h2>
+    <div class="reminder-item"><strong>现在</strong> — 订机票 + 办 eVOA + 订树屋</div>
+    <div class="reminder-item"><strong>9月20日</strong> — 预订巴图尔火山徒步 tour + 确认跳岛船班</div>
+    <div class="reminder-item"><strong>9月24日</strong> — 检查护照/eVOA/保险/换汇，充电宝充满</div>
+    <div class="reminder-item"><strong>9月25日</strong> — 出发！提前 2.5 小时到 HKG</div>
+    <div class="reminder-item"><strong>9月27日晚</strong> — 确认 Day 4 火山徒步向导 pickup 时间（凌晨 2:00）</div>
+    <div class="reminder-item"><strong>9月29日晚</strong> — 确认 Lovina 海豚船时间（凌晨 5:30）</div>
+    <div class="reminder-item"><strong>10月1日晚</strong> — 购 Sanur→Penida 快船票（12Go.asia 或酒店前台）</div>
+    <div class="reminder-item"><strong>10月4日晚</strong> — 在线值机返程航班</div>
+  </div>
+
+  <!-- ====== DAY 1 ====== -->
+  <div class="section-title">第一阶段 · 南巴厘海滩</div>
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">01</div>
+      <div class="day-label"><span>抵达+初探</span> · 9月25日 周四</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">13:00</div><div class="dur">～15:00</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">交通</div>
+        <p>✈️ 抵达 Ngurah Rai 国际机场（DPS）。入境出示 eVOA 打印件。取行李后机场大厅买 Telkomsel SIM 卡（30GB/30天 ≈ ¥50），ATM 取 IDR 1,000,000 应急。</p>
+        <p style="font-size:11px;color:var(--ink-muted)">⚠️ 机场换汇汇率最差，只换 ¥500 应急。大额到 Ubud 换。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">15:30</div><div class="dur">～16:30</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">交通</div>
+        <p>Grab/Gojek 前往水明漾酒店，约 40-60 分钟（视交通），费用 IDR 200,000-300,000（¥90-135）。入住后简单休整。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">17:30</div><div class="dur">～19:30</div></div>
+      <div class="node-body">
+        <div class="node-badge place">水明漾海滩</div>
+        <p>日落时分海滩散步。Double Six Beach 彩色懒人沙发+冲浪者剪影，典型的巴厘岛第一印象。9 月日落约 18:15，提前半小时到。</p>
+        <div class="node-img"><img src="images/Seminyak_Beach_Bali_sunset__co_2026-06-23T07-05-45.png" alt="Seminyak Beach sunset"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+水明漾+日落+海滩" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">19:30</div><div class="dur">～21:00</div></div>
+      <div class="node-body">
+        <div class="node-badge food">晚餐</div>
+        <p><strong>Naughty Nuri's Seminyak</strong> — 巴厘岛最著名的猪肋排，Martini 也是一绝。人均 ¥60-80。轻松的第一顿，不用太正式。备选：Seasalt Seminyak 海滩落日海鲜（人均 ¥150+）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 2 ====== -->
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">02</div>
+      <div class="day-label"><span>乌鲁瓦图+悬崖日落</span> · 9月26日 周五</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">08:30</div><div class="dur">～09:30</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">交通</div>
+        <p>Grab 前往乌鲁瓦图，约 50-60 分钟，费用 IDR 200,000-250,000。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">09:30</div><div class="dur">～11:30</div></div>
+      <div class="node-body">
+        <div class="node-badge place">乌鲁瓦图寺</div>
+        <p>建在 70 米悬崖上的千年海神庙。门票 IDR 50,000/人，入口免费借纱笼。注意：猴子会抢眼镜和帽子！悬崖步道沿途可远眺印度洋。</p>
+        <div class="node-img"><img src="images/Uluwatu_Temple_perched_on_stee_2026-06-23T07-02-22.png" alt="Uluwatu Temple"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+乌鲁瓦图+悬崖+寺庙+日落" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+        <div class="photo-guide">
+          <div class="pg-icon">📸</div>
+          <div class="pg-content">
+            <div class="pg-label">人像 · 拍照指南</div>
+            <div class="pg-tip"><strong>悬崖步道转角处</strong>是出片最佳机位，上午顺光。白色/浅色连衣裙 + 纱笼飘起来的瞬间，逆光剪影也绝。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">12:00</div><div class="dur">～13:30</div></div>
+      <div class="node-body">
+        <div class="node-badge food">午餐</div>
+        <p><strong>Single Fin</strong> — 乌鲁瓦图悬崖上的老牌 surf bar，印度洋全景。周日有著名 party，周五相对安静。牛肉汉堡+冰 Bintang，人均 ¥60-90。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">14:00</div><div class="dur">～16:30</div></div>
+      <div class="node-body">
+        <div class="node-badge place">巴东巴东海滩</div>
+        <p>穿过岩洞进入的隐秘白沙滩。可下水游泳或躺平。想冲浪的话海滩入口有冲浪板出租+教练，2h 体验课 IDR 350,000/人。</p>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+Padang+Padang+海滩+冲浪" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">18:00</div><div class="dur">～19:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">Kecak 火舞</div>
+        <p>回到乌鲁瓦图寺看日落 Kecak 火舞——巴厘岛最震撼的文化表演。50 个赤裸上身的男子围坐吟唱"chak-chak-chak"，日落为背景演绎罗摩衍那史诗。门票 IDR 150,000/人，提前 30 分钟排队占好位。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">19:30</div><div class="dur">～21:00</div></div>
+      <div class="node-body">
+        <div class="node-badge food">晚餐</div>
+        <p>Grab 前往<strong>金巴兰海滩海鲜烧烤</strong>（约 30min）。沙滩烛光餐桌，现捞现烤的鱼虾蟹。推荐 Menega Cafe，人均 ¥80-150。脚踩沙子吃海鲜，巴厘岛经典收尾。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 3 ====== -->
+  <div class="section-title">第二阶段 · 乌布文化</div>
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">03</div>
+      <div class="day-label"><span>南→乌布</span> · 9月27日 周六</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">09:00</div><div class="dur">～10:30</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">交通</div>
+        <p>退房，Grab 前往乌布酒店，约 1-1.5 小时，费用 IDR 250,000-350,000。建议订稻田周边民宿（不临主街），安静且风景好。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">12:00</div><div class="dur">～13:00</div></div>
+      <div class="node-body">
+        <div class="node-badge food">午餐</div>
+        <p><strong>Warung Babi Guling Ibu Oka</strong> — 乌布烤乳猪饭的祖师爷。一份 Nasi Babi Guling（脆皮猪肉+血肠+蔬菜+辣酱）IDR 55,000（¥25）。不接受预订，排队但值得。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">14:00</div><div class="dur">～16:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">德格拉朗梯田</div>
+        <p>巴厘岛最知名的梯田景观，门票 IDR 25,000/人。必玩 Bali Swing 高空秋千（IDR 150,000-500,000 视套餐），穿飘逸长裙出片率 200%。</p>
+        <div class="node-img"><img src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Tegallalang Rice Terraces"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+德格拉朗+梯田+秋千+拍照" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+        <div class="photo-guide">
+          <div class="pg-icon">📸</div>
+          <div class="pg-content">
+            <div class="pg-label">人像 · 拍照指南</div>
+            <div class="pg-tip"><strong>午后 14-16 点顺光</strong>，梯田层次感最强。秋千建议选中等高度（出片最好），长裙比短裤好看 10 倍。梯田间小路上抓拍行走的瞬间也绝。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">16:30</div><div class="dur">～17:30</div></div>
+      <div class="node-body">
+        <div class="node-badge place">圣泉寺</div>
+        <p>Tirta Empul，巴厘岛最重要的水庙。当地人在圣水池中沐浴祈祷，游客可参与（需穿纱笼）。门票 IDR 50,000/人。</p>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+圣泉寺+Tirta+Empul" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">19:30</div><div class="dur">～21:00</div></div>
+      <div class="node-body">
+        <div class="node-badge food">晚餐</div>
+        <p><strong>Hujan Locale</strong> — 主打印尼 fusion，主厨 Will Meyrick 在东南亚餐饮界名气很大。推荐 sharing menu，人均 ¥150-200。备选：Melting Wok Warung（平价东南亚菜，人均 ¥40）。</p>
+        <p style="font-size:11px;color:var(--ink-muted)">⚠️ 晚餐后早点休息，明天凌晨 2 点起床。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 4 ====== -->
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">04</div>
+      <div class="day-label"><span>巴图尔火山日出</span> · 9月28日 周日</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">2:00</div><div class="dur">凌晨</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">出发</div>
+        <p>向导到乌布酒店接人。提前一天通过 Klook/酒店预订 Mount Batur Sunrise Trekking Tour，舒适型 IDR 600,000-800,000/人（¥270-360），含接送+早餐+手电+向导。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">5:45</div><div class="dur">～7:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">巴图尔火山顶</div>
+        <p>约 2 小时登顶（难度中等，非技术路线）。日出约 6:00，向导在山顶准备简单早餐（煮鸡蛋+香蕉三明治+热茶）。俯瞰巴图尔湖，远眺阿贡火山和林贾尼火山。</p>
+        <div class="node-img"><img src="images/Mount_Batur_volcano_sunrise_tr_2026-06-23T07-02-54.png" alt="Mount Batur sunrise"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+巴图尔火山+日出+徒步" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+        <div class="photo-guide">
+          <div class="pg-icon">📸</div>
+          <div class="pg-content">
+            <div class="pg-label">人像 · 拍照指南</div>
+            <div class="pg-tip"><strong>日出前 10 分钟天空最魔幻</strong>（粉→橙→金渐变）。站在火山口边缘，让同伴从侧后方拍剪影。穿亮色冲锋衣在暗色火山岩上反差极大。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">10:00</div><div class="dur">～15:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">休整</div>
+        <p>回到酒店补觉。凌晨 2 点起床必须休息够，不然后面行程撑不住。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">16:00</div><div class="dur">～18:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">乌布艺术市场</div>
+        <p>午后逛 Ubud Art Market。手工竹编包（¥30-80）、蜡染布、捕梦网。要砍价，按报价 30-40% 还。17:00 左右收摊。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">18:30</div><div class="dur">～19:30</div></div>
+      <div class="node-body">
+        <div class="node-badge place">稻田 Spa</div>
+        <p>推荐 <strong>Karsa Spa</strong>（需提前邮件预订），稻田中央的露天按摩房。Balinese Massage 1h IDR 200,000（¥90），性价比之王。备选：Putri Bali Spa。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">20:00</div><div class="dur">～</div></div>
+      <div class="node-body">
+        <div class="node-badge food">晚餐</div>
+        <p><strong>Warung Garasi</strong> — 本地人爱去的印尼家常菜，Nasi Campur 拼盘饭 IDR 35,000（¥16），轻松好吃。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 5 ====== -->
+  <div class="section-title">第三阶段 · 北线探索</div>
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">05</div>
+      <div class="day-label"><span>乌布→罗威那</span> · 9月29日 周一</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">08:00</div><div class="dur">～16:00</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">包车一日</div>
+        <p>退房，包车向北。通过 Klook 或酒店预订 10h 包车 ¥250-350。沿途三站：</p>
+        <p style="margin-top:4px;"><strong>① Gitgit 瀑布（9:30-10:30）</strong> — 主瀑 35m，步行 15min 入林，水雾清凉。门票 IDR 20,000。</p>
+        <p><strong>② Wanagiri Hidden Hills（11:00-12:00）</strong> — 网红秋千+鸟巢观景台，俯瞰双子湖 Buyan & Tamblingan。门票 IDR 50,000。</p>
+        <p><strong>③ Ulun Danu Bratan 水神庙（14:00-15:30）</strong> — 建在湖上的印度教寺庙，印在 IDR 50,000 纸币上。巴厘岛最标志性画面。门票 IDR 75,000。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">16:30</div><div class="dur">～</div></div>
+      <div class="node-body">
+        <div class="node-badge place">罗威那</div>
+        <p>入住 Lovina 海滩小型度假村。黑沙滩安静到只有海浪声，游客不到南部 1/10。泳池看日落，早点休息——明早 5:30 出海。</p>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+罗威那+水神庙+瀑布+北线" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">19:00</div><div class="dur">～20:00</div></div>
+      <div class="node-body">
+        <div class="node-badge food">晚餐</div>
+        <p>酒店餐厅或 <strong>Damai Restaurant</strong>（罗威那最好的 fine dining，人均 ¥100-150）。清淡为主，为明早海豚养精蓄锐。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 6 ====== -->
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">06</div>
+      <div class="day-label"><span>海豚+树屋之夜</span> · 9月30日 周二</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">5:30</div><div class="dur">～8:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">罗威那海豚</div>
+        <p>🌅 乘坐传统 Jukung 独木舟出海，日出时分海豚群在船边跃出水面。共享船 IDR 100,000/人（¥45），4-6 人一船。9 月海况好，目击率 90%+。</p>
+        <div class="node-img"><img src="images/Lovina_Bali_dolphins_jumping_o_2026-06-23T07-04-19.png" alt="Lovina dolphins at sunrise"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+罗威那+海豚+日出" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">09:00</div><div class="dur">～12:00</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">交通</div>
+        <p>酒店早餐后退房，包车南返约 2.5h，直接送到树屋。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">12:00</div><div class="dur">～</div></div>
+      <div class="node-body">
+        <div class="node-badge place">树屋入住</div>
+        <p>🌿 经济型树屋推荐：<strong>Bali Jungle Huts</strong>（¥300-500/晚）或 <strong>Bamboo Eagle Eco Lodge</strong>（¥400-600/晚）。竹制结构，四周稻田或丛林环绕，露天淋浴。</p>
+        <div class="node-img"><img src="images/Bamboo_treehouse_eco_lodge_in__2026-06-23T07-04-47.png" alt="Bamboo treehouse in Ubud jungle"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+树屋+乌布+竹屋+民宿" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+        <div class="photo-guide">
+          <div class="pg-icon">📸</div>
+          <div class="pg-content">
+            <div class="pg-label">人像 · 拍照指南</div>
+            <div class="pg-tip"><strong>清晨薄雾时分的树屋阳台</strong>是最佳机位，丛林+晨雾+一杯咖啡。下午在竹子缝隙漏下的光影中拍也很美。浅色睡衣/亚麻衬衫氛围感拉满。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">14:00</div><div class="dur">～</div></div>
+      <div class="node-body">
+        <div class="node-badge place">丛林时光</div>
+        <p>这是一下午"住"大于"玩"的时光。泳池泡着、书翻着、鸟鸣听着。树屋自带餐厅解决午晚餐（印尼炒饭/炒面 IDR 60,000-100,000）。黄昏丛林散步或酒店瑜伽课。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 7 ====== -->
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">07</div>
+      <div class="day-label"><span>乌布自由日</span> · 10月1日 周三</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">08:30</div><div class="dur">～10:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">树屋早晨</div>
+        <p>最后享受树屋氛围。早餐后退房，Grab 回到乌布中心（如树屋在乌布周边）。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">10:30</div><div class="dur">～12:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">圣猴森林</div>
+        <p>Sacred Monkey Forest，门票 IDR 80,000/人。600+ 只长尾猕猴在古庙遗迹间自由活动。<strong>眼镜、帽子、水瓶收好，猴子会抢。</strong>不要直视它们眼睛（挑衅信号）。</p>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+乌布+圣猴森林+猴子" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">12:30</div><div class="dur">～13:30</div></div>
+      <div class="node-body">
+        <div class="node-badge food">午餐</div>
+        <p><strong>Sari Organik</strong> — 穿过稻田步行 15 分钟到达，四周稻田环绕的有机餐厅。推荐 Buddha Bowl 和火龙果 smoothie bowl，人均 ¥40-60。本身就是风景。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">15:00</div><div class="dur">～17:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">Campuhan 山脊漫步</div>
+        <p>免费，1-2 小时山脊散步，俯瞰两条河谷交汇。下午 16:00 后光线最好，不晒。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">19:00</div><div class="dur">～21:00</div></div>
+      <div class="node-body">
+        <div class="node-badge food">告别乌布晚餐</div>
+        <p><strong>Bridges Bali</strong> — 河谷上的浪漫餐厅，主打西餐+印尼 fusion，人均 ¥150-250。备选：Locavore（需提前 2 周订位，人均 ¥400+）。在乌布的最后一晚要吃好。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 8 ====== -->
+  <div class="section-title">第四阶段 · 佩尼达跳岛</div>
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">08</div>
+      <div class="day-label"><span>佩尼达西线</span> · 10月2日 周四</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">07:00</div><div class="dur">～08:00</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">交通</div>
+        <p>乌布退房，Grab 到 Sanur 码头（约 45min，IDR 200,000）。提前一天在 12Go.asia 或酒店前台购快船票。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">08:30</div><div class="dur">～09:15</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">快船</div>
+        <p>Sanur → Nusa Penida 快船 45min，IDR 150,000-200,000/人（¥68-90）。多家运营商（Angel Billabong、Semabu Hills），最早 7:30 有船。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">10:00</div><div class="dur">～13:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">精灵坠崖</div>
+        <p>🦖 <strong>Kelingking Beach</strong> — 佩尼达头号景点！T-Rex 形状悬崖伸入碧绿海水。可从山顶观景台拍照，也可沿陡峭台阶下到海滩（45min 单程，体力活）。包车 IDR 600,000/天。</p>
+        <div class="node-img"><img src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking Beach Nusa Penida"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=佩尼达+精灵坠崖+Kelingking" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+        <div class="photo-guide">
+          <div class="pg-icon">📸</div>
+          <div class="pg-content">
+            <div class="pg-label">人像 · 拍照指南</div>
+            <div class="pg-tip"><strong>上午顺光</strong>，海水颜色最炸裂。推荐站在主观景台左侧突出岩石上拍（安全范围内）。亮色长裙（红/黄/白）与蓝绿色海水形成对比。无人机视角更震撼。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">14:00</div><div class="dur">～15:30</div></div>
+      <div class="node-body">
+        <div class="node-badge place">天使浴池+断桥</div>
+        <p><strong>Angel's Billabong</strong> — 天然潮汐无边泳池，退潮时可下水（注意浪）。旁边 <strong>Broken Beach</strong> 是天然拱门断桥，海水从下方涌入形成圆形海湾。</p>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=佩尼达+天使浴池+Broken+Beach" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">16:30</div><div class="dur">～18:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">水晶湾</div>
+        <p>Crystal Bay 浮潜/日落。佩尼达最佳浮潜点，有机会看到 Manta Ray（9 月概率高）。租浮潜装备 IDR 50,000/套。</p>
+        <p style="font-size:11px;color:var(--ink-muted)">⚠️ 佩尼达路况极差（窄+坑+灰），摩托车新手不要骑。包车安全得多。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 9 ====== -->
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">09</div>
+      <div class="day-label"><span>佩尼达东线→蓝梦岛</span> · 10月3日 周五</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">07:00</div><div class="dur">～11:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">钻石海滩+Atuh</div>
+        <p><strong>Diamond Beach</strong> — 沿峭壁上的竹楼梯下到白沙滩，佩尼达最美的海滩没有之一。<strong>Atuh Beach</strong> 在旁边，双湾海景。早去人少，光线也好。</p>
+        <div class="node-img"><img src="images/Diamond_Beach_Nusa_Penida_Bali_2026-06-23T07-03-49.png" alt="Diamond Beach Nusa Penida"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=佩尼达+钻石海滩+Diamond+Beach" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">12:00</div><div class="dur">～14:00</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">交通</div>
+        <p>午饭+返回码头。预计 14:00 快船 Penida → Lembongan（20-30min）。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">15:00</div><div class="dur">～18:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">恶魔的眼泪+梦幻海滩</div>
+        <p><strong>Devil's Tear</strong> — 巨浪冲入凹洞喷出十几米水雾，几乎每次都有彩虹。⚠️ 不要站太近，浪会把人卷下去。<strong>Dream Beach</strong> 在旁边，蓝梦岛最漂亮的白沙滩，看日落。</p>
+        <div class="node-img"><img src="images/Devils_Tear_Nusa_Lembongan_Bal_2026-06-23T07-05-15.png" alt="Devil's Tear Nusa Lembongan"></div>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=蓝梦岛+恶魔的眼泪+梦幻海滩" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">19:00</div><div class="dur">～</div></div>
+      <div class="node-body">
+        <div class="node-badge food">晚餐</div>
+        <p>Jungutbatu 海滩沿线一排海鲜烧烤餐厅，人均 ¥50-80。烤鱼+冰 Bintang 啤酒，蓝梦岛标配。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 10 ====== -->
+  <div class="section-title">第五阶段 · 返程收尾</div>
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">10</div>
+      <div class="day-label"><span>蓝梦岛浮潜+回本岛</span> · 10月4日 周六</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">08:00</div><div class="dur">～11:30</div></div>
+      <div class="node-body">
+        <div class="node-badge place">浮潜半日</div>
+        <p>包船 IDR 300,000-500,000（¥135-225/船）走 3 个潜点：<strong>Manta Bay</strong>（魔鬼鱼，9月高概率）、<strong>Crystal Bay</strong>（珊瑚群+热带鱼）、<strong>红树林</strong>（清静水域）。自备 GoPro 或租防水壳。</p>
+        <p style="font-size:11px;color:var(--ink-muted)">🤿 浮潜装备可在蓝梦岛租，IDR 50,000/套。不会游泳也没关系，船长会给你救生衣+浮条。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">12:30</div><div class="dur">～13:30</div></div>
+      <div class="node-body">
+        <div class="node-badge food">午餐</div>
+        <p>退房前最后一顿蓝梦岛午餐，海滩餐厅解决。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">14:00</div><div class="dur">～15:00</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">回本岛</div>
+        <p>快船 Lembongan → Sanur，30min。抵达后 Grab 前往最后一晚酒店。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">16:00</div><div class="dur">～18:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">最后的日落</div>
+        <p>推荐 <strong>Rock Bar</strong>（AYANA 度假村内，巴厘岛最著名的悬崖酒吧）或 <strong>Sundara Beach Club</strong>（Jimbaran，安静私密）。预算：Rock Bar 人均 ¥100-200，Sundara 人均 ¥150-250。</p>
+        <a class="xhs-link" href="https://www.xiaohongshu.com/search_result?keyword=巴厘岛+Rock+Bar+AYANA" target="_blank">小红书看攻略 <span class="arrow">↗</span></a>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">19:30</div><div class="dur">～21:00</div></div>
+      <div class="node-body">
+        <div class="node-badge food">告别晚餐</div>
+        <p>Jimbaran 或 Sanur 最后的海鲜大餐。推荐 Sundara 海边套餐或当地海鲜馆。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">21:30</div><div class="dur">～</div></div>
+      <div class="node-body">
+        <div class="node-badge place">收尾 Spa</div>
+        <p>推荐 2h Balinese Massage ¥150-200/人，为旅行画上完美句号。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DAY 11 ====== -->
+  <div class="day">
+    <div class="day-header">
+      <div class="day-num">11</div>
+      <div class="day-label"><span>返程</span> · 10月5日 周日</div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">08:00</div><div class="dur">～10:00</div></div>
+      <div class="node-body">
+        <div class="node-badge place">自由早晨</div>
+        <p>早餐、泳池最后泡一次、打包。退房。国际航班建议提前 2.5h 到机场。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">10:30</div><div class="dur">～11:00</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">去机场</div>
+        <p>Grab 前往 DPS 机场。Sanur → DPS 25min，Jimbaran → DPS 20min。</p>
+        <p style="font-size:11px;color:var(--ink-muted)">⚠️ 巴厘岛机场出境排队可能长达 1h，预留充足时间。机场免税店可花掉剩余印尼盾。</p>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-time"><div class="time">13:00</div><div class="dur">～</div></div>
+      <div class="node-body">
+        <div class="node-badge transit">返程</div>
+        <p>✈️ DPS → HKG，巴厘岛之旅结束。下次见。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== BUDGET ====== -->
+  <div class="section-title">三档预算对比（两人合计，含国际机票）</div>
+  <table class="budget-table">
+    <tr><th>项目</th><th>经济型 ¥</th><th>舒适型 ¥</th><th>豪华型 ¥</th></tr>
+    <tr><td>✈️ 国际往返（2人）</td><td>2,800</td><td>3,600</td><td>4,800</td></tr>
+    <tr><td>🏨 住宿 10 晚</td><td>2,500</td><td>5,500</td><td>12,000</td></tr>
+    <tr><td>🍜 餐饮 11 天</td><td>2,200</td><td>4,000</td><td>8,000</td></tr>
+    <tr><td>🚗 交通（包车+Grab+船）</td><td>1,500</td><td>2,500</td><td>3,500</td></tr>
+    <tr><td>🎫 活动（徒步+海豚+浮潜+门票+Spa）</td><td>1,800</td><td>2,800</td><td>4,500</td></tr>
+    <tr><td>📱 SIM + 杂费</td><td>200</td><td>300</td><td>500</td></tr>
+    <tr class="total"><td><strong>总计</strong></td><td><strong>11,000</strong></td><td><strong>18,700</strong></td><td><strong>33,300</strong></td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">* 经济型：青旅/民宿+本地餐厅+摩托；舒适型：精品酒店+混合用餐+包车；豪华型：五星/树屋度假村+fine dining+私人向导</p>
+
+  <!-- ====== PRACTICAL TIPS ====== -->
+  <div class="section-title">落地实用贴士</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>📱 App 必备</h4>
+      <p><strong>Gojek + Grab</strong>：打车+外卖+按摩上门。南部&乌布覆盖好，佩尼达/罗威那几乎叫不到车。<br>
+      <strong>Google Maps</strong>：提前下载巴厘岛离线地图（佩尼达信号差）。<br>
+      <strong>12Go.asia</strong>：快船票线上预订。</p>
+    </div>
+    <div class="info-card">
+      <h4>💵 换汇建议</h4>
+      <p>机场只换 ¥500 应急（汇率最差）。<br>
+      Ubud 或 Seminyak 正规换汇点（BMC / Central Kuta Money Exchange）汇率最好。<br>
+      大额消费刷 Visa/Mastercard（不收银联的地方多）。ATM 用 BCA/BNI 取现稳妥。</p>
+    </div>
+    <div class="info-card">
+      <h4>👕 天气穿衣</h4>
+      <p>9 月底干季尾巴，27-31°C，湿度 60-75%。<br>
+      白天轻薄透气，早晚+火山穿薄外套。<br>
+      偶有短暂阵雨（3-6 天/月），不影响行程。<br>
+      紫外线极端，SPF50+ 必备。</p>
+    </div>
+    <div class="info-card">
+      <h4>🚤 跳岛船班</h4>
+      <p><strong>Sanur→Penida</strong>：7:30–17:00 每小时一班，45min。<br>
+      <strong>Penida→Lembongan</strong>：每天 4-5 班，20-30min。<br>
+      <strong>Lembongan→Sanur</strong>：8:00–16:00 多班次，30min。<br>
+      提前一天买票即可，旺季建议线上先订。</p>
+    </div>
+    <div class="info-card">
+      <h4>⚠️ 安全注意</h4>
+      <p>佩尼达路况极差，摩托新手不要骑。<br>
+      恶魔的眼泪不要站崖边，浪能卷人。<br>
+      猴子抢眼镜/帽子/水瓶，圣猴森林收好。<br>
+      饮用瓶装水，不要喝自来水。<br>
+      巴厘岛肚子（Bali Belly）最常见，带肠胃药。</p>
+    </div>
+    <div class="info-card">
+      <h4>⛈️ 雨天备选方案</h4>
+      <p>如遇暴雨跳岛船班取消：提前一天返本岛。<br>
+      乌布替代行程：Tegenungan 瀑布、Setia Darma 面具博物馆、银饰工坊体验、Yoga Barn 瑜伽课。<br>
+      南部替代：Beach club 躺一天（Finns / Potato Head）。</p>
+    </div>
+  </div>
+
+  <!-- ====== EMERGENCY ====== -->
+  <div class="section-title">紧急联系</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>🆘 紧急电话</h4>
+      <p>报警：<strong>110</strong><br>急救/救护车：<strong>118</strong><br>旅游警察：<strong>+62 361 754599</strong></p>
+    </div>
+    <div class="info-card">
+      <h4>🇨🇳 中国领馆</h4>
+      <p>中国驻登巴萨总领馆<br><strong>+62 361 239902</strong><br>领事保护热线：<strong>+86 10 12308</strong></p>
+    </div>
+  </div>
+
+  <!-- ====== FOOTER ====== -->
+  <div class="footer-note">
+    <p>巴厘岛 11 天深度之旅 · 9月25日–10月5日</p>
+    <p style="margin-top:4px;">价格参考日期 2026年6月23日 · 实际请以预订时为准</p>
+    <p style="margin-top:8px;color:var(--moss);">🌿 Selamat Jalan — 一路顺风</p>
+  </div>
+
+</div>
+
+<!-- ====== INTERACTIVE CHECKLIST JS ====== -->
+<script>
+(function(){
+  const STORAGE_KEY = 'bali-2026-sep-packing';
+  const items = document.querySelectorAll('.prep-item');
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (Array.isArray(saved)) {
+      items.forEach((el, i) => { if (saved[i]) el.classList.add('checked'); });
+    }
+  } catch(e) {}
+  items.forEach((el, i) => {
+    el.addEventListener('click', function(e) {
+      if (window.getSelection().toString()) return;
+      this.classList.toggle('checked');
+      const state = [];
+      document.querySelectorAll('.prep-item').forEach(e => state.push(e.classList.contains('checked')));
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
