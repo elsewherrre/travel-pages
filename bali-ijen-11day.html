@@ -445,6 +445,18 @@
     .mode-toggle { top: 8px; }
     .mode-btn { padding: 6px 10px; font-size: 10px; }
   }
+
+  /* Leaflet popup dark theme */
+  .dark-popup .leaflet-popup-content-wrapper {
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .dark-popup .leaflet-popup-content { color: #fff; margin: 8px 10px; }
+  .dark-popup .leaflet-popup-tip { background: #1e1e1e; border: 1px solid var(--border); }
+  .dark-popup .leaflet-popup-close-button { color: var(--muted) !important; }
 </style>
 </head>
 <body>
@@ -856,7 +868,7 @@ async function renderDay(day) {
     });
 
     const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
-    marker.bindPopup(`<div style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap;">${p.n}. ${p.name}</div>`);
+    marker.bindPopup(`<div style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;">${p.n}. ${p.name}</div>`, {className: 'dark-popup'});
     markers.push(marker);
   });
 
