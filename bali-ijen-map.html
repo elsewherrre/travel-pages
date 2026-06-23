@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巴厘岛+伊真 · 交互地图行程</title>
+<script src="https://map.qq.com/api/gljs?v=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></script>
+<style>
+:root {
+  --bg: #0b0b0b;
+  --card: #131313;
+  --card-hover: #1a1a1a;
+  --text: #e0e0e0;
+  --muted: #888;
+  --green: #5d8a5e;
+  --green-glow: #7ab07c;
+  --gold: #c9a96e;
+  --border: #262626;
+  --tag-bg: #141d14;
+  --booking: #003b95;
+  --sidebar-w: 340px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Noto Sans SC", sans-serif;
+  height: 100vh; overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════ LAYOUT ═══════════ */
+#app { display: flex; height: 100vh; }
+#sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  z-index: 10;
+}
+#map-wrap { flex: 1; position: relative; }
+#map { width: 100%; height: 100%; }
+
+/* ═══════════ SIDEBAR HEADER ═══════════ */
+.sidebar-header {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-header .badge {
+  display: inline-block; padding: 3px 12px; border-radius: 12px;
+  background: rgba(93,138,94,0.15); color: var(--green-glow);
+  font-size: 12px; letter-spacing: 0.5px; margin-bottom: 8px;
+}
+.sidebar-header h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.sidebar-header .sub { font-size: 12px; color: var(--muted); }
+
+/* ═══════════ TIMELINE ═══════════ */
+.timeline-wrap {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0 24px;
+  scroll-behavior: smooth;
+}
+.timeline-wrap::-webkit-scrollbar { width: 3px; }
+.timeline-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.timeline {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: 4px 0;
+}
+.timeline::before {
+  content: ''; position: absolute;
+  left: 20px; top: 0; bottom: 0; width: 1px;
+  background: var(--border); z-index: 0;
+}
+
+.tl-node {
+  position: relative; z-index: 1;
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 20px 14px 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-left: 3px solid transparent;
+}
+.tl-node:hover { background: var(--card-hover); }
+.tl-node.active {
+  background: rgba(93,138,94,0.06);
+  border-left-color: var(--green);
+}
+
+.tl-dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+  transition: all 0.3s;
+  position: relative;
+}
+.tl-node.active .tl-dot {
+  border-color: var(--green);
+  box-shadow: 0 0 10px rgba(93,138,94,0.2);
+}
+.tl-dot .tl-num {
+  position: absolute; top: -6px; right: -6px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--border); color: var(--muted);
+  font-size: 9px; display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+}
+.tl-node.active .tl-dot .tl-num {
+  background: var(--green); color: #fff;
+}
+
+.tl-info { flex: 1; min-width: 0; }
+.tl-info .tl-date {
+  font-size: 12px; color: var(--green-glow); font-weight: 600;
+  letter-spacing: 0.5px; margin-bottom: 2px;
+}
+.tl-info .tl-label {
+  font-size: 15px; font-weight: 700; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tl-info .tl-spots {
+  font-size: 11px; color: var(--muted); margin-top: 3px;
+  line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ═══════════ MAP OVERLAYS ═══════════ */
+.map-overlay-top {
+  position: absolute; top: 16px; left: 50%;
+  transform: translateX(-50%); z-index: 5;
+  display: flex; gap: 0;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+}
+.mode-btn {
+  padding: 10px 18px; font-size: 13px; font-weight: 600;
+  background: transparent; border: none; color: var(--muted);
+  cursor: pointer; transition: all 0.2s;
+  border-right: 1px solid var(--border);
+  display: flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+}
+.mode-btn:last-child { border-right: none; }
+.mode-btn:hover { color: #fff; background: var(--card-hover); }
+.mode-btn.active { color: var(--green-glow); background: rgba(93,138,94,0.1); }
+
+.day-info-bar {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  z-index: 5;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 20px;
+  max-width: 420px; width: calc(100% - 32px);
+  pointer-events: none;
+}
+.day-info-bar h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.day-info-bar .spots-list {
+  font-size: 11px; color: var(--muted); line-height: 1.5;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.day-info-bar .spot-tag {
+  background: var(--card); border: 1px solid var(--border);
+  padding: 2px 8px; border-radius: 4px; font-size: 10px;
+  color: var(--text);
+}
+
+/* ═══════════ LEGEND ═══════════ */
+.legend {
+  position: absolute; bottom: 24px; right: 16px; z-index: 5;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+.legend-line { width: 24px; height: 3px; border-radius: 2px; }
+.legend-dash { width: 24px; height: 2px; border-radius: 1px; }
+
+/* ═══════════ SIDEBAR FOOTER ═══════════ */
+.sidebar-footer {
+  padding: 14px 20px; border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--muted);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-shrink: 0;
+}
+.sidebar-footer a {
+  color: var(--green-glow); text-decoration: none;
+  font-weight: 600;
+}
+
+/* ═══════════ MOBILE ═══════════ */
+@media (max-width: 768px) {
+  #app { flex-direction: column; }
+  #sidebar {
+    width: 100%; height: auto; flex-shrink: 0;
+    border-right: none; border-bottom: 1px solid var(--border);
+    flex-direction: column; max-height: 42vh;
+  }
+  .sidebar-header { padding: 16px 16px 8px; }
+  .sidebar-header h2 { font-size: 16px; }
+  .timeline-wrap {
+    flex: 1; overflow-x: auto; overflow-y: hidden;
+    padding: 0 0 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .timeline {
+    flex-direction: row; gap: 0; min-width: max-content;
+    padding: 8px 12px;
+  }
+  .timeline::before {
+    left: 12px; right: 12px; top: 20px; height: 1px; width: auto;
+  }
+  .tl-node {
+    flex-direction: column; align-items: center;
+    padding: 8px 10px; border-left: none; border-top: 3px solid transparent;
+    min-width: 62px; gap: 8px;
+  }
+  .tl-node.active { border-top-color: var(--green); border-left-color: transparent; }
+  .tl-info { text-align: center; }
+  .tl-info .tl-label { font-size: 12px; }
+  .tl-info .tl-date { font-size: 10px; }
+  .tl-info .tl-spots { display: none; }
+  .tl-dot { width: 34px; height: 34px; font-size: 14px; }
+  #map-wrap { flex: 1; }
+  .day-info-bar { bottom: 12px; padding: 10px 14px; }
+  .day-info-bar h3 { font-size: 12px; }
+  .legend { bottom: 12px; right: 8px; padding: 8px 10px; }
+  .mode-btn { padding: 8px 14px; font-size: 12px; }
+  .sidebar-footer { padding: 8px 12px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- ═══════════ SIDEBAR ═══════════ -->
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <div class="badge">2026 国庆 · 9/25 → 10/5</div>
+      <h2>巴厘岛 + 伊真火山</h2>
+      <div class="sub">11天 · 点击日期查看当日路线</div>
+    </div>
+    <div class="timeline-wrap" id="timeline-wrap">
+      <div class="timeline" id="timeline"></div>
+    </div>
+    <div class="sidebar-footer">
+      <span>📍 7站 · 新加坡→水明漾→乌布→伊真→佩妮达→蓝梦岛→返程</span>
+      <a href="https://elsewherrre.github.io/travel-pages/bali-ijen-11day.html" target="_blank">完整行程 →</a>
+    </div>
+  </div>
+
+  <!-- ═══════════ MAP ═══════════ -->
+  <div id="map-wrap">
+    <div id="map"></div>
+    <div class="map-overlay-top" id="mode-toggle">
+      <button class="mode-btn" data-mode="driving">🚗 驾车</button>
+      <button class="mode-btn active" data-mode="combined">🗺️ 综合</button>
+      <button class="mode-btn" data-mode="walking">🚶 步行</button>
+    </div>
+    <div class="day-info-bar" id="day-info">
+      <h3 id="day-info-title">选择左侧日期查看路线</h3>
+      <div class="spots-list" id="day-info-spots"></div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-line" style="background:#4d9fff;"></div> 驾车</div>
+      <div class="legend-item"><div class="legend-dash" style="background:var(--green-glow);border:1px dashed var(--green-glow);"></div> 步行</div>
+      <div class="legend-item"><div style="width:10px;height:10px;border-radius:50%;background:var(--green);"></div> 起点</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════ TRANSPARENT DOT BASE64 ═══════════
+const DOT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+
+// ═══════════ DAY DATA ═══════════
+const DAYS = [
+  {
+    id: 'd0', date: '9/26', dow: '周五', icon: '🇸🇬', label: '新加坡转机', spots: '樟宜→滨海湾→牛车水→甘榜格南→星耀樟宜',
+    center: [1.337, 103.88], zoom: 11,
+    points: [
+      { n:1, name:'樟宜机场', lat:1.3644, lng:103.9915, type:'start' },
+      { n:2, name:'滨海湾鱼尾狮', lat:1.2869, lng:103.8545, type:'poi' },
+      { n:3, name:'牛车水·麦士威', lat:1.2835, lng:103.8440, type:'poi' },
+      { n:4, name:'甘榜格南·哈芝巷', lat:1.3026, lng:103.8596, type:'poi' },
+      { n:5, name:'星耀樟宜', lat:1.3602, lng:103.9897, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,true], [2,3,false], [3,4,false] ]
+  },
+  {
+    id: 'd1', date: '9/27', dow: '周六', icon: '🏖️', label: '水明漾·抵达', spots: 'DPS机场→酒店→Double Six 日落',
+    center: [-8.72, 115.16], zoom: 12,
+    points: [
+      { n:1, name:'DPS 机场', lat:-8.7481, lng:115.1672, type:'start' },
+      { n:2, name:'Seminyak 酒店区', lat:-8.6906, lng:115.1560, type:'poi' },
+      { n:3, name:'Double Six Beach', lat:-8.6889, lng:115.1512, type:'poi' },
+      { n:4, name:'沙滩日落豆袋椅', lat:-8.6895, lng:115.1520, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,true], [2,3,true] ]
+  },
+  {
+    id: 'd2', date: '9/28', dow: '周日', icon: '🛕', label: '乌鲁瓦图·悬崖', spots: 'Uluwatu→Padang Padang→Jimbaran海鲜',
+    center: [-8.80, 115.12], zoom: 12,
+    points: [
+      { n:1, name:'Seminyak 出发', lat:-8.6906, lng:115.1560, type:'start' },
+      { n:2, name:'Uluwatu Temple', lat:-8.8291, lng:115.0849, type:'poi' },
+      { n:3, name:'Padang Padang Beach', lat:-8.8106, lng:115.1016, type:'poi' },
+      { n:4, name:'Single Fin 悬崖酒吧', lat:-8.8163, lng:115.0920, type:'poi' },
+      { n:5, name:'Jimbaran 海鲜沙滩', lat:-8.7805, lng:115.1592, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,false], [2,3,true], [3,4,false] ]
+  },
+  {
+    id: 'd3', date: '9/29', dow: '周一', icon: '🏄', label: 'Canggu·冲浪', spots: 'Batu Bolong→稻田咖啡馆→La Brisa日落',
+    center: [-8.67, 115.14], zoom: 13,
+    points: [
+      { n:1, name:'冲浪体验课·Batu Bolong', lat:-8.6537, lng:115.1291, type:'start' },
+      { n:2, name:'Crate Cafe', lat:-8.6550, lng:115.1340, type:'poi' },
+      { n:3, name:'Penny Lane', lat:-8.6575, lng:115.1364, type:'poi' },
+      { n:4, name:'La Brisa 海滩俱乐部', lat:-8.6570, lng:115.1280, type:'end' },
+    ],
+    segments: [ [0,1,true], [1,2,true], [2,3,true] ]
+  },
+  {
+    id: 'd4', date: '9/30', dow: '周二', icon: '🌾', label: '乌布·梯田', spots: 'Seminyak→Tegallalang→圣泉寺→Ubud Market',
+    center: [-8.46, 115.27], zoom: 11,
+    points: [
+      { n:1, name:'Seminyak 出发', lat:-8.6906, lng:115.1560, type:'start' },
+      { n:2, name:'乌布稻田酒店', lat:-8.5069, lng:115.2624, type:'poi' },
+      { n:3, name:'Tegallalang 梯田', lat:-8.4313, lng:115.2800, type:'poi' },
+      { n:4, name:'Tirta Empul 圣泉寺', lat:-8.4151, lng:115.3150, type:'poi' },
+      { n:5, name:'Ubud Art Market', lat:-8.5071, lng:115.2624, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,false], [2,3,false], [3,4,false] ]
+  },
+  {
+    id: 'd5', date: '10/1', dow: '周三', icon: '🐒', label: '乌布·猴林→伊真', spots: '圣猴森林→山脊漫步→渡轮→巴纽旺宜',
+    center: [-8.40, 114.60], zoom: 9,
+    points: [
+      { n:1, name:'Sacred Monkey Forest', lat:-8.5188, lng:115.2590, type:'start' },
+      { n:2, name:'Campuhan Ridge Walk', lat:-8.5021, lng:115.2619, type:'poi' },
+      { n:3, name:'🚗 乌布→Gilimanuk码头', lat:-8.1615, lng:114.4325, type:'poi' },
+      { n:4, name:'⛴️ Ketapang渡轮口', lat:-8.1430, lng:114.4010, type:'poi' },
+      { n:5, name:'巴纽旺宜酒店', lat:-8.1553, lng:114.4066, type:'end' },
+    ],
+    segments: [ [0,1,true], [1,2,false], [2,3,false] ]
+  },
+  {
+    id: 'd6', date: '10/2', dow: '周四', icon: '🔥', label: '伊真·蓝火', spots: '凌晨登山→蓝火→火山湖日出→返巴厘',
+    center: [-8.10, 114.32], zoom: 11,
+    points: [
+      { n:1, name:'巴纽旺宜酒店(出发)', lat:-8.1553, lng:114.4066, type:'start' },
+      { n:2, name:'Paltuding 登山口', lat:-8.0586, lng:114.2413, type:'poi' },
+      { n:3, name:'Ijen Crater 蓝火', lat:-8.0580, lng:114.2420, type:'poi' },
+      { n:4, name:'火山湖日出观景', lat:-8.0575, lng:114.2415, type:'poi' },
+      { n:5, name:'返回巴厘岛 Sanur', lat:-8.6906, lng:115.1560, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,true], [2,3,true], [0,4,false] ]
+  },
+  {
+    id: 'd7', date: '10/3', dow: '周五', icon: '🦖', label: '佩妮达·悬崖', spots: 'Sanur快船→Kelingking→Angel Billabong→Crystal Bay',
+    center: [-8.73, 115.48], zoom: 11,
+    points: [
+      { n:1, name:'Sanur 码头', lat:-8.6753, lng:115.2634, type:'start' },
+      { n:2, name:'Penida 码头(快船45min)', lat:-8.6930, lng:115.5245, type:'poi' },
+      { n:3, name:'Kelingking 精灵坠崖', lat:-8.7498, lng:115.4600, type:'poi' },
+      { n:4, name:'Angel Billabong', lat:-8.7358, lng:115.4323, type:'poi' },
+      { n:5, name:'Crystal Bay 浮潜', lat:-8.7154, lng:115.4456, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,false], [2,3,false], [3,4,true] ]
+  },
+  {
+    id: 'd8', date: '10/4', dow: '周六', icon: '🌊', label: '蓝梦岛·恶魔泪', spots: 'Penida→Lembongan→Devil Tear→Dream Beach',
+    center: [-8.69, 115.45], zoom: 13,
+    points: [
+      { n:1, name:'Penida 码头出发', lat:-8.6930, lng:115.5245, type:'start' },
+      { n:2, name:'Jungutbatu 码头(20min)', lat:-8.6758, lng:115.4454, type:'poi' },
+      { n:3, name:"Devil's Tear 恶魔的眼泪", lat:-8.6806, lng:115.4408, type:'poi' },
+      { n:4, name:'Dream Beach 长滩日落', lat:-8.6773, lng:115.4472, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,true], [2,3,true] ]
+  },
+  {
+    id: 'd9', date: '10/5', dow: '周日', icon: '✈️', label: '浮潜·返程', spots: 'Manta Bay浮潜→Sanur→DPS机场21:40起飞',
+    center: [-8.72, 115.33], zoom: 11,
+    points: [
+      { n:1, name:'Lembongan 酒店出发', lat:-8.6758, lng:115.4454, type:'start' },
+      { n:2, name:'Manta Bay 浮潜', lat:-8.7100, lng:115.4500, type:'poi' },
+      { n:3, name:'Sanur 码头(快船30min)', lat:-8.6753, lng:115.2634, type:'poi' },
+      { n:4, name:'DPS 机场 21:40起飞', lat:-8.7481, lng:115.1672, type:'end' },
+    ],
+    segments: [ [0,1,false], [1,2,false], [2,3,false] ]
+  }
+];
+
+// ═══════════ INIT MAP ═══════════
+const map = new TMap.Map('map', {
+  center: new TMap.LatLng(-8.50, 115.20),
+  zoom: 9,
+  mapStyleId: 'style8',
+  minZoom: 4, maxZoom: 17,
+  showControl: false,
+});
+// Remove default controls for clean look
+setTimeout(() => {
+  const controls = document.querySelectorAll('.tmap-zoom-control, .tmap-copyright, .tmap-logo');
+  controls.forEach(el => el.style.display = 'none');
+}, 500);
+
+let currentDay = null;
+let currentMode = 'combined';
+let markerLayer = null;
+let polylineLayer = null;
+let infoWindow = null;
+
+// ═══════════ BUILD TIMELINE ═══════════
+const tl = document.getElementById('timeline');
+const tlWrap = document.getElementById('timeline-wrap');
+DAYS.forEach((day, idx) => {
+  const node = document.createElement('div');
+  node.className = 'tl-node';
+  node.dataset.dayId = day.id;
+  node.innerHTML = `
+    <div class="tl-dot">
+      ${day.icon}
+      <div class="tl-num">${idx+1}</div>
+    </div>
+    <div class="tl-info">
+      <div class="tl-date">${day.date} · ${day.dow}</div>
+      <div class="tl-label">${day.label}</div>
+      <div class="tl-spots">${day.spots}</div>
+    </div>
+  `;
+  node.addEventListener('click', () => selectDay(day.id));
+  tl.appendChild(node);
+});
+
+// ═══════════ MODE TOGGLE ═══════════
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMode = btn.dataset.mode;
+    if (currentDay) renderDay(currentDay);
+  });
+});
+
+// ═══════════ SELECT DAY ═══════════
+function selectDay(dayId) {
+  const day = DAYS.find(d => d.id === dayId);
+  if (!day) return;
+  currentDay = day;
+
+  // Update timeline UI
+  document.querySelectorAll('.tl-node').forEach(n => {
+    n.classList.toggle('active', n.dataset.dayId === dayId);
+  });
+
+  // Scroll to active node
+  const activeNode = document.querySelector(`.tl-node[data-day-id="${dayId}"]`);
+  if (activeNode) {
+    if (window.innerWidth <= 768) {
+      activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    } else {
+      activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  // Update info bar
+  document.getElementById('day-info-title').textContent = `${day.date} ${day.dow} · ${day.label}`;
+  const spotsEl = document.getElementById('day-info-spots');
+  spotsEl.innerHTML = day.points.map((p, i) =>
+    `<span class="spot-tag">${i===0?'⭑':''} ${p.name}</span>`
+  ).join('');
+
+  // Render on map
+  renderDay(day);
+}
+
+// ═══════════ RENDER DAY ═══════════
+function renderDay(day) {
+  // Clear old layers
+  if (markerLayer) { markerLayer.setMap(null); markerLayer = null; }
+  if (polylineLayer) { polylineLayer.setMap(null); polylineLayer = null; }
+  if (infoWindow) { infoWindow.close(); infoWindow = null; }
+
+  // Animate map
+  map.panTo(new TMap.LatLng(day.center[0], day.center[1]), { duration: 600 });
+  setTimeout(() => map.setZoom(day.zoom), 300);
+
+  // Build marker geometries
+  const markerStyles = {
+    'start': new TMap.MarkerStyle({
+      width: 1, height: 1, anchor: { x: 0.5, y: 0.5 }, src: DOT,
+      color: '#fff', size: 13, fontWeight: '700',
+      backgroundColor: '#5d8a5e', backgroundBorderRadius: 14,
+      backgroundWidth: 28, backgroundHeight: 28,
+      direction: 'center',
+    }),
+    'poi': new TMap.MarkerStyle({
+      width: 1, height: 1, anchor: { x: 0.5, y: 0.5 }, src: DOT,
+      color: '#e0e0e0', size: 11, fontWeight: '600',
+      backgroundColor: '#1a1a1a', backgroundBorderRadius: 13,
+      backgroundWidth: 26, backgroundHeight: 26,
+      borderColor: '#5d8a5e', borderWidth: 1.5,
+      direction: 'center',
+    }),
+    'end': new TMap.MarkerStyle({
+      width: 1, height: 1, anchor: { x: 0.5, y: 0.5 }, src: DOT,
+      color: '#fff', size: 13, fontWeight: '700',
+      backgroundColor: '#c9a96e', backgroundBorderRadius: 14,
+      backgroundWidth: 28, backgroundHeight: 28,
+      direction: 'center',
+    }),
+  };
+
+  const markerGeoms = day.points.map((p, i) => ({
+    id: `m${i}`,
+    styleId: p.type,
+    position: new TMap.LatLng(p.lat, p.lng),
+    content: String(p.n),
+    properties: { name: p.name, num: p.n },
+  }));
+
+  markerLayer = new TMap.MultiMarker({
+    map, styles: markerStyles, geometries: markerGeoms,
+  });
+
+  // Markers click → info window
+  markerLayer.on('click', (e) => {
+    if (infoWindow) infoWindow.close();
+    const pos = e.geometry.position;
+    const name = e.geometry.properties.name;
+    const num = e.geometry.properties.num;
+    infoWindow = new TMap.InfoWindow({
+      map,
+      position: pos,
+      offset: { x: 0, y: -20 },
+      content: `<div style="background:#131313;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid #262626;white-space:nowrap;">${num}. ${name}</div>`,
+    });
+    infoWindow.open();
+  });
+
+  // Build polyline geometries
+  const isWalking = (segIdx) => {
+    const seg = day.segments[segIdx];
+    if (!seg) return false;
+    return seg[2]; // seg[2] = isWalking boolean
+  };
+
+  if (day.segments && day.segments.length > 0) {
+    const polyGeoms = [];
+
+    if (currentMode === 'combined') {
+      // Combined: split into driving vs walking segments
+      const walkPaths = [];
+      const drivePaths = [];
+
+      day.segments.forEach(seg => {
+        const p1 = day.points[seg[0]];
+        const p2 = day.points[seg[1]];
+        if (seg[2]) {
+          walkPaths.push([new TMap.LatLng(p1.lat, p1.lng), new TMap.LatLng(p2.lat, p2.lng)]);
+        } else {
+          drivePaths.push([new TMap.LatLng(p1.lat, p1.lng), new TMap.LatLng(p2.lat, p2.lng)]);
+        }
+      });
+
+      if (drivePaths.length > 0) {
+        polyGeoms.push({ id: 'drive', styleId: 'drive', paths: drivePaths });
+      }
+      if (walkPaths.length > 0) {
+        polyGeoms.push({ id: 'walk', styleId: 'walk', paths: walkPaths });
+      }
+    } else if (currentMode === 'walking') {
+      // Walking mode: all segments as walking style
+      const allPaths = day.segments.map(seg => {
+        const p1 = day.points[seg[0]];
+        const p2 = day.points[seg[1]];
+        return [new TMap.LatLng(p1.lat, p1.lng), new TMap.LatLng(p2.lat, p2.lng)];
+      });
+      polyGeoms.push({ id: 'all', styleId: 'walk', paths: allPaths });
+    } else {
+      // Driving mode: all segments as driving style
+      const allPaths = day.segments.map(seg => {
+        const p1 = day.points[seg[0]];
+        const p2 = day.points[seg[1]];
+        return [new TMap.LatLng(p1.lat, p1.lng), new TMap.LatLng(p2.lat, p2.lng)];
+      });
+      polyGeoms.push({ id: 'all', styleId: 'drive', paths: allPaths });
+    }
+
+    const polyStyles = {
+      'drive': new TMap.PolylineStyle({
+        color: '#4d9fff', width: 5, borderWidth: 0,
+        lineCap: 'round', showArrow: true,
+        arrowOptions: { width: 6, height: 5, space: 60, animSpeed: 30 },
+      }),
+      'walk': new TMap.PolylineStyle({
+        color: '#7ab07c', width: 3, borderWidth: 0,
+        lineCap: 'round', dashArray: [10, 6],
+      }),
+    };
+
+    polylineLayer = new TMap.MultiPolyline({
+      map, styles: polyStyles, geometries: polyGeoms,
+    });
+  }
+}
+
+// ═══════════ INIT ═══════════
+// Default select first day
+setTimeout(() => selectDay('d1'), 800);
+</script>
+
+</body>
+</html>
