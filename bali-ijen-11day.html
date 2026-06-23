@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巴厘岛+伊真 · 11天火山海岛</title>
+<style>
+  :root {
+    --bg: #0b0b0b;
+    --card: #131313;
+    --card-hover: #1a1a1a;
+    --text: #e0e0e0;
+    --muted: #888;
+    --green: #5d8a5e;
+    --green-glow: #7ab07c;
+    --gold: #c9a96e;
+    --border: #262626;
+    --tag-bg: #141d14;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Noto Sans SC", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 64px 0 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero .badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    background: rgba(93,138,94,0.15);
+    color: var(--green-glow);
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .hero .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+
+  /* flight bar */
+  .flight-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 32px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .flight-node { text-align: center; }
+  .flight-node .code { font-size: 26px; font-weight: 700; color: #fff; }
+  .flight-node .time { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .flight-node .label { font-size: 11px; color: var(--green); margin-top: 2px; }
+  .flight-sep { color: var(--green); font-size: 18px; }
+  .flight-tag {
+    background: rgba(201,169,110,0.12);
+    color: var(--gold);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .flight-tag small { display: block; font-weight: 400; font-size: 11px; color: var(--muted); }
+
+  /* ── Route strip ── */
+  .route-strip {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    margin: 48px 0 36px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .route-strip::-webkit-scrollbar { display: none; }
+  .route-stop {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 20px 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-right: none;
+    position: relative;
+  }
+  .route-stop:last-child { border-right: 1px solid var(--border); border-radius: 0 10px 10px 0; }
+  .route-stop:first-child { border-radius: 10px 0 0 10px; }
+  .route-stop .day-range { font-size: 11px; color: var(--green-glow); margin-bottom: 6px; letter-spacing: 0.5px; }
+  .route-stop .stop-name { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .route-stop .stop-nights { font-size: 12px; color: var(--muted); }
+
+  /* ── Section ── */
+  .section { padding: 64px 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+  .section-header {
+    margin-bottom: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .section-num {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(93,138,94,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: var(--green-glow);
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 28px; font-weight: 700; color: #fff; }
+  .section-header .tagline { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+  /* ── Hero image per section ── */
+  .section-hero-img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) { .section-hero-img { height: 240px; } }
+
+  /* ── Day cards grid ── */
+  .day-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 768px) { .day-grid { grid-template-columns: 1fr; } }
+  .day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .day-card .dow {
+    font-size: 11px;
+    color: var(--green-glow);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .day-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .day-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── Gallery ── */
+  .gallery {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .gallery img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .gallery .g-main { grid-row: 1 / 3; }
+  @media (max-width: 768px) {
+    .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; }
+    .gallery .g-main { grid-row: 1; grid-column: 1 / 3; }
+  }
+
+  /* ── Small bonus card ── */
+  .bonus-card {
+    background: var(--card);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  @media (max-width: 768px) { .bonus-card { flex-direction: column; } }
+  .bonus-card img {
+    width: 280px; height: 180px;
+    object-fit: cover; border-radius: 10px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) { .bonus-card img { width: 100%; height: 200px; } }
+  .bonus-card h4 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .bonus-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── Budget ── */
+  .budget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 768px) { .budget-grid { grid-template-columns: 1fr; } }
+  .budget-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .budget-card .amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 8px 0 4px;
+  }
+  .budget-card .label {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ── Tags ── */
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .tag {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    background: var(--tag-bg);
+    color: var(--green-glow);
+  }
+
+  /* ── Tips ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 768px) { .tips-grid { grid-template-columns: 1fr 1fr; } }
+  .tip-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 13px;
+  }
+  .tip-card .icon { font-size: 20px; margin-bottom: 8px; }
+  .tip-card h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .tip-card p { color: var(--muted); line-height: 1.5; }
+
+  .footer {
+    text-align: center; padding: 40px 0 32px;
+    color: var(--muted); font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="badge">2026 国庆 · 9/25 → 10/6</div>
+  <h1>巴厘岛 + 伊真火山</h1>
+  <div class="subtitle">11 天 · 海滩 → 稻田 → 蓝火 → 跳岛</div>
+
+  <div class="flight-bar">
+    <div class="flight-node">
+      <div class="code">HKG</div>
+      <div class="time">9/25 20:45</div>
+    </div>
+    <div class="flight-sep">→</div>
+    <div class="flight-node">
+      <div class="code">SIN</div>
+      <div class="time">9/26 00:45</div>
+      <div class="label">中转 20.5h</div>
+    </div>
+    <div class="flight-sep">→</div>
+    <div class="flight-node">
+      <div class="code">DPS</div>
+      <div class="time">9/27 00:05</div>
+    </div>
+    <div class="flight-tag">
+      HK$5,156
+      <small>两人往返 · Scoot</small>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ROUTE STRIP ═══════════ -->
+<div class="container">
+  <div class="route-strip">
+    <div class="route-stop">
+      <div class="day-range">9/26</div>
+      <div class="stop-name">新加坡</div>
+      <div class="stop-nights">转机一日</div>
+    </div>
+    <div class="route-stop">
+      <div class="day-range">9/27 — 29</div>
+      <div class="stop-name">水明漾</div>
+      <div class="stop-nights">3晚</div>
+    </div>
+    <div class="route-stop">
+      <div class="day-range">9/30 — 10/1</div>
+      <div class="stop-name">乌布</div>
+      <div class="stop-nights">2晚</div>
+    </div>
+    <div class="route-stop">
+      <div class="day-range">10/1 — 2</div>
+      <div class="stop-name">伊真火山</div>
+      <div class="stop-nights">2天1夜</div>
+    </div>
+    <div class="route-stop">
+      <div class="day-range">10/3 — 4</div>
+      <div class="stop-name">佩妮达岛</div>
+      <div class="stop-nights">1晚</div>
+    </div>
+    <div class="route-stop">
+      <div class="day-range">10/5</div>
+      <div class="stop-name">自由日</div>
+      <div class="stop-nights">返程</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SINGAPORE ═══════════ -->
+<div class="container" style="margin-bottom: 48px;">
+  <div class="bonus-card">
+    <img src="images/Singapore_Marina_Bay_skyline_a_2026-06-23T07-41-00.png" alt="Singapore Marina Bay">
+    <div>
+      <h4>🇸🇬 新加坡转机 · 9/26 凌晨→傍晚</h4>
+      <p>
+        20.5 小时中转，足够进城吃玩。<br>
+        樟宜 → MRT 滨海湾鱼尾狮 + 超级树（免费）→ 牛车水麦士威熟食中心海南鸡饭 → 甘榜格南哈芝巷 → 傍晚回星耀樟宜逛雨漩涡 → 21:15 飞巴厘岛。<br>
+        <span style="color:var(--green-glow);">中国护照新加坡过境免签 96h · MRT 全日 S$10/人 · 餐饮 ¥80-150/人</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 1. SEMINYAK ═══════════ -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <h2>水明漾 · 海滩节奏</h2>
+        <div class="tagline">9/27 — 29 · 3晚 · 南巴厘最时髦的海岸线</div>
+      </div>
+    </div>
+
+    <img class="section-hero-img" src="images/Canggu_Bali_Batu_Bolong_beach__2026-06-23T08-00-28.png" alt="Canggu Beach">
+
+    <div class="day-grid">
+      <div class="day-card">
+        <div class="dow">Day 1 · 9/27 周六</div>
+        <h4>抵达 + 海滩初探</h4>
+        <p>凌晨 00:05 抵 DPS，入住 Seminyak 酒店补觉。午后 Double Six Beach 日落啤酒，沙滩豆袋椅躺平，晚上海鲜烧烤 — 给身体一个缓冲。</p>
+        <div class="tag-row"><span class="tag">Double Six Beach</span><span class="tag">沙滩日落</span></div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Day 2 · 9/28 周日</div>
+        <h4>乌鲁瓦图悬崖 + 火舞</h4>
+        <p>上午 Uluwatu Temple 悬崖庙俯瞰印度洋。午后 Padang Padang 海滩穿岩洞入沙滩。日落时刻悬崖剧场 Kecak Fire Dance — 火与舞在暮色中烧。</p>
+        <div class="tag-row"><span class="tag">Uluwatu</span><span class="tag">Kecak 火舞</span><span class="tag">Jimbaran 海鲜</span></div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Day 3 · 9/29 周一</div>
+        <h4>Canggu 冲浪日</h4>
+        <p>上午冲浪体验课 2h（Batu Bolong 初学者友好）。午后田间咖啡馆：Crate Cafe 或 Penny Lane 吃 brunch。傍晚 La Brisa 海滩俱乐部日落，Seminyak 最后一夜。</p>
+        <div class="tag-row"><span class="tag">冲浪体验课</span><span class="tag">稻田咖啡馆</span></div>
+      </div>
+      <div class="day-card" style="background:rgba(93,138,94,0.05);border-color:rgba(93,138,94,0.2);">
+        <div style="font-size:13px;color:var(--green-glow);">
+          <strong>水明漾高光时刻</strong><br><br>
+          ▸ 对冲印度洋的沙滩日落，每天不重样<br>
+          ▸ Uluwatu 悬崖上的 Kecak 火舞 — 巴厘岛最震撼的演出<br>
+          ▸ 冲浪初体验：Canggu 浪点对新手最友好
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 2. UBUD ═══════════ -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <h2>乌布 · 稻田与文化</h2>
+        <div class="tagline">9/30 — 10/1 · 2晚 · 巴厘岛的精神腹地</div>
+      </div>
+    </div>
+
+    <img class="section-hero-img" src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Tegalalang Rice Terraces">
+
+    <div class="gallery">
+      <img class="g-main" src="images/Ubud_Sacred_Monkey_Forest_Bali_2026-06-23T08-00-27.png" alt="Monkey Forest">
+      <img src="images/Uluwatu_Temple_perched_on_stee_2026-06-23T07-02-22.png" alt="Temples">
+      <img src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Rice Terraces">
+    </div>
+
+    <div class="day-grid" style="margin-top:24px;">
+      <div class="day-card">
+        <div class="dow">Day 4 · 9/30 周二</div>
+        <h4>梯田 + 圣泉寺</h4>
+        <p>上午 Tegallalang 梯田 — 巴厘岛明信片画面，高空秋千荡进稻田海洋。下午 Tirta Empul 圣泉寺，千年圣水池可体验洗礼。傍晚 Ubud Art Market 淘手工蜡染。</p>
+        <div class="tag-row"><span class="tag">Tegallalang</span><span class="tag">圣泉寺</span></div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Day 5 · 10/1 周三</div>
+        <h4>圣猴森林 + 傍晚出发</h4>
+        <p>上午 Sacred Monkey Forest — 古庙废墟 + 长尾猕猴在丛林光影中穿行。午后 Campuhan Ridge Walk 山脊漫步。16:00 包车出发，坐渡轮去巴纽旺宜，入住酒店休整，凌晨登山。</p>
+        <div class="tag-row"><span class="tag">猴林</span><span class="tag">🚗 出发去伊真</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 3. IJEN ═══════════ -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <h2>伊真火山 · 蓝火奇观</h2>
+        <div class="tagline">10/1 傍晚 — 10/2 傍晚 · 2天1夜 · 全球唯二蓝色火焰</div>
+      </div>
+    </div>
+
+    <img class="section-hero-img" src="images/Kawah_Ijen_volcano_blue_fire_p_2026-06-23T07-41-01.png" alt="Ijen Blue Fire">
+
+    <div class="gallery">
+      <img class="g-main" src="images/Kawah_Ijen_crater_lake_panoram_2026-06-23T08-00-27.png" alt="Ijen Crater Lake">
+      <img src="images/Kawah_Ijen_volcano_blue_fire_p_2026-06-23T07-41-01.png" alt="Blue Fire">
+      <img src="images/Kawah_Ijen_crater_lake_panoram_2026-06-23T08-00-27.png" alt="Ijen Panorama">
+    </div>
+
+    <div class="day-grid" style="margin-top:24px;">
+      <div class="day-card">
+        <div class="dow">Day 5 晚 → Day 6</div>
+        <h4>凌晨登伊真</h4>
+        <p>凌晨 1:00 从酒店出发，2:00 到达 Paltuding 登山口。徒步 1.5-2h 到达火山口边缘。黑暗中硫磺燃烧的蓝色火焰在眼前跳动 — 地球上只有冰岛和这里能看到。</p>
+        <div class="tag-row"><span class="tag">蓝火</span><span class="tag">防毒面具必备</span></div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Day 6 清晨 → 傍晚</div>
+        <h4>火山湖日出 + 返程</h4>
+        <p>天光渐亮，世界最大酸性火山湖显露真容 — 碧绿色湖面在火山口内蒸腾。日出后下山，12:00 前回到酒店。午后坐渡轮回巴厘岛，晚上抵达休整。</p>
+        <div class="tag-row"><span class="tag">火山湖</span><span class="tag">🚗 返回巴厘岛</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 4. PENIDA ═══════════ -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <h2>佩妮达岛 · 跳岛</h2>
+        <div class="tagline">10/3 — 4 · 2天1晚 · 巴厘岛最野的海岸线</div>
+      </div>
+    </div>
+
+    <img class="section-hero-img" src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking Beach">
+
+    <div class="gallery">
+      <img class="g-main" src="images/Diamond_Beach_Nusa_Penida_Bali_2026-06-23T07-03-49.png" alt="Diamond Beach">
+      <img src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking">
+      <img src="images/Diamond_Beach_Nusa_Penida_Bali_2026-06-23T07-03-49.png" alt="Diamond">
+    </div>
+
+    <div class="day-grid" style="margin-top:24px;">
+      <div class="day-card">
+        <div class="dow">Day 8 · 10/3 周五</div>
+        <h4>佩妮达西线</h4>
+        <p>Sanur 快船 45min 登岛。Kelingking 精灵坠崖 — T-Rex 形状悬崖直插碧海。Angel's Billabong 天然无边泳池 + Broken Beach 断桥拱门。傍晚 Crystal Bay 浮潜，Manta Ray 出没季。</p>
+        <div class="tag-row"><span class="tag">Kelingking</span><span class="tag">浮潜</span></div>
+      </div>
+      <div class="day-card">
+        <div class="dow">Day 9 · 10/4 周六</div>
+        <h4>佩妮达东线 → 回本岛</h4>
+        <p>Diamond Beach 钻石海滩 — 沿峭壁楼梯下到白沙滩。Atuh Beach 双湾海景。午后快船回 Sanur，晚上回到 Seminyak 休整。</p>
+        <div class="tag-row"><span class="tag">Diamond Beach</span><span class="tag">Atuh Beach</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 5. FREE DAY ═══════════ -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <h2>自由日 · 收尾</h2>
+        <div class="tagline">10/5 周日 · 最后一天 · 21:40 起飞</div>
+      </div>
+    </div>
+
+    <img class="section-hero-img" src="images/Seminyak_Beach_Bali_sunset__co_2026-06-23T07-05-45.png" alt="Seminyak Sunset" style="height:300px;">
+
+    <div class="day-grid">
+      <div class="day-card">
+        <h4>惬意收尾</h4>
+        <p>上午睡到自然醒，泳池最后泡一会。中午吃一顿好的告别餐。下午 18:00 轻松前往机场。21:40 起飞，经新加坡 10/6 中午抵港。</p>
+      </div>
+      <div class="day-card" style="background:rgba(93,138,94,0.05);border-color:rgba(93,138,94,0.2);">
+        <div style="font-size:13px;color:var(--green-glow);">
+          <strong>为什么多留一天？</strong><br><br>
+          伊真夜爬后身体需要恢复，佩妮达两天也不轻松。最后一天不安排活动，就是逛、吃、等飞机。比从佩妮达直奔机场从容太多。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ BUDGET ═══════════ -->
+<div class="section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">¥</div>
+      <div>
+        <h2>预算 · 两人合计</h2>
+        <div class="tagline">¥12,000 — 25,000 内 · 中位 ¥19,220</div>
+      </div>
+    </div>
+
+    <div class="budget-grid">
+      <div class="budget-card">
+        <div class="label">✈️ 国际机票</div>
+        <div class="amount">¥4,800</div>
+        <div class="label">HKG ⇄ DPS 两人含税</div>
+      </div>
+      <div class="budget-card">
+        <div class="label">🏨 住宿 9 晚</div>
+        <div class="amount">¥5,000</div>
+        <div class="label">Seminyak 3 + Ubud 2 + Ijen 1 + Penida 1 + 其他 2</div>
+      </div>
+      <div class="budget-card">
+        <div class="label">🔥 Ijen 两天一夜团</div>
+        <div class="amount">¥2,400</div>
+        <div class="label">含交通+渡轮+向导+防毒面具+住宿</div>
+      </div>
+      <div class="budget-card">
+        <div class="label">🍜 餐饮 9 天</div>
+        <div class="amount">¥3,200</div>
+        <div class="label">含 fine dining 1-2 顿</div>
+      </div>
+      <div class="budget-card">
+        <div class="label">🚗 交通 + ⛴️ 跳岛</div>
+        <div class="amount">¥2,600</div>
+        <div class="label">包车+Grab+快船+佩妮达岛上</div>
+      </div>
+      <div class="budget-card">
+        <div class="label">🏄 活动 + 杂费</div>
+        <div class="amount">¥1,220</div>
+        <div class="label">冲浪课+门票+Spa+SIM+新加坡</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TIPS ═══════════ -->
+<div class="section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">📋</div>
+      <div>
+        <h2>落地贴士</h2>
+      </div>
+    </div>
+
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="icon">📱</div>
+        <h4>App</h4>
+        <p>Gojek + Grab 都装，南部/乌布覆盖好。佩妮达几乎叫不到车，提前包车或租摩托。</p>
+      </div>
+      <div class="tip-card">
+        <div class="icon">💰</div>
+        <h4>换汇</h4>
+        <p>机场只换 ¥500 应急。Seminyak/Ubud 正规兑换点汇率最好。BCA ATM 银联可取。</p>
+      </div>
+      <div class="tip-card">
+        <div class="icon">🎒</div>
+        <h4>必带</h4>
+        <p>运动鞋（伊真徒步）+ 薄外套（凌晨山顶 10°C）+ 珊瑚礁安全防晒 + 纱笼（进庙）。</p>
+      </div>
+      <div class="tip-card">
+        <div class="icon">🚤</div>
+        <h4>船票</h4>
+        <p>Sanur→Penida 快船 IDR 150K/人，12Go.asia 或酒店前台提前一天订。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  巴厘岛 + 伊真火山 · 2026 国庆 · elsewherrre.github.io/travel-pages
+</div>
+
+</body>
+</html>
