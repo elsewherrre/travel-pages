@@ -185,37 +185,11 @@
   }
   @media (max-width: 768px) {
     .route-map { justify-content: flex-start; padding: 0 8px 8px; }
-    .map-connector .line { width: 28px; }
+    .map-connector .line { width: 22px; }
     .map-node-dot { width: 42px; height: 42px; font-size: 16px; }
-    .map-node-wrap .map-label { font-size: 12px; }
+    .map-node-wrap .map-label { font-size: 11px; }
+    .map-node-wrap .map-date { font-size: 10px; }
   }
-
-  /* ── Route strip (compact) ── */
-  .route-strip {
-    display: flex;
-    gap: 0;
-    align-items: stretch;
-    margin: 0 0 36px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .route-strip::-webkit-scrollbar { display: none; }
-  .route-stop {
-    flex: 1;
-    min-width: 110px;
-    text-align: center;
-    padding: 16px 10px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-right: none;
-    position: relative;
-  }
-  .route-stop:last-child { border-right: 1px solid var(--border); border-radius: 0 10px 10px 0; }
-  .route-stop:first-child { border-radius: 10px 0 0 10px; }
-  .route-stop .day-range { font-size: 11px; color: var(--green-glow); margin-bottom: 6px; letter-spacing: 0.5px; }
-  .route-stop .stop-name { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-  .route-stop .stop-nights { font-size: 11px; color: var(--muted); }
 
   /* ── Booking button ── */
   .booking-btn {
@@ -322,23 +296,6 @@
   }
 
   /* ── Gallery ── */
-  .gallery {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 200px 200px;
-    gap: 12px;
-    margin-top: 24px;
-  }
-  .gallery img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  .gallery .g-main { grid-row: 1 / 3; }
-  @media (max-width: 768px) {
-    .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; }
-    .gallery .g-main { grid-row: 1; grid-column: 1 / 3; }
-  }
   .gallery-single { display: block; margin-top: 24px; }
   .gallery-single img {
     width: 100%; height: 360px;
@@ -441,9 +398,9 @@
 
 <!-- ═══════════ HERO ═══════════ -->
 <div class="hero">
-  <div class="badge">2026 国庆 · 9/25 → 10/6</div>
+  <div class="badge">2026 国庆 · 9/25 → 10/5</div>
   <h1>巴厘岛 + 伊真火山</h1>
-  <div class="subtitle">11 天 · 海滩 → 稻田 → 蓝火 → 跳岛</div>
+  <div class="subtitle">11 天 · 海滩 → 稻田 → 蓝火 → 佩妮达 → 蓝梦岛</div>
 
   <div class="flight-bar">
     <div class="flight-node">
@@ -460,6 +417,10 @@
     <div class="flight-node">
       <div class="code">DPS</div>
       <div class="time">9/27 00:05</div>
+    </div>
+    <div class="flight-node">
+      <div style="font-size:13px;color:var(--muted);">10/5 21:40</div>
+      <div class="code" style="font-size:18px;">DPS → HKG</div>
     </div>
     <div class="flight-tag">
       HK$5,156
@@ -502,17 +463,24 @@
       </div>
       <div class="map-connector"><div class="line"></div></div>
       <div class="map-node-wrap">
-        <div class="map-node-dot">🏝️</div>
-        <div class="map-label">佩妮达岛</div>
-        <div class="map-date">10/3 — 4</div>
+        <div class="map-node-dot">🦖</div>
+        <div class="map-label">佩妮达</div>
+        <div class="map-date">10/3</div>
+        <div class="map-nights">1 晚</div>
+      </div>
+      <div class="map-connector"><div class="line"></div></div>
+      <div class="map-node-wrap">
+        <div class="map-node-dot">🌊</div>
+        <div class="map-label">蓝梦岛</div>
+        <div class="map-date">10/4 — 5</div>
         <div class="map-nights">1 晚</div>
       </div>
       <div class="map-connector"><div class="line"></div></div>
       <div class="map-node-wrap">
         <div class="map-node-dot">✈️</div>
-        <div class="map-label">自由日</div>
-        <div class="map-date">10/5</div>
-        <div class="map-nights">返程</div>
+        <div class="map-label">返程</div>
+        <div class="map-date">10/5 晚</div>
+        <div class="map-nights">21:40 起飞</div>
       </div>
     </div>
   </div>
@@ -667,8 +635,8 @@
     <div class="section-header">
       <div class="section-num">4</div>
       <div class="header-right">
-        <h2>佩妮达岛 · 跳岛</h2>
-        <div class="tagline">10/3 — 4 · 2天1晚 · 巴厘岛最野的海岸线</div>
+        <h2>佩妮达岛 · 野性悬崖</h2>
+        <div class="tagline">10/3 · 1晚 · 巴厘岛最野的海岸线</div>
       </div>
       <div class="header-actions">
         <a href="https://www.booking.com/searchresults.html?ss=Nusa+Penida%2C+Bali%2C+Indonesia&amp;checkin=2026-10-03&amp;checkout=2026-10-04" target="_blank" class="booking-btn" rel="noopener">
@@ -679,55 +647,66 @@
 
     <img class="section-hero-img" src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking Beach">
 
-    <div class="gallery-single">
-      <img src="images/Diamond_Beach_Nusa_Penida_Bali_2026-06-23T07-03-49.png" alt="Diamond Beach">
-    </div>
-
-    <div class="day-grid" style="margin-top:24px;">
+    <div class="day-grid">
       <div class="day-card">
         <div class="dow">Day 7 · 10/3 周五</div>
-        <h4>佩妮达西线</h4>
-        <p>Sanur 快船 45min 登岛。Kelingking 精灵坠崖 — T-Rex 形状悬崖直插碧海。Angel's Billabong 天然无边泳池 + Broken Beach 断桥拱门。傍晚 Crystal Bay 浮潜，Manta Ray 出没季。</p>
-        <div class="tag-row"><span class="tag">Kelingking</span><span class="tag">浮潜</span></div>
+        <h4>西线精华一日</h4>
+        <p>Sanur 快船 45min 登岛。直奔 Kelingking 精灵坠崖 — T-Rex 形状悬崖直插碧海，可走下去到沙滩（45min 陡峭单程）。午后 Angel's Billabong 天然无边泳池 + Broken Beach 断桥拱门。傍晚 Crystal Bay 浮潜，Manta Ray 出没季。</p>
+        <div class="tag-row"><span class="tag">Kelingking</span><span class="tag">Angel's Billabong</span><span class="tag">浮潜</span></div>
       </div>
       <div class="day-card">
-        <div class="dow">Day 8 · 10/4 周六</div>
-        <h4>佩妮达东线 → 回本岛</h4>
-        <p>Diamond Beach 钻石海滩 — 沿峭壁楼梯下到白沙滩。Atuh Beach 双湾海景。午后快船回 Sanur，晚上回到 Seminyak 休整。</p>
-        <div class="tag-row"><span class="tag">Diamond Beach</span><span class="tag">Atuh Beach</span></div>
+        <div class="dow">Day 7 清晨（可选）</div>
+        <h4>Diamond Beach 日出</h4>
+        <p>如果体力够，日出前出发东线：Diamond Beach 钻石海滩 — 沿峭壁楼梯下到白沙滩。Atuh Beach 双湾海景。拍完照赶在午前回来，不耽误西线行程。量力而行，累了就跳过去西线慢慢玩。</p>
+        <div class="tag-row"><span class="tag">Diamond Beach</span><span class="tag">可选</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ 5. FREE DAY ═══════════ -->
+<!-- ═══════════ 5. LEMBONGAN ═══════════ -->
 <div class="section">
   <div class="container">
     <div class="section-header">
       <div class="section-num">5</div>
       <div class="header-right">
-        <h2>自由日 · 收尾</h2>
-        <div class="tagline">10/5 周日 · 最后一天 · 21:40 起飞</div>
+        <h2>蓝梦岛 · 精致收尾</h2>
+        <div class="tagline">10/4 — 5 · 1晚 · 小而美的离岛时光</div>
       </div>
       <div class="header-actions">
-        <a href="https://www.booking.com/searchresults.html?ss=Seminyak%2C+Bali%2C+Indonesia&amp;checkin=2026-10-04&amp;checkout=2026-10-05" target="_blank" class="booking-btn" rel="noopener">
-          <span class="bk-icon">B</span> 搜索水明漾酒店
+        <a href="https://www.booking.com/searchresults.html?ss=Nusa+Lembongan%2C+Bali%2C+Indonesia&amp;checkin=2026-10-04&amp;checkout=2026-10-05" target="_blank" class="booking-btn" rel="noopener">
+          <span class="bk-icon">B</span> 搜索蓝梦岛酒店
         </a>
       </div>
     </div>
 
-    <img class="section-hero-img" src="images/Seminyak_Beach_Bali_sunset__co_2026-06-23T07-05-45.png" alt="Seminyak Sunset" style="height:300px;">
+    <img class="section-hero-img" src="images/Dream_Beach_Nusa_Lembongan_Bal_2026-06-23T08-27-08.png" alt="Dream Beach Lembongan">
 
-    <div class="day-grid">
+    <div class="gallery-single">
+      <img src="images/Devils_Tear_Nusa_Lembongan_Bal_2026-06-23T07-05-15.png" alt="Devil's Tear">
+    </div>
+
+    <div class="day-grid" style="margin-top:24px;">
       <div class="day-card">
-        <h4>惬意收尾</h4>
-        <p>上午睡到自然醒，泳池最后泡一会。中午吃一顿好的告别餐。下午 18:00 轻松前往机场。21:40 起飞，经新加坡 10/6 中午抵港。</p>
+        <div class="dow">Day 8 · 10/4 周六</div>
+        <h4>抵达 + 恶魔的眼泪</h4>
+        <p>上午 Penida 快船 20min 到 Lembongan。入住后租摩托环岛。下午 Devil's Tear 恶魔的眼泪 — 巨浪冲入凹洞喷出水雾，阳光折射出彩虹。傍晚 Dream Beach 日落，Jungutbatu 海滩海鲜烧烤。</p>
+        <div class="tag-row"><span class="tag">Devil's Tear</span><span class="tag">Dream Beach</span></div>
       </div>
-      <div class="day-card" style="background:rgba(93,138,94,0.05);border-color:rgba(93,138,94,0.2);">
-        <div style="font-size:13px;color:var(--green-glow);">
-          <strong>为什么多留一天？</strong><br><br>
-          伊真夜爬后身体需要恢复，佩妮达两天也不轻松。最后一天不安排活动，就是逛、吃、等飞机。比从佩妮达直奔机场从容太多。
-        </div>
+      <div class="day-card">
+        <div class="dow">Day 9 · 10/5 周日</div>
+        <h4>浮潜 + 从容返程</h4>
+        <p>上午浮潜半日游：Manta Bay + Crystal Bay + 红树林，包船 2-3h。中午回酒店退房。14:00 快船回 Sanur（30min），Grab 去 DPS 机场（25min）。17:00 前到机场，21:40 起飞。</p>
+        <div class="tag-row"><span class="tag">浮潜</span><span class="tag">14:00 返程</span><span class="tag">21:40 起飞</span></div>
+      </div>
+    </div>
+
+    <div class="bonus-card" style="margin-top:20px;background:rgba(93,138,94,0.04);border-color:rgba(93,138,94,0.15);">
+      <div>
+        <h4 style="color:var(--green-glow);font-size:14px;">⚡ 10/5 时间线</h4>
+        <p style="font-size:13px;color:var(--muted);">
+          上午浮潜 → 12:00 午餐退房 → 14:00 Lembongan 快船 → 14:30 抵 Sanur → 15:00 Grab 出发 → 15:30 到 DPS → 21:40 起飞。全程不赶，比从佩妮达直奔机场从容得多。蓝梦到 Sanur 只有 30 分钟，是本岛周边最近的离岛。
+        </p>
       </div>
     </div>
   </div>
@@ -740,7 +719,7 @@
       <div class="section-num">¥</div>
       <div class="header-right">
         <h2>预算 · 两人合计</h2>
-        <div class="tagline">¥12,000 — 25,000 内 · 中位 ¥19,220</div>
+        <div class="tagline">¥12,000 — 25,000 内 · 中位 ¥19,500</div>
       </div>
     </div>
 
@@ -748,12 +727,12 @@
       <div class="budget-card">
         <div class="label">✈️ 国际机票</div>
         <div class="amount">¥4,800</div>
-        <div class="label">HKG ⇄ DPS 两人含税</div>
+        <div class="label">HKG ⇆ DPS 两人含税 · Scoot</div>
       </div>
       <div class="budget-card">
         <div class="label">🏨 住宿 9 晚</div>
-        <div class="amount">¥5,000</div>
-        <div class="label">Seminyak 3 + Ubud 2 + Ijen 1 + Penida 1 + 其他 2</div>
+        <div class="amount">¥5,200</div>
+        <div class="label">Seminyak 3 + Ubud 2 + Ijen 1 + 中转 1 + Penida 1 + Lembongan 1</div>
       </div>
       <div class="budget-card">
         <div class="label">🔥 Ijen 两天一夜团</div>
@@ -767,13 +746,13 @@
       </div>
       <div class="budget-card">
         <div class="label">🚗 交通 + ⛴️ 跳岛</div>
-        <div class="amount">¥2,600</div>
-        <div class="label">包车+Grab+快船+佩妮达岛上</div>
+        <div class="amount">¥2,700</div>
+        <div class="label">包车+Grab+Sanur快船+蓝梦快船+岛上租摩托</div>
       </div>
       <div class="budget-card">
         <div class="label">🏄 活动 + 杂费</div>
-        <div class="amount">¥1,220</div>
-        <div class="label">冲浪课+门票+Spa+SIM+新加坡</div>
+        <div class="amount">¥1,200</div>
+        <div class="label">冲浪课+浮潜+门票+Spa+SIM+新加坡</div>
       </div>
     </div>
   </div>
@@ -793,7 +772,7 @@
       <div class="tip-card">
         <div class="icon">📱</div>
         <h4>App</h4>
-        <p>Gojek + Grab 都装，南部/乌布覆盖好。佩妮达几乎叫不到车，提前包车或租摩托。</p>
+        <p>Gojek + Grab 都装，南部/乌布覆盖好。佩妮达和蓝梦几乎叫不到车，租摩托或包车。</p>
       </div>
       <div class="tip-card">
         <div class="icon">💰</div>
@@ -808,14 +787,14 @@
       <div class="tip-card">
         <div class="icon">🚤</div>
         <h4>船票</h4>
-        <p>Sanur→Penida 快船 IDR 150K/人，12Go.asia 或酒店前台提前一天订。</p>
+        <p>Sanur→Penida & Penida→Lembongan→Sanur 快船，12Go.asia 或酒店前台提前一天订。</p>
       </div>
     </div>
   </div>
 </div>
 
 <div class="footer">
-  巴厘岛 + 伊真火山 · 2026 国庆 · elsewherrre.github.io/travel-pages
+  巴厘岛 + 伊真火山 + 佩妮达 + 蓝梦岛 · 2026 国庆 · elsewherrre.github.io/travel-pages
 </div>
 
 </body>
