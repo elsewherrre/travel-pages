@@ -28,12 +28,15 @@
     -webkit-font-smoothing: antialiased;
   }
   .container { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
+  html, body { overflow-x: hidden; width: 100%; }
+  @media (max-width: 480px) { .container { padding: 0 14px; } }
 
   /* ── Hero ── */
   .hero {
-    padding: 48px 0 36px;
+    padding: 40px 16px 32px;
     text-align: center;
     border-bottom: 1px solid var(--border);
+    overflow: hidden;
   }
   .hero .badge {
     display: inline-block;
@@ -46,16 +49,16 @@
     margin-bottom: 12px;
   }
   .hero h1 {
-    font-size: 38px;
+    font-size: clamp(26px, 5vw, 38px);
     font-weight: 700;
     letter-spacing: -0.5px;
     color: #fff;
     margin-bottom: 6px;
   }
   .hero .subtitle {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--muted);
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
   /* flight bar */
@@ -63,18 +66,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 12px;
     flex-wrap: wrap;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 18px 28px;
+    padding: 14px 16px;
     max-width: 820px;
     margin: 0 auto;
   }
   .flight-node { text-align: center; }
-  .flight-node .code { font-size: 24px; font-weight: 700; color: #fff; }
-  .flight-node .time { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .flight-node .code { font-size: 20px; font-weight: 700; color: #fff; }
+  .flight-node .time { font-size: 11px; color: var(--muted); margin-top: 2px; }
   .flight-node .label { font-size: 10px; color: var(--green); margin-top: 1px; }
   .flight-sep { color: var(--green); font-size: 16px; }
   .flight-tag {
@@ -109,7 +112,7 @@
     z-index: 10;
   }
   .map-sidebar-header {
-    padding: 20px 18px 12px;
+    padding: 16px 14px 10px;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
@@ -234,32 +237,43 @@
   .day-info-bar {
     position: absolute;
     bottom: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 18px;
-    max-width: 420px;
-    width: calc(100% - 24px);
-    pointer-events: none;
-  }
-  .day-info-bar h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-  .day-info-bar .spots-inline { font-size: 11px; color: var(--muted); line-height: 1.5; }
-
-  .map-legend {
-    position: absolute;
-    bottom: 14px;
+    left: 12px;
     right: 12px;
     z-index: 999;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    border-radius: 12px;
+    padding: 10px 14px;
+    max-width: none;
+    pointer-events: none;
+  }
+  .day-info-bar h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .day-info-bar .spots-inline { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  .map-legend {
+    display: none; /* hide on mobile, shown on desktop */
+  }
+  @media (min-width: 769px) {
+    .day-info-bar {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      max-width: 420px;
+      padding: 12px 18px;
+    }
+    .map-legend {
+      display: flex;
+      position: absolute;
+      bottom: 14px;
+      right: 12px;
+      z-index: 999;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      flex-direction: column;
+      gap: 5px;
+    }
   }
   .map-legend-item { display: flex; align-items: center; gap: 7px; font-size: 10px; color: var(--muted); }
   .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -312,20 +326,32 @@
 
   /* ── Section ── */
   .section { padding: 56px 0; }
+  @media (max-width: 768px) { .section { padding: 36px 0; } }
   .section + .section { border-top: 1px solid var(--border); }
   .section-header {
     margin-bottom: 28px;
     display: flex;
     align-items: flex-start;
     gap: 14px;
+    flex-wrap: wrap;
   }
-  .section-header .header-right { flex: 1; }
+  .section-header .header-right { flex: 1; min-width: 200px; }
   .section-header .header-actions {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 6px;
     padding-top: 4px;
+  }
+  @media (max-width: 600px) {
+    .section-header .header-actions {
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 8px;
+    }
+    .booking-btn { font-size: 12px; padding: 8px 14px; }
   }
   .section-num {
     width: 44px; height: 44px;
@@ -336,7 +362,9 @@
     flex-shrink: 0;
   }
   .section-header h2 { font-size: 26px; font-weight: 700; color: #fff; }
+  @media (max-width: 768px) { .section-header h2 { font-size: 20px; } }
   .section-header .tagline { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  @media (max-width: 768px) { .section-header .tagline { font-size: 12px; } }
 
   .section-hero-img {
     width: 100%; height: 380px; object-fit: cover; border-radius: 14px; margin-bottom: 20px;
@@ -375,7 +403,8 @@
     background: var(--card); border: 1px solid var(--border);
     border-radius: 10px; padding: 18px 22px; text-align: center;
   }
-  .budget-card .amount { font-size: 30px; font-weight: 700; color: var(--gold); margin: 6px 0 4px; }
+  .budget-card .amount { font-size: 28px; font-weight: 700; color: var(--gold); margin: 6px 0 4px; }
+  @media (max-width: 768px) { .budget-card .amount { font-size: 22px; } }
   .budget-card .label { font-size: 12px; color: var(--muted); }
 
   .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
@@ -398,19 +427,23 @@
     .map-section-inner { flex-direction: column; height: auto; }
     .map-sidebar {
       width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border);
-      flex-direction: column; max-height: 30vh; overflow: hidden;
+      flex-direction: column; overflow: hidden; flex-shrink: 0;
     }
-    .timeline-wrap { flex: 1; overflow-x: auto; overflow-y: hidden; }
-    .timeline { flex-direction: row; min-width: max-content; padding: 8px 10px; }
-    .timeline::before { left: 10px; right: 10px; top: 18px; height: 1px; width: auto; }
-    .tl-node { flex-direction: column; align-items: center; padding: 6px 8px; border-left: none; border-top: 3px solid transparent; min-width: 58px; gap: 6px; }
+    .map-sidebar-header { padding: 10px 14px 8px; }
+    .map-sidebar-header h3 { font-size: 14px; }
+    .timeline-wrap { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; flex: none; }
+    .timeline { flex-direction: row; min-width: max-content; padding: 6px 0 8px 0; }
+    .timeline::before { left: 0; right: 0; top: 18px; height: 1px; width: auto; }
+    .tl-node { flex-direction: column; align-items: center; padding: 4px 7px; border-left: none; border-top: 3px solid transparent; min-width: 52px; gap: 4px; }
     .tl-node.active { border-top-color: var(--green); border-left-color: transparent; }
     .tl-info { text-align: center; }
-    .tl-info .tl-label { font-size: 11px; }
+    .tl-info .tl-date { font-size: 9px; }
+    .tl-info .tl-label { font-size: 10px; }
     .tl-info .tl-spots { display: none; }
-    .tl-dot { width: 30px; height: 30px; font-size: 14px; }
-    .map-main { flex: 1; height: 50vh; }
-    .mode-btn { padding: 7px 12px; font-size: 11px; }
+    .tl-dot { width: 26px; height: 26px; font-size: 12px; }
+    .map-main { flex: 1; height: 55vh; min-height: 320px; }
+    .mode-toggle { top: 8px; }
+    .mode-btn { padding: 6px 10px; font-size: 10px; }
   }
 </style>
 </head>
@@ -469,7 +502,7 @@
 </div>
 
 <!-- ═══════════ SINGAPORE ═══════════ -->
-<div class="container" style="margin: 40px auto;">
+<div class="container" style="margin: 32px auto;">
   <div class="bonus-card">
     <img src="images/Singapore_Marina_Bay_skyline_a_2026-06-23T07-41-00.png" alt="Singapore Marina Bay">
     <div>
