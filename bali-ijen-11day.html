@@ -60,8 +60,6 @@
     color: var(--muted);
     margin-bottom: 24px;
   }
-
-  /* flight bar */
   .flight-bar {
     display: flex;
     align-items: center;
@@ -91,281 +89,129 @@
   }
   .flight-tag small { display: block; font-weight: 400; font-size: 10px; color: var(--muted); }
 
-  /* ════════════ INTERACTIVE MAP ════════════ */
-  .map-section {
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-  }
-  .map-section-inner {
-    display: flex;
-    height: 580px;
-    max-width: 100%;
-    position: relative;
-  }
+  /* Interactive Map */
+  .map-section { border-bottom: 1px solid var(--border); background: var(--bg); }
+  .map-section-inner { display: flex; height: 580px; max-width: 100%; position: relative; }
   .map-sidebar {
-    width: 312px;
-    flex-shrink: 0;
-    background: var(--bg);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    z-index: 10;
+    width: 312px; flex-shrink: 0; background: var(--bg);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10;
   }
-  .map-sidebar-header {
-    padding: 16px 14px 10px;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-  }
+  .map-sidebar-header { padding: 16px 14px 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
   .map-sidebar-header .sec-badge {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 10px;
-    background: rgba(93,138,94,0.12);
-    color: var(--green-glow);
-    font-size: 11px;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    background: rgba(93,138,94,0.12); color: var(--green-glow); font-size: 11px;
+    letter-spacing: 0.5px; margin-bottom: 6px;
   }
-  .map-sidebar-header h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-  }
-  .map-sidebar-header .hint {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  .map-sidebar-header h3 { font-size: 16px; font-weight: 700; color: #fff; }
+  .map-sidebar-header .hint { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-  /* Timeline */
   .timeline-wrap {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
   }
   .timeline-wrap::-webkit-scrollbar { width: 3px; }
   .timeline-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
   .timeline { position: relative; display: flex; flex-direction: column; padding: 4px 0; }
   .timeline::before {
-    content: '';
-    position: absolute;
-    left: 18px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: var(--border);
-    z-index: 0;
+    content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
+    width: 1px; background: var(--border); z-index: 0;
   }
   .tl-node {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 16px 12px 4px;
-    cursor: pointer;
-    transition: background 0.15s;
-    border-left: 3px solid transparent;
+    position: relative; z-index: 1; display: flex; align-items: flex-start;
+    gap: 12px; padding: 12px 16px 12px 4px; cursor: pointer;
+    transition: background 0.15s; border-left: 3px solid transparent;
   }
   .tl-node:hover { background: var(--card-hover); }
-  .tl-node.active {
-    background: rgba(93,138,94,0.05);
-    border-left-color: var(--green);
-  }
+  .tl-node.active { background: rgba(93,138,94,0.05); border-left-color: var(--green); }
   .tl-dot {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--card);
-    border: 2px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-    transition: all 0.3s;
+    width: 36px; height: 36px; border-radius: 50%; background: var(--card);
+    border: 2px solid var(--border); display: flex; align-items: center;
+    justify-content: center; font-size: 15px; flex-shrink: 0; transition: all 0.3s;
   }
-  .tl-node.active .tl-dot {
-    border-color: var(--green);
-    box-shadow: 0 0 8px rgba(93,138,94,0.18);
-  }
+  .tl-node.active .tl-dot { border-color: var(--green); box-shadow: 0 0 8px rgba(93,138,94,0.18); }
   .tl-info { flex: 1; min-width: 0; }
   .tl-info .tl-date { font-size: 11px; color: var(--green-glow); font-weight: 600; letter-spacing: 0.5px; }
   .tl-info .tl-label { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .tl-info .tl-spots { font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-  /* Map area */
   .map-main { flex: 1; position: relative; }
   #map { width: 100%; height: 100%; }
   .leaflet-container { background: #181818; }
 
   .mode-toggle {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    display: flex;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    z-index: 999; display: flex; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
   }
   .mode-btn {
-    padding: 9px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.2s;
-    border-right: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
+    padding: 9px 16px; font-size: 12px; font-weight: 600;
+    background: transparent; border: none; color: var(--muted);
+    cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border);
+    display: flex; align-items: center; gap: 5px; white-space: nowrap;
   }
   .mode-btn:last-child { border-right: none; }
   .mode-btn:hover { color: #fff; background: var(--card-hover); }
   .mode-btn.active { color: var(--green-glow); background: rgba(93,138,94,0.1); }
 
   .day-info-bar {
-    position: absolute;
-    bottom: 14px;
-    left: 12px;
-    right: 12px;
-    z-index: 999;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 14px;
-    max-width: none;
-    pointer-events: none;
+    position: absolute; bottom: 14px; left: 12px; right: 12px; z-index: 999;
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 10px 14px; max-width: none; pointer-events: none;
   }
   .day-info-bar h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
   .day-info-bar .spots-inline { font-size: 11px; color: var(--muted); line-height: 1.4; }
 
   .map-legend { display: none; }
   @media (min-width: 769px) {
-    .day-info-bar {
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-      max-width: 420px;
-      padding: 12px 18px;
-    }
+    .day-info-bar { left: 50%; right: auto; transform: translateX(-50%); max-width: 420px; padding: 12px 18px; }
     .map-legend {
-      display: flex;
-      position: absolute;
-      bottom: 14px;
-      right: 12px;
-      z-index: 999;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-      flex-direction: column;
-      gap: 5px;
+      display: flex; position: absolute; bottom: 14px; right: 12px; z-index: 999;
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 12px; flex-direction: column; gap: 5px;
     }
   }
   .map-legend-item { display: flex; align-items: center; gap: 7px; font-size: 10px; color: var(--muted); }
   .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
   .map-loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 999;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 12px;
-    color: var(--muted);
-    display: none;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 999; background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 20px; font-size: 12px; color: var(--muted); display: none;
   }
 
-  /* ── Booking button ── */
   .booking-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 18px;
-    background: rgba(0,59,149,0.1);
-    border: 1px solid rgba(0,59,149,0.25);
-    border-radius: 8px;
-    color: #4d9fff;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.25s;
-    white-space: nowrap;
-    flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px;
+    background: rgba(0,59,149,0.1); border: 1px solid rgba(0,59,149,0.25);
+    border-radius: 8px; color: #4d9fff; font-size: 13px; font-weight: 600;
+    text-decoration: none; transition: all 0.25s; white-space: nowrap; flex-shrink: 0;
   }
   .booking-btn:hover { background: rgba(0,59,149,0.2); border-color: rgba(0,59,149,0.5); color: #7ab8ff; }
   .booking-btn .bk-icon {
-    width: 16px; height: 16px;
-    background: var(--booking);
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 9px;
-    color: #fff;
-    font-weight: 900;
-    letter-spacing: -0.5px;
+    width: 16px; height: 16px; background: var(--booking); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center; font-size: 9px;
+    color: #fff; font-weight: 900; letter-spacing: -0.5px;
   }
 
-  /* ── Section ── */
   .section { padding: 56px 0; }
   @media (max-width: 768px) { .section { padding: 36px 0; } }
   .section + .section { border-top: 1px solid var(--border); }
-  .section-header {
-    margin-bottom: 28px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
+  .section-header { margin-bottom: 28px; display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
   .section-header .header-right { flex: 1; min-width: 200px; }
-  .section-header .header-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-    padding-top: 4px;
-  }
+  .section-header .header-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; padding-top: 4px; }
   @media (max-width: 600px) {
-    .section-header .header-actions {
-      width: 100%;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 8px;
-    }
+    .section-header .header-actions { width: 100%; flex-direction: row; align-items: center; justify-content: flex-start; padding-top: 8px; }
     .booking-btn { font-size: 12px; padding: 8px 14px; }
   }
   .section-num {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: rgba(93,138,94,0.12);
+    width: 44px; height: 44px; border-radius: 12px; background: rgba(93,138,94,0.12);
     display: flex; align-items: center; justify-content: center;
-    font-size: 17px; font-weight: 700; color: var(--green-glow);
-    flex-shrink: 0;
+    font-size: 17px; font-weight: 700; color: var(--green-glow); flex-shrink: 0;
   }
   .section-header h2 { font-size: 26px; font-weight: 700; color: #fff; }
   @media (max-width: 768px) { .section-header h2 { font-size: 20px; } }
   .section-header .tagline { font-size: 13px; color: var(--muted); margin-top: 3px; }
   @media (max-width: 768px) { .section-header .tagline { font-size: 12px; } }
 
-  .section-hero-img {
-    width: 100%; height: 380px; object-fit: cover; border-radius: 14px; margin-bottom: 20px;
-  }
+  .section-hero-img { width: 100%; height: 380px; object-fit: cover; border-radius: 14px; margin-bottom: 20px; }
   @media (max-width: 768px) { .section-hero-img { height: 220px; } }
 
   .day-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -409,23 +255,17 @@
 
   .tips-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   @media (max-width: 768px) { .tips-grid { grid-template-columns: 1fr 1fr; } }
-  .tip-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 14px; font-size: 12px;
-  }
+  .tip-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; font-size: 12px; }
   .tip-card .icon { font-size: 18px; margin-bottom: 6px; }
   .tip-card h4 { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 3px; }
   .tip-card p { color: var(--muted); line-height: 1.5; }
 
   .footer { text-align: center; padding: 32px 0 28px; color: var(--muted); font-size: 11px; border-top: 1px solid var(--border); }
 
-  /* ── Mobile map section ── */
+  /* Mobile map section */
   @media (max-width: 768px) {
     .map-section-inner { flex-direction: column; height: auto; }
-    .map-sidebar {
-      width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border);
-      flex-direction: column; overflow: hidden; flex-shrink: 0;
-    }
+    .map-sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border); flex-direction: column; overflow: hidden; flex-shrink: 0; }
     .map-sidebar-header { padding: 10px 14px 8px; }
     .map-sidebar-header h3 { font-size: 14px; }
     .timeline-wrap { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; flex: none; }
@@ -443,14 +283,7 @@
     .mode-btn { padding: 6px 10px; font-size: 10px; }
   }
 
-  /* Leaflet popup dark theme */
-  .dark-popup .leaflet-popup-content-wrapper {
-    background: #1e1e1e;
-    color: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-  }
+  .dark-popup .leaflet-popup-content-wrapper { background: #1e1e1e; color: #fff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); }
   .dark-popup .leaflet-popup-content { color: #fff; margin: 8px 10px; }
   .dark-popup .leaflet-popup-tip { background: #1e1e1e; border: 1px solid var(--border); }
   .dark-popup .leaflet-popup-close-button { color: var(--muted) !important; }
@@ -462,7 +295,7 @@
 <div class="hero">
   <div class="badge">2026 国庆 · 9/25 → 10/5</div>
   <h1>巴厘岛 + 伊真火山</h1>
-  <div class="subtitle">9天8晚 · 海滩 → 稻田 → 蓝火 → 佩妮达 → 蓝梦岛 → 🇸🇬</div>
+  <div class="subtitle">9天8晚 · 蓝梦岛 → 佩妮达 → Canggu → 伊真蓝火 → 乌布 → Twin Lakes 雨林 → 🇸🇬</div>
   <div class="flight-bar">
     <div class="flight-node"><div class="code">HKG</div><div class="time">9/25 22:40</div></div>
     <div class="flight-sep">→</div>
@@ -513,96 +346,91 @@
   </div>
 </div>
 
-<!-- ═══════════ 1. SEMINYAK ═══════════ -->
+<!-- ═══════════ 1. LEMBONGAN ═══════════ -->
 <div class="section">
   <div class="container">
     <div class="section-header">
       <div class="section-num">1</div>
-      <div class="header-right"><h2>水明漾 · 海滩节奏</h2><div class="tagline">9/26 — 27 · 2晚 · 南巴厘最时髦的海岸线</div></div>
-      <div class="header-actions">
-        <a href="https://www.booking.com/searchresults.html?ss=Seminyak%2C+Bali%2C+Indonesia&checkin=2026-09-26&checkout=2026-09-28" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索水明漾酒店</a>
-      </div>
+      <div class="header-right"><h2>蓝梦岛 · 到埠跳岛</h2><div class="tagline">9/26 · 1晚 · Nusa Veranda Sunset Villas</div></div>
     </div>
-    <img class="section-hero-img" src="images/Canggu_Bali_Batu_Bolong_beach__2026-06-23T08-00-28.png" alt="Canggu Beach">
+    <img class="section-hero-img" src="images/Devils_Tear_Nusa_Lembongan_Bal_2026-06-23T07-05-15.png" alt="Devil's Tear">
     <div class="day-grid">
-      <div class="day-card"><div class="dow">Day 1 · 9/26 周六</div><h4>抵达 + Canggu 冲浪</h4><p>07:50 落地 DPS，入住 Seminyak 酒店，上午补个短觉。午后 Batu Bolong 海滩 2h 冲浪体验课（初学者友好）。傍晚 La Brisa 海滩俱乐部日落 + Crate Cafe 稻田咖啡馆。</p><div class="tag-row"><span class="tag">冲浪体验课</span><span class="tag">La Brisa</span><span class="tag">稻田咖啡馆</span></div></div>
-      <div class="day-card"><div class="dow">Day 2 · 9/27 周日</div><h4>乌鲁瓦图悬崖 + 火舞</h4><p>上午 Uluwatu 悬崖庙俯瞰印度洋。午后 Padang Padang 海滩穿岩洞入沙滩。日落时刻悬崖剧场 Kecak Fire Dance — 火与舞在暮色中燃烧。晚上 Jimbaran 沙滩海鲜烧烤收尾。</p><div class="tag-row"><span class="tag">Uluwatu</span><span class="tag">Kecak 火舞</span><span class="tag">Jimbaran 海鲜</span></div></div>
+      <div class="day-card"><div class="dow">Day 1 · 9/26 周六</div><h4>到埠 + 蓝梦岛慢悠日</h4><p>07:50 落地 DPS → 落地签 ¥180/人 → Grab 去沙努尔码头（30 min）→ 快船去蓝梦岛 → 入住 Nusa Veranda → 午饭 → 蘑菇海滩浮潜 → Devil's Tears 巨浪拍崖 → Yellow Bridge 日落。</p><div class="tag-row"><span class="tag">Devil's Tears</span><span class="tag">蘑菇海滩浮潜</span><span class="tag">Yellow Bridge</span></div></div>
+      <div class="day-card"><div class="dow">Day 2 上午 · 9/27 周日</div><h4>蓝梦岛 → 佩妮达</h4><p>睡到自然醒，退房。10:00 快船去佩妮达（30 min，¥40/人），码头现场买票班次多。10:30 抵达佩妮达，直接接上 Manta Point 浮潜 tour。</p><div class="tag-row"><span class="tag">快船 30min</span><span class="tag">码头买票</span></div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ 2. UBUD ═══════════ -->
+<!-- ═══════════ 2. PENIDA ═══════════ -->
 <div class="section">
   <div class="container">
     <div class="section-header">
       <div class="section-num">2</div>
-      <div class="header-right"><h2>乌布 · 稻田与文化</h2><div class="tagline">9/28 — 29 · 2晚 · 巴厘岛的精神腹地</div></div>
-      <div class="header-actions">
-        <a href="https://www.booking.com/searchresults.html?ss=Ubud%2C+Bali%2C+Indonesia&checkin=2026-09-28&checkout=2026-09-30" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索乌布酒店</a>
-      </div>
+      <div class="header-right"><h2>佩妮达岛 · 魔鬼鱼 + 野性悬崖</h2><div class="tagline">9/27 · 1晚 · Penida Paradiso</div></div>
     </div>
-    <img class="section-hero-img" src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Tegalalang Rice Terraces">
-    <div class="gallery-2col"><img src="images/Ubud_Sacred_Monkey_Forest_Bali_2026-06-23T08-00-27.png" alt="Monkey Forest"><img src="images/Bamboo_treehouse_eco_lodge_in__2026-06-23T07-04-47.png" alt="Bamboo Treehouse"></div>
-    <div class="day-grid" style="margin-top:20px;">
-      <div class="day-card"><div class="dow">Day 3 · 9/28 周一</div><h4>梯田 + 圣泉寺</h4><p>上午退房包车北上。下午 Tegallalang 梯田 — 巴厘岛明信片画面，高空秋千荡进稻田海洋。日暮 Tirta Empul 圣泉寺，千年圣水池洗礼。傍晚 Ubud Art Market 淘手工蜡染。</p><div class="tag-row"><span class="tag">Tegallalang</span><span class="tag">圣泉寺</span><span class="tag">Art Market</span></div></div>
-      <div class="day-card"><div class="dow">Day 4 · 9/29 周二</div><h4>圣猴森林 + 山脊漫步</h4><p>上午 Sacred Monkey Forest — 古庙废墟 + 长尾猕猴在丛林光影中穿行。午后 Campuhan Ridge Walk 山脊漫步感受乌布田园。晚上收拾，Ubud 最后一夜。</p><div class="tag-row"><span class="tag">猴林</span><span class="tag">山脊漫步</span></div></div>
+    <img class="section-hero-img" src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking Beach">
+    <div class="day-grid">
+      <div class="day-card"><div class="dow">Day 2 · 9/27 周日</div><h4>Manta Point 浮潜 🐟 + Kelingking</h4><p>10:30-14:00 snorkeling tour：Manta Point 看魔鬼鱼 + 水晶湾 + Gamat Bay，3-3.5h，Klook ¥180-250/人。午饭 → 15:00 Kelingking 精灵坠崖（走下去沙滩量力）→ 傍晚入住 Penida Paradiso，西岸日落。</p><div class="tag-row"><span class="tag">Manta Point 🐟</span><span class="tag">Kelingking</span><span class="tag">日落</span></div></div>
+      <div class="day-card"><div class="dow">Day 3 上午 · 9/28 周一</div><h4>钻石海滩 + Atuh Beach</h4><p>08:00 Diamond Beach 钻石海滩（上午人少）。09:30 步行到旁边的 Atuh Beach — 同是悬崖海滩但人少得多。11:30 退房，12:30 快船回沙努尔。</p><div class="tag-row"><span class="tag">Diamond Beach</span><span class="tag">Atuh Beach</span></div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ 3. IJEN ═══════════ -->
+<!-- ═══════════ 3. CANGGU / DEWANI ═══════════ -->
 <div class="section">
   <div class="container">
     <div class="section-header">
       <div class="section-num">3</div>
-      <div class="header-right"><h2>伊真火山 · 蓝火奇观</h2><div class="tagline">9/30 下午 — 10/1 傍晚 · 2天1夜 · 全球唯二蓝色火焰</div></div>
+      <div class="header-right"><h2>Canggu · 稻田海滩瘫</h2><div class="tagline">9/28 — 30 · 3晚 · Dewani Villa Resort（订4晚，10/2退房）</div></div>
       <div class="header-actions">
-        <a href="https://www.booking.com/searchresults.html?ss=Banyuwangi%2C+Indonesia&checkin=2026-09-30&checkout=2026-10-01" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索巴纽旺宜酒店</a>
+        <a href="https://www.booking.com/searchresults.html?ss=Canggu%2C+Bali%2C+Indonesia&checkin=2026-09-28&checkout=2026-10-01" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索 Canggu 酒店</a>
+      </div>
+    </div>
+    <img class="section-hero-img" src="images/Canggu_Bali_Batu_Bolong_beach__2026-06-23T08-00-28.png" alt="Canggu Beach">
+    <div class="day-grid">
+      <div class="day-card"><div class="dow">Day 3 · 9/28 周一</div><h4>佩妮达 → Canggu 到埠</h4><p>快船回沙努尔 → Grab 到 Dewani Villa Resort（45 min，¥50）→ 入住、洗澡 → 下午 Batu Bolong 街闲逛 → 晚上 La Brisa 或 The Slow 晚饭。</p><div class="tag-row"><span class="tag">到埠瘫</span><span class="tag">Batu Bolong</span><span class="tag">La Brisa</span></div></div>
+      <div class="day-card"><div class="dow">Day 4 · 9/29 周二</div><h4>Canggu 全日：冲浪 + 稻田 + Tanah Lot</h4><p>08:00 Batu Bolong 冲浪体验课 2h（¥120-150/人）→ 租摩托稻田骑行 → Crate Cafe 早午餐 → 下午瘫泳池 → 16:30 骑摩托去 Tanah Lot 海神庙日落。</p><div class="tag-row"><span class="tag">冲浪课</span><span class="tag">稻田骑行</span><span class="tag">Tanah Lot</span></div></div>
+      <div class="day-card"><div class="dow">Day 5 · 9/30 周三</div><h4>最后瘫 → 19:00 伊真出发 ⛰️</h4><p>睡到自然醒。12:00 退房但行李留房间（连订未退），泳池继续瘫。15:00 必须补午睡！→ 18:00 简单晚饭 → 19:00 Klook 来接（Canggu 免费接送 ✅）。夜车 + 渡轮去伊真。</p><div class="tag-row"><span class="tag">午睡必杀</span><span class="tag">19:00出发</span><span class="tag">Klook接送</span></div></div>
+      <div class="day-card"><div class="dow">Day 6 下午 · 10/1 周四</div><h4>回 Canggu 回血</h4><p>爬完伊真 → 约 17:00 回到 Dewani，行李还在房间！→ 洗澡睡 2h → 19:00 出门：La Brisa 看日落 → Betelnut Cafe 晚饭 → Old Man's 喝一杯 → 22:00 回酒店睡。</p><div class="tag-row"><span class="tag">无缝回血</span><span class="tag">Canggu 夜</span><span class="tag">Old Man's</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 4. IJEN ═══════════ -->
+<div class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="header-right"><h2>伊真火山 · 蓝火奇观</h2><div class="tagline">9/30 19:00 — 10/1 17:00 · 无酒店通宵 · 全球唯二蓝色火焰</div></div>
+      <div class="header-actions">
+        <a href="https://www.klook.com/zh-CN/activity/20944" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">K</span> Klook 伊真团</a>
       </div>
     </div>
     <img class="section-hero-img" src="images/Kawah_Ijen_volcano_blue_fire_p_2026-06-23T07-41-01.png" alt="Ijen Blue Fire">
     <div class="gallery-single"><img src="images/Kawah_Ijen_crater_lake_panoram_2026-06-23T08-00-27.png" alt="Ijen Crater Lake"></div>
     <div class="day-grid" style="margin-top:20px;">
-      <div class="day-card"><div class="dow">Day 5 · 9/30 周三</div><h4>下午出发，乌布→巴纽旺宜</h4><p>午后 14:00 包车从 Ubud 出发，约 4h 到 Gilimanuk 渡轮码头，坐 1h 渡轮到巴纽旺宜（爪哇岛）。抵达后入住酒店，早睡 — 凌晨就要出发。</p><div class="tag-row"><span class="tag">包车 4h</span><span class="tag">渡轮 1h</span><span class="tag">早睡必杀</span></div></div>
-      <div class="day-card"><div class="dow">Day 6 · 10/1 周四</div><h4>凌晨登伊真 → 火山湖日出 → 返程</h4><p>凌晨 1:00 出发，2:00 到 Paltuding 登山口，徒步 1.5-2h 到火山口。黑暗中蓝色硫磺火焰在脚下跳动。天光渐亮，碧绿色火山湖蒸腾。日出后下山，午后坐渡轮回巴厘岛。</p><div class="tag-row"><span class="tag">蓝火</span><span class="tag">防毒面具</span><span class="tag">🚗 返程</span></div></div>
+      <div class="day-card"><div class="dow">Day 5 夜 → Day 6 凌晨</div><h4>通宵时间线</h4><p>19:00 Klook 从 Canggu 接 → 4h 夜车 → 00:30 Gilimanuk 渡轮（1h）→ 03:00 到 Paltuding 登山口 → 徒步 2h 登顶 → 05:00 💙<strong>蓝色硫磺火焰</strong>在黑暗中燃烧 → 06:00 火山口湖日出（世界最大酸性湖）→ 07:00 下山 → 09:00 Jagir 瀑布打卡 → 中午渡轮回 → 约 17:00 回到 Canggu。</p><div class="tag-row"><span class="tag">蓝火 💙</span><span class="tag">防毒面具</span><span class="tag">3km徒步</span><span class="tag">22h不睡</span></div></div>
+      <div class="day-card"><div class="dow">⚠️ 重要提示</div><h4>伊真登山须知</h4><p>· 每月第一个周五闭山（清洁日），10/2 是周五，所以选 <strong>9/30 出发 ✓</strong><br>· Klook 含全部交通+渡轮+向导+防毒面具，不需自购火车票<br>· 山顶凌晨 ~10°C，带薄外套<br>· 日包：头灯、保暖衣、口罩、水、充电宝</p><div class="tag-row"><span class="tag">9/30可约 ✓</span><span class="tag">10°C山顶</span><span class="tag">日包准备</span></div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ 4. PENIDA ═══════════ -->
-<div class="section">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-num">4</div>
-      <div class="header-right"><h2>佩妮达岛 · 野性悬崖</h2><div class="tagline">10/2 · 1晚 · 巴厘岛最野的海岸线</div></div>
-      <div class="header-actions">
-        <a href="https://www.booking.com/searchresults.html?ss=Nusa+Penida%2C+Bali%2C+Indonesia&checkin=2026-10-02&checkout=2026-10-03" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索佩妮达民宿</a>
-      </div>
-    </div>
-    <img class="section-hero-img" src="images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png" alt="Kelingking Beach">
-    <div class="day-grid">
-      <div class="day-card"><div class="dow">Day 7 · 10/2 周五</div><h4>西线经典：精灵坠崖 + 无边泳池</h4><p>Sanur 快船 45min 登岛。直奔 Kelingking 精灵坠崖 — T-Rex 形悬崖直插碧海。午后 Angel's Billabong 天然无边泳池 + Broken Beach 断桥拱门。傍晚 Crystal Bay 浮潜，Manta Ray 出没季。</p><div class="tag-row"><span class="tag">Kelingking</span><span class="tag">Angel's Billabong</span><span class="tag">浮潜</span></div></div>
-      <div class="day-card"><div class="dow">Day 7 清晨（可选）</div><h4>Diamond Beach 日出</h4><p>体力够的话日出前出发东线：Diamond Beach 钻石海滩沿峭壁楼梯下到白沙滩。拍完照赶在午前回来。量力而行，西线才是重点。</p><div class="tag-row"><span class="tag">Diamond Beach</span><span class="tag">可选</span></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ 5. LEMBONGAN ═══════════ -->
+<!-- ═══════════ 5. UBUD ═══════════ -->
 <div class="section">
   <div class="container">
     <div class="section-header">
       <div class="section-num">5</div>
-      <div class="header-right"><h2>蓝梦岛 · 精致收尾</h2><div class="tagline">10/3 · 1晚 · 小而美的离岛时光</div></div>
+      <div class="header-right"><h2>乌布 · 山脊与雨林</h2><div class="tagline">10/2 — 3 · 2晚 · 精神腹地慢节奏</div></div>
       <div class="header-actions">
-        <a href="https://www.booking.com/searchresults.html?ss=Nusa+Lembongan%2C+Bali%2C+Indonesia&checkin=2026-10-03&checkout=2026-10-04" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索蓝梦岛酒店</a>
+        <a href="https://www.booking.com/searchresults.html?ss=Ubud%2C+Bali%2C+Indonesia&checkin=2026-10-02&checkout=2026-10-04" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索乌布酒店</a>
       </div>
     </div>
-    <img class="section-hero-img" src="images/Dream_Beach_Nusa_Lembongan_Bal_2026-06-23T08-27-08.png" alt="Dream Beach Lembongan">
-    <div class="gallery-single"><img src="images/Devils_Tear_Nusa_Lembongan_Bal_2026-06-23T07-05-15.png" alt="Devil's Tear"></div>
-    <div class="day-grid" style="margin-top:20px;">
-      <div class="day-card"><div class="dow">Day 8 · 10/3 周六</div><h4>蓝梦岛慢悠日</h4><p>上午 Penida 快船 20min 到 Lembongan。午后 Devil's Tear — 巨浪冲入凹洞喷出彩虹水雾。傍晚 Dream Beach 长滩日落，Jungutbatu 海滩海鲜烧烤，最后一晚好好吃。</p><div class="tag-row"><span class="tag">Devil's Tear</span><span class="tag">Dream Beach</span><span class="tag">海鲜烧烤</span></div></div>
-      <div class="day-card"><div class="dow">Day 9 · 10/4 周日</div><h4>浮潜 + 从容返岛</h4><p>上午 Manta Bay 浮潜半日游（2-3h 包船）。中午退房，14:00 快船回 Sanur，下午入住机场附近酒店休整。晚上收拾行李，第二天早上 07:15 的航班别迟到。</p><div class="tag-row"><span class="tag">浮潜</span><span class="tag">14:00 返程</span><span class="tag">机场酒店</span></div></div>
+    <img class="section-hero-img" src="images/Ubud_Sacred_Monkey_Forest_Bali_2026-06-23T08-00-27.png" alt="Monkey Forest">
+    <div class="day-grid">
+      <div class="day-card"><div class="dow">Day 7 · 10/2 周五</div><h4>Dewani → 乌布 · 慢悠日</h4><p>自然醒退房 → Grab 去乌布（1h）→ 入住 → 圣猴森林（¥40，1-1.5h）→ 乌布皇宫（免费 15 min）→ 回酒店瘫（昨天刚爬山，节奏放慢）→ 17:00 <strong>Campuhan Ridge Walk</strong> 山脊日落 → 晚饭 Sage / Melting Wok。</p><div class="tag-row"><span class="tag">圣猴森林</span><span class="tag">皇宫</span><span class="tag">Ridge Walk</span></div></div>
+      <div class="day-card"><div class="dow">Day 8 · 10/3 周六</div><h4>Twin Lakes 雨林徒步 🌿</h4><p>06:30 出发 → 08:00 到 Buyan & Tamblingan 双湖 → 向导带队雨林穿越（3-4h）：原始森林 + 草药辨识 + 林间古庙 + 独木舟划过湖面 → 12:00 湖上午餐 → 15:30 回乌布 → 告别晚餐 Hujan Locale 猪肋排。</p><div class="tag-row"><span class="tag">雨林徒步</span><span class="tag">独木舟</span><span class="tag">双湖古庙</span><span class="tag">告别晚餐</span></div></div>
     </div>
+    <div class="gallery-2col"><img src="images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png" alt="Rice Terraces"><img src="images/Bamboo_treehouse_eco_lodge_in__2026-06-23T07-04-47.png" alt="Bamboo Treehouse"></div>
   </div>
 </div>
 
@@ -612,7 +440,24 @@
     <img src="images/Singapore_Marina_Bay_skyline_a_2026-06-23T07-41-00.png" alt="Singapore Marina Bay">
     <div>
       <h4>🇸🇬 新加坡返程转机 · 10/5 9小时</h4>
-      <p>10:00 抵樟宜，19:00 起飞。行李直达 HKG。<br>樟宜 → MRT 滨海湾鱼尾狮 + 超级树（免费）→ 牛车水麦士威海南鸡饭 → 甘榜格南哈芝巷 → 15:00 回星耀樟宜逛雨漩涡 + 购物。<br><span style="color:var(--green-glow);">中国护照新加坡 96h 过境免签 · MRT S$10/人 · 餐饮 ¥80-150/人 · 16:30 前务必回到机场</span></p>
+      <p>10:00 抵樟宜，19:00 起飞。行李直达 HKG。<br>樟宜 → MRT 滨海湾鱼尾狮 + 超级树 → 牛车水海南鸡饭 → 甘榜格南哈芝巷 → 15:00 回星耀樟宜逛雨漩涡。<br><span style="color:var(--green-glow);">中国护照新加坡 96h 过境免签 · MRT S$10/人 · 餐饮 ¥80-150/人 · 16:30 前务必回到机场</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ AIRPORT ═══════════ -->
+<div class="section" style="padding-bottom:32px;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">🏨</div>
+      <div class="header-right"><h2>机场收尾</h2><div class="tagline">10/4 · 1晚 · Kuta 机场酒店</div></div>
+      <div class="header-actions">
+        <a href="https://www.booking.com/searchresults.html?ss=Kuta%2C+Bali%2C+Indonesia&checkin=2026-10-04&checkout=2026-10-05" target="_blank" class="booking-btn" rel="noopener"><span class="bk-icon">B</span> 搜索机场酒店</a>
+      </div>
+    </div>
+    <div class="day-grid">
+      <div class="day-card"><div class="dow">Day 9 · 10/4 周日</div><h4>收尾 → 瘫 → 早睡</h4><p>上午乌布退房 → Grab 去 Kuta 机场酒店（30 min，¥120-180）→ 入住、瘫、最后泡泳池、打包。18:00 附近晚饭 → 21:00 早睡。</p><div class="tag-row"><span class="tag">收尾</span><span class="tag">瘫</span><span class="tag">早睡</span></div></div>
+      <div class="day-card"><div class="dow">Day 10 · 10/5 周一</div><h4>飞 ✈️</h4><p>05:30 起床 → 05:45 Grab 去机场（10 min）→ 06:15 办登机 → 07:15 DPS → SIN（樟宜 9h 中转：Jewel 瀑布 + 海南鸡饭）→ 19:00 SIN → HKG。</p><div class="tag-row"><span class="tag">5:30起床</span><span class="tag">樟宜中转</span></div></div>
     </div>
   </div>
 </div>
@@ -626,15 +471,15 @@
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
       <span class="tag" style="font-size:12px;padding:6px 14px;">9/25 五 22:40 HKG → MNL → DPS</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(201,169,110,0.1);color:var(--gold);">9/26 六 07:50 抵达，水明漾 ①</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(201,169,110,0.1);color:var(--gold);">9/27 日 乌鲁瓦图悬崖+火舞 ②</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;">9/28 一 →乌布，梯田+圣泉寺 ③</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;">9/29 二 猴林+山脊漫步 ④</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(255,100,80,0.1);color:#ff8a80;">9/30 三 下午→巴纽旺宜，伊真前夜 ⑤</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(255,100,80,0.1);color:#ff8a80;">10/1 四 凌晨蓝火🔥→返巴厘 ⑥</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(100,181,246,0.1);color:#64b5f6;">10/2 五 佩妮达·精灵坠崖 ⑦</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(100,181,246,0.1);color:#64b5f6;">10/3 六 蓝梦岛·恶魔泪 ⑧</span>
-      <span class="tag" style="font-size:12px;padding:6px 14px;">10/4 日 浮潜→返岛→机场酒店 ⑨</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(100,181,246,0.1);color:#64b5f6;">9/26 六 蓝梦岛·Devil's Tears ①</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(100,181,246,0.1);color:#64b5f6;">9/27 日 佩妮达·Manta魔鬼鱼 ②</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(201,169,110,0.1);color:var(--gold);">9/28 一 →Canggu 到埠 ③</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(201,169,110,0.1);color:var(--gold);">9/29 二 冲浪+稻田+Tanah Lot ④</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(255,100,80,0.1);color:#ff8a80;">9/30 三 19:00 伊真出发 ⛰️ ⑤</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(255,100,80,0.1);color:#ff8a80;">10/1 四 凌晨蓝火💙→回Canggu ⑥</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(93,138,94,0.1);">10/2 五 →乌布·猴林·RidgeWalk ⑦</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(93,138,94,0.1);">10/3 六 Twin Lakes 雨林🌿 ⑧</span>
+      <span class="tag" style="font-size:12px;padding:6px 14px;">10/4 日 上午收尾→机场酒店 ⑨</span>
       <span class="tag" style="font-size:12px;padding:6px 14px;background:rgba(93,138,94,0.1);">10/5 一 DPS 07:15 → SIN 9h → HKG 19:00 ✈️</span>
     </div>
   </div>
@@ -645,20 +490,21 @@
   <div class="container">
     <div class="section-header">
       <div class="section-num">¥</div>
-      <div class="header-right"><h2>预算 · 两人合计 & 单人参考</h2><div class="tagline">¥12,500 — 18,300 · 中位 ¥15,400</div></div>
+      <div class="header-right"><h2>预算 · 两人合计 & 单人参考</h2><div class="tagline">¥13,500 — 19,700 · 中位 ¥16,600</div></div>
     </div>
     <div class="budget-grid">
       <div class="budget-card"><div class="label">✈️ 国际机票</div><div class="amount">¥5,500</div><div class="label">HKG ⇆ DPS 两人含税 · 酷航 · ¥2,750/人</div></div>
-      <div class="budget-card"><div class="label">🏨 住宿 8 晚</div><div class="amount">¥1,900 – 3,300</div><div class="label">Seminyak 2 + Ubud 2 + Ijen 1 + Penida 1 + Lembongan 1 + 机场 1</div></div>
-      <div class="budget-card"><div class="label">🔥 Ijen 两天一夜团</div><div class="amount">¥1,200 – 2,400</div><div class="label">含交通+渡轮+向导+防毒面具+1晚酒店</div></div>
-      <div class="budget-card"><div class="label">🍽️ 餐饮 9 天</div><div class="amount">¥1,800 – 3,600</div><div class="label">含 fine dining 1-2 顿</div></div>
-      <div class="budget-card"><div class="label">🚗 交通 + ⛴️ 跳岛</div><div class="amount">¥1,300 – 2,200</div><div class="label">包车 + Grab + 快船 + 岛上摩托</div></div>
-      <div class="budget-card"><div class="label">🏄 活动 + 杂费 + 签证</div><div class="amount">¥600 – 900</div><div class="label">冲浪课 + 浮潜 + 门票 + 落地签 + 保险 + SIM</div></div>
+      <div class="budget-card"><div class="label">🏨 住宿 9 晚</div><div class="amount">¥2,100 – 3,600</div><div class="label">Lembongan 1 + Penida 1 + Dewani 4 + Ubud 2 + 机场 1</div></div>
+      <div class="budget-card"><div class="label">🔥 伊真 Klook 通宵团</div><div class="amount">¥1,200 – 1,800</div><div class="label">含交通+渡轮+向导+防毒面具，无外南梦酒店</div></div>
+      <div class="budget-card"><div class="label">🌿 Twin Lakes 雨林徒步</div><div class="amount">¥1,200 – 1,600</div><div class="label">含接送+向导+独木舟+湖上午餐，~$102/人</div></div>
+      <div class="budget-card"><div class="label">🍽️ 餐饮 9 天</div><div class="amount">¥1,800 – 3,600</div><div class="label">含告别晚餐 1 顿 fine dining</div></div>
+      <div class="budget-card"><div class="label">🚗 交通 + ⛴️ 跳岛</div><div class="amount">¥1,100 – 1,800</div><div class="label">Grab + 快船 + 岛上摩托 + 乌布→Twin Lakes 往返</div></div>
+      <div class="budget-card"><div class="label">🏄 活动 + 杂费 + 签证</div><div class="amount">¥600 – 900</div><div class="label">冲浪课 + Manta 浮潜 + 门票 + 落地签 + 保险 + SIM</div></div>
     </div>
     <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
-      <div class="budget-card" style="flex:1;min-width:150px;background:rgba(93,138,94,0.04);border-color:rgba(93,138,94,0.15);"><div class="label">单人低配</div><div class="amount" style="font-size:24px;">¥6,250</div></div>
-      <div class="budget-card" style="flex:1;min-width:150px;background:rgba(93,138,94,0.04);border-color:rgba(93,138,94,0.15);"><div class="label">单人舒适</div><div class="amount" style="font-size:24px;">¥7,700</div></div>
-      <div class="budget-card" style="flex:1;min-width:150px;background:rgba(93,138,94,0.04);border-color:rgba(93,138,94,0.15);"><div class="label">单人中高</div><div class="amount" style="font-size:24px;">¥9,150</div></div>
+      <div class="budget-card" style="flex:1;min-width:150px;background:rgba(93,138,94,0.04);border-color:rgba(93,138,94,0.15);"><div class="label">单人低配</div><div class="amount" style="font-size:24px;">¥6,750</div></div>
+      <div class="budget-card" style="flex:1;min-width:150px;background:rgba(93,138,94,0.04);border-color:rgba(93,138,94,0.15);"><div class="label">单人舒适</div><div class="amount" style="font-size:24px;">¥8,300</div></div>
+      <div class="budget-card" style="flex:1;min-width:150px;background:rgba(93,138,94,0.04);border-color:rgba(93,138,94,0.15);"><div class="label">单人中高</div><div class="amount" style="font-size:24px;">¥9,850</div></div>
     </div>
   </div>
 </div>
@@ -668,124 +514,123 @@
   <div class="container">
     <div class="section-header"><div class="section-num">📋</div><div class="header-right"><h2>落地贴士</h2></div></div>
     <div class="tips-grid">
-      <div class="tip-card"><div class="icon">📱</div><h4>App</h4><p>Gojek + Grab 都装，南部/乌布覆盖好。佩妮达和蓝梦几乎叫不到车，租摩托或包车。</p></div>
-      <div class="tip-card"><div class="icon">💰</div><h4>换汇</h4><p>机场只换 ¥500 应急。Seminyak/Ubud 正规兑换点汇率最好。BCA ATM 银联可取。</p></div>
-      <div class="tip-card"><div class="icon">🎒</div><h4>必带</h4><p>运动鞋（伊真徒步）+ 薄外套（凌晨山顶 10°C）+ 珊瑚礁安全防晒 + 纱笼（进庙）+ 移动电源（伊真下山前没电）。</p></div>
-      <div class="tip-card"><div class="icon">🚤</div><h4>船票</h4><p>Sanur→Penida & Penida→Lembongan→Sanur 快船，12Go.asia 或酒店前台提前一天订。</p></div>
+      <div class="tip-card"><div class="icon">📱</div><h4>App</h4><p>Gojek + Grab 都装。佩妮达几乎叫不到车，租摩托。蓝梦岛步行+自行车够用。</p></div>
+      <div class="tip-card"><div class="icon">💰</div><h4>换汇</h4><p>机场只换 ¥500 应急。Canggu/Ubud 兑换点汇率最好。BCA ATM 银联可取。</p></div>
+      <div class="tip-card"><div class="icon">🎒</div><h4>伊真必带</h4><p>运动鞋 + 薄外套（10°C）+ 头灯 + N95 口罩 + 充电宝。日包，行李锁 Dewani 房间。</p></div>
+      <div class="tip-card"><div class="icon">🏨</div><h4>Dewani 订房</h4><p>订 9/28-10/2 连续 4 晚。中间 9/30 去伊真的晚上白付但房间保留，10/1 回来无缝瘫。</p></div>
     </div>
   </div>
 </div>
 
-<div class="footer">巴厘岛 + 伊真火山 + 佩妮达 + 蓝梦岛 · 2026 国庆 · elsewherrre.github.io/travel-pages</div>
+<div class="footer">巴厘岛 + 伊真火山 + 佩妮达 + Twin Lakes 雨林 · 2026 国庆 · elsewherrre.github.io/travel-pages</div>
 
 <!-- ═══════════ SCRIPTS ═══════════ -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ═══════════ DAY DATA ═══════════
-// segments[i] = [from_idx, to_idx, is_walking, is_ferry]
 const DAYS = [
   {
-    id:'d0', date:'9/26', dow:'周六', icon:'🏖️', label:'水明漾·抵达', spots:'DPS机场→酒店→Batu Bolong冲浪→La Brisa日落',
-    center:[-8.68,115.15], zoom:13,
+    id:'d0', date:'9/26', dow:'周六', icon:'🏝️', label:'蓝梦岛·到埠', spots:'DPS→沙努尔码头→快船→Nusa Veranda→蘑菇海滩→Devil\'s Tears',
+    center:[-8.69,115.44], zoom:13,
     points:[
       {n:1,name:'DPS 机场',lat:-8.7481,lng:115.1672,type:'start'},
-      {n:2,name:'Seminyak 酒店区',lat:-8.6906,lng:115.1560,type:'poi'},
-      {n:3,name:'Batu Bolong 冲浪滩',lat:-8.6537,lng:115.1291,type:'poi'},
-      {n:4,name:'La Brisa 海滩俱乐部',lat:-8.6570,lng:115.1280,type:'end'}
+      {n:2,name:'沙努尔码头',lat:-8.6753,lng:115.2634,type:'poi'},
+      {n:3,name:'Jungutbatu 码头',lat:-8.6758,lng:115.4454,type:'poi'},
+      {n:4,name:'Nusa Veranda 酒店',lat:-8.6800,lng:115.4440,type:'poi'},
+      {n:5,name:'蘑菇海滩',lat:-8.6773,lng:115.4472,type:'poi'},
+      {n:6,name:'Devil\'s Tears',lat:-8.6806,lng:115.4408,type:'end'}
     ],
-    segments:[[0,1,false],[1,2,false],[2,3,true]]
+    segments:[[0,1,false],[1,2,false,true],[2,3,false],[3,4,true],[4,5,true]]
   },
   {
-    id:'d1', date:'9/27', dow:'周日', icon:'🛕', label:'乌鲁瓦图·悬崖', spots:'Seminyak→Uluwatu→Padang Padang→火舞→Jimbaran',
-    center:[-8.80,115.12], zoom:12,
+    id:'d1', date:'9/27', dow:'周日', icon:'🐟', label:'佩妮达·魔鬼鱼', spots:'蓝梦岛→快船→Manta Point浮潜→Kelingking→Penida Paradiso',
+    center:[-8.74,115.47], zoom:12,
     points:[
-      {n:1,name:'Seminyak 出发',lat:-8.6906,lng:115.1560,type:'start'},
-      {n:2,name:'Uluwatu Temple',lat:-8.8291,lng:115.0849,type:'poi'},
-      {n:3,name:'Padang Padang Beach',lat:-8.8106,lng:115.1016,type:'poi'},
-      {n:4,name:'Single Fin 悬崖日落',lat:-8.8163,lng:115.0920,type:'poi'},
-      {n:5,name:'Jimbaran 海鲜沙滩',lat:-8.7805,lng:115.1592,type:'end'}
+      {n:1,name:'蓝梦岛码头出发',lat:-8.6758,lng:115.4454,type:'start'},
+      {n:2,name:'Penida 码头',lat:-8.6930,lng:115.5245,type:'poi'},
+      {n:3,name:'Manta Point 浮潜',lat:-8.7100,lng:115.4500,type:'poi'},
+      {n:4,name:'Kelingking 精灵坠崖',lat:-8.7498,lng:115.4600,type:'poi'},
+      {n:5,name:'Penida Paradiso(西岸)',lat:-8.7400,lng:115.4600,type:'end'}
     ],
-    segments:[[0,1,false],[1,2,false],[2,3,true],[3,4,false]]
+    segments:[[0,1,false,true],[1,2,false,true],[2,3,false,true],[3,4,false]]
   },
   {
-    id:'d2', date:'9/28', dow:'周一', icon:'🌾', label:'乌布·梯田', spots:'Seminyak→Ubud→Tegallalang→圣泉寺→Art Market',
-    center:[-8.49,115.27], zoom:11,
+    id:'d2', date:'9/28', dow:'周一', icon:'🌊', label:'佩妮达→Canggu', spots:'Diamond Beach→Atuh Beach→快船回沙努尔→Dewani Villa',
+    center:[-8.68,115.20], zoom:11,
     points:[
-      {n:1,name:'Seminyak 出发(包车)',lat:-8.6906,lng:115.1560,type:'start'},
-      {n:2,name:'乌布稻田酒店',lat:-8.5069,lng:115.2624,type:'poi'},
-      {n:3,name:'Tegallalang 梯田',lat:-8.4313,lng:115.2800,type:'poi'},
-      {n:4,name:'Tirta Empul 圣泉寺',lat:-8.4151,lng:115.3150,type:'poi'},
-      {n:5,name:'Ubud Art Market',lat:-8.5071,lng:115.2624,type:'end'}
-    ],
-    segments:[[0,1,false],[1,2,false],[2,3,false],[3,4,false]]
-  },
-  {
-    id:'d3', date:'9/29', dow:'周二', icon:'🐒', label:'乌布·猴林', spots:'圣猴森林→山脊漫步→准备出发伊真',
-    center:[-8.51,115.26], zoom:14,
-    points:[
-      {n:1,name:'乌布酒店',lat:-8.5069,lng:115.2624,type:'start'},
-      {n:2,name:'Sacred Monkey Forest',lat:-8.5188,lng:115.2590,type:'poi'},
-      {n:3,name:'Campuhan Ridge Walk',lat:-8.5021,lng:115.2619,type:'poi'},
-      {n:4,name:'Ubud Palace',lat:-8.5070,lng:115.2620,type:'end'}
-    ],
-    segments:[[0,1,true],[1,2,true],[2,3,true]]
-  },
-  {
-    id:'d4', date:'9/30', dow:'周三', icon:'🚗', label:'乌布→伊真', spots:'包车4h→Gilimanuk码头→渡轮→巴纽旺宜',
-    center:[-8.30,114.50], zoom:9,
-    points:[
-      {n:1,name:'乌布出发(14:00)',lat:-8.5069,lng:115.2624,type:'start'},
-      {n:2,name:'Gilimanuk 码头(4h车)',lat:-8.1615,lng:114.4325,type:'poi'},
-      {n:3,name:'⛴️ Ketapang 渡轮口',lat:-8.1430,lng:114.4010,type:'poi'},
-      {n:4,name:'巴纽旺宜酒店',lat:-8.1553,lng:114.4066,type:'end'}
+      {n:1,name:'Penida Paradiso',lat:-8.7400,lng:115.4600,type:'start'},
+      {n:2,name:'Diamond Beach',lat:-8.7350,lng:115.5050,type:'poi'},
+      {n:3,name:'沙努尔码头(快船回)',lat:-8.6753,lng:115.2634,type:'poi'},
+      {n:4,name:'Dewani Villa Resort',lat:-8.6537,lng:115.1470,type:'end'}
     ],
     segments:[[0,1,false],[1,2,false,true],[2,3,false]]
   },
   {
-    id:'d5', date:'10/1', dow:'周四', icon:'🔥', label:'伊真·蓝火+返程', spots:'凌晨登山→蓝火→火山湖日出→返巴厘岛',
+    id:'d3', date:'9/29', dow:'周二', icon:'🏄', label:'Canggu·全日', spots:'Batu Bolong冲浪→稻田骑行→Tanah Lot日落',
+    center:[-8.650,115.130], zoom:13,
+    points:[
+      {n:1,name:'Dewani Villa Resort',lat:-8.6537,lng:115.1470,type:'start'},
+      {n:2,name:'Batu Bolong 冲浪滩',lat:-8.6537,lng:115.1291,type:'poi'},
+      {n:3,name:'Umalas 稻田小路',lat:-8.6520,lng:115.1500,type:'poi'},
+      {n:4,name:'Tanah Lot 海神庙',lat:-8.6213,lng:115.0868,type:'end'}
+    ],
+    segments:[[0,1,true],[1,2,false],[2,3,false]]
+  },
+  {
+    id:'d4', date:'9/30', dow:'周三', icon:'🚗', label:'伊真出发', spots:'Dewani瘫→19:00 Klook接→Gilimanuk渡轮→Ijen',
+    center:[-8.30,114.50], zoom:9,
+    points:[
+      {n:1,name:'Dewani(19:00出发)',lat:-8.6537,lng:115.1470,type:'start'},
+      {n:2,name:'Gilimanuk 渡轮口',lat:-8.1615,lng:114.4325,type:'poi'},
+      {n:3,name:'⛴️ Ketapang(爪哇)',lat:-8.1430,lng:114.4010,type:'poi'},
+      {n:4,name:'Paltuding 登山口',lat:-8.0586,lng:114.2413,type:'end'}
+    ],
+    segments:[[0,1,false],[1,2,false,true],[2,3,false]]
+  },
+  {
+    id:'d5', date:'10/1', dow:'周四', icon:'💙', label:'伊真·蓝火+回', spots:'凌晨登顶→蓝火→火山湖日出→下山→返Canggu',
     center:[-8.10,114.32], zoom:12,
     points:[
-      {n:1,name:'巴纽旺宜酒店(01:00)',lat:-8.1553,lng:114.4066,type:'start'},
-      {n:2,name:'Paltuding 登山口',lat:-8.0586,lng:114.2413,type:'poi'},
-      {n:3,name:'Ijen Crater 蓝火',lat:-8.0580,lng:114.2420,type:'poi'},
-      {n:4,name:'火山湖日出观景',lat:-8.0575,lng:114.2415,type:'poi'},
-      {n:5,name:'返回巴厘岛 Sanur',lat:-8.6906,lng:115.1560,type:'end'}
+      {n:1,name:'Paltuding 登山口',lat:-8.0586,lng:114.2413,type:'start'},
+      {n:2,name:'Ijen Crater 蓝火',lat:-8.0580,lng:114.2420,type:'poi'},
+      {n:3,name:'火山湖日出',lat:-8.0575,lng:114.2415,type:'poi'},
+      {n:4,name:'Gilimanuk 渡轮回',lat:-8.1615,lng:114.4325,type:'poi'},
+      {n:5,name:'回 Dewani(17:00)',lat:-8.6537,lng:115.1470,type:'end'}
     ],
-    segments:[[0,1,false],[1,2,true],[2,3,true],[0,4,false,true]]
+    segments:[[0,1,true],[1,2,true],[0,3,false],[3,4,false,true]]
   },
   {
-    id:'d6', date:'10/2', dow:'周五', icon:'🦖', label:'佩妮达·悬崖', spots:'Sanur快船→Kelingking→Angel Billabong→Crystal Bay',
-    center:[-8.73,115.48], zoom:11,
+    id:'d6', date:'10/2', dow:'周五', icon:'🐒', label:'乌布·慢悠日', spots:'Dewani→乌布→圣猴森林→皇宫→Campuhan Ridge Walk',
+    center:[-8.51,115.26], zoom:14,
     points:[
-      {n:1,name:'Sanur 码头',lat:-8.6753,lng:115.2634,type:'start'},
-      {n:2,name:'Penida 码头(快船45min)',lat:-8.6930,lng:115.5245,type:'poi'},
-      {n:3,name:'Kelingking 精灵坠崖',lat:-8.7498,lng:115.4600,type:'poi'},
-      {n:4,name:'Angel Billabong',lat:-8.7358,lng:115.4323,type:'poi'},
-      {n:5,name:'Crystal Bay 浮潜',lat:-8.7154,lng:115.4456,type:'end'}
+      {n:1,name:'Dewani 退房出发',lat:-8.6537,lng:115.1470,type:'start'},
+      {n:2,name:'乌布酒店',lat:-8.5069,lng:115.2624,type:'poi'},
+      {n:3,name:'圣猴森林',lat:-8.5188,lng:115.2590,type:'poi'},
+      {n:4,name:'乌布皇宫',lat:-8.5070,lng:115.2620,type:'poi'},
+      {n:5,name:'Campuhan Ridge Walk',lat:-8.5021,lng:115.2619,type:'end'}
     ],
-    segments:[[0,1,false,true],[1,2,false],[2,3,false],[3,4,true]]
+    segments:[[0,1,false],[1,2,false],[2,3,true],[3,4,true]]
   },
   {
-    id:'d7', date:'10/3', dow:'周六', icon:'🌊', label:'蓝梦岛·恶魔泪', spots:'Penida→Lembongan→Devil Tear→Dream Beach',
-    center:[-8.69,115.45], zoom:13,
+    id:'d7', date:'10/3', dow:'周六', icon:'🌿', label:'Twin Lakes·雨林', spots:'乌布→Twin Lakes雨林徒步→独木舟→回乌布',
+    center:[-8.25,115.07], zoom=11,
     points:[
-      {n:1,name:'Penida 码头出发',lat:-8.6930,lng:115.5245,type:'start'},
-      {n:2,name:'Jungutbatu 码头(20min)',lat:-8.6758,lng:115.4454,type:'poi'},
-      {n:3,name:"Devil's Tear 恶魔的眼泪",lat:-8.6806,lng:115.4408,type:'poi'},
-      {n:4,name:'Dream Beach 长滩日落',lat:-8.6773,lng:115.4472,type:'end'}
+      {n:1,name:'乌布酒店(6:30出发)',lat:-8.5069,lng:115.2624,type:'start'},
+      {n:2,name:'Lake Buyan 入口',lat:-8.2413,lng:115.1080,type:'poi'},
+      {n:3,name:'雨林徒步路线',lat:-8.2480,lng:115.0950,type:'poi'},
+      {n:4,name:'Lake Tamblingan 独木舟',lat:-8.2550,lng:115.0850,type:'poi'},
+      {n:5,name:'回乌布酒店',lat:-8.5069,lng:115.2624,type:'end'}
     ],
-    segments:[[0,1,false,true],[1,2,true],[2,3,true]]
+    segments:[[0,1,false],[1,2,true],[2,3,true],[3,4,false]]
   },
   {
-    id:'d8', date:'10/4', dow:'周日', icon:'🐠', label:'浮潜·返程', spots:'Manta Bay浮潜→14:00快船→机场酒店休整',
-    center:[-8.72,115.33], zoom:11,
+    id:'d8', date:'10/4', dow:'周日', icon:'🏨', label:'机场·收尾', spots:'乌布退房→机场酒店→瘫→打包→早睡',
+    center:[-8.66,115.20], zoom:11,
     points:[
-      {n:1,name:'Lembongan 酒店出发',lat:-8.6758,lng:115.4454,type:'start'},
-      {n:2,name:'Manta Bay 浮潜',lat:-8.7100,lng:115.4500,type:'poi'},
-      {n:3,name:'Sanur 码头(快船30min)',lat:-8.6753,lng:115.2634,type:'poi'},
-      {n:4,name:'机场附近酒店',lat:-8.7450,lng:115.1700,type:'end'}
+      {n:1,name:'乌布酒店退房',lat:-8.5069,lng:115.2624,type:'start'},
+      {n:2,name:'机场酒店(Kuta)',lat:-8.7450,lng:115.1700,type:'end'}
     ],
-    segments:[[0,1,false,true],[1,2,false,true],[2,3,false]]
+    segments:[[0,1,false]]
   }
 ];
 
@@ -811,11 +656,9 @@ let routeLayers = [];
 let markerLayer = null;
 const routeCache = {};
 
-// ═══════════ OSRM ROUTE FETCH ═══════════
 async function fetchOSRMRoute(lat1, lng1, lat2, lng2, profile) {
   const cacheKey = `${lat1},${lng1}-${lat2},${lng2}-${profile}`;
   if (routeCache[cacheKey]) return routeCache[cacheKey];
-
   const url = `https://router.project-osrm.org/route/v1/${profile}/${lng1},${lat1};${lng2},${lat2}?overview=full&geometries=geojson`;
   try {
     const resp = await fetch(url);
@@ -824,23 +667,16 @@ async function fetchOSRMRoute(lat1, lng1, lat2, lng2, profile) {
       routeCache[cacheKey] = data.routes[0].geometry;
       return data.routes[0].geometry;
     }
-  } catch(e) {
-    console.warn('OSRM fetch failed:', e);
-  }
+  } catch(e) { console.warn('OSRM fetch failed:', e); }
   return null;
 }
 
 function straightLineGeoJSON(lat1, lng1, lat2, lng2) {
-  return {
-    type: 'LineString',
-    coordinates: [[lng1, lat1], [lng2, lat2]]
-  };
+  return { type: 'LineString', coordinates: [[lng1, lat1], [lng2, lat2]] };
 }
 
-// ═══════════ RENDER DAY ═══════════
 async function renderDay(day) {
   document.getElementById('map-loading').style.display = 'block';
-
   routeLayers.forEach(l => map.removeLayer(l));
   routeLayers = [];
   if (markerLayer) {
@@ -848,7 +684,6 @@ async function renderDay(day) {
     else if (markerLayer.remove) markerLayer.remove();
     markerLayer = null;
   }
-
   map.closePopup();
   map.flyTo(day.center, day.zoom, { duration: 1.5 });
 
@@ -859,25 +694,15 @@ async function renderDay(day) {
     const color = isFirst ? '#5d8a5e' : (isLast ? '#c9a96e' : '#444');
     const size = isFirst || isLast ? 32 : 26;
     const fontSize = isFirst || isLast ? 13 : 10;
-
     const icon = L.divIcon({
       className: 'custom-marker',
-      html: `<div style="
-        width:${size}px;height:${size}px;border-radius:50%;
-        background:${color};color:#fff;display:flex;align-items:center;justify-content:center;
-        font-weight:700;font-size:${fontSize}px;border:2px solid rgba(255,255,255,0.2);
-        box-shadow:0 2px 6px rgba(0,0,0,0.5);
-      ">${p.n}</div>`,
-      iconSize: [size, size],
-      iconAnchor: [size/2, size/2],
-      popupAnchor: [0, -size/2]
+      html: `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${color};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:${fontSize}px;border:2px solid rgba(255,255,255,0.2);box-shadow:0 2px 6px rgba(0,0,0,0.5);">${p.n}</div>`,
+      iconSize: [size, size], iconAnchor: [size/2, size/2], popupAnchor: [0, -size/2]
     });
-
     const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
     marker.bindPopup(`<div style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;">${p.n}. ${p.name}</div>`, {className: 'dark-popup'});
     markers.push(marker);
   });
-
   markerLayer = { _markers: markers };
 
   if (day.segments && day.segments.length > 0) {
@@ -885,110 +710,51 @@ async function renderDay(day) {
       const [fromIdx, toIdx, isWalk, isFerry] = seg;
       const p1 = day.points[fromIdx];
       const p2 = day.points[toIdx];
-
       let profile, color, dash, weight;
-      if (isFerry) {
-        profile = null;
-        color = '#c9a96e';
-        dash = '10, 6';
-        weight = 2;
-      } else if (currentMode === 'walking') {
-        profile = 'walking';
-        color = '#7ab07c';
-        dash = '8, 5';
-        weight = 3;
-      } else if (currentMode === 'driving') {
-        profile = 'driving';
-        color = '#6ba3ff';
-        dash = null;
-        weight = 4;
-      } else { // combined
-        if (isWalk) {
-          profile = 'walking';
-          color = '#7ab07c';
-          dash = '8, 5';
-          weight = 3;
-        } else {
-          profile = 'driving';
-          color = '#6ba3ff';
-          dash = null;
-          weight = 4;
-        }
+      if (isFerry) { profile = null; color = '#c9a96e'; dash = '10, 6'; weight = 2; }
+      else if (currentMode === 'walking') { profile = 'walking'; color = '#7ab07c'; dash = '8, 5'; weight = 3; }
+      else if (currentMode === 'driving') { profile = 'driving'; color = '#6ba3ff'; dash = null; weight = 4; }
+      else {
+        if (isWalk) { profile = 'walking'; color = '#7ab07c'; dash = '8, 5'; weight = 3; }
+        else { profile = 'driving'; color = '#6ba3ff'; dash = null; weight = 4; }
       }
-
       let geoJSON;
-      if (profile) {
-        geoJSON = await fetchOSRMRoute(p1.lat, p1.lng, p2.lat, p2.lng, profile);
-      }
-      if (!geoJSON) {
-        geoJSON = straightLineGeoJSON(p1.lat, p1.lng, p2.lat, p2.lng);
-        if (!isFerry && profile) dash = '5, 5';
-      }
-
+      if (profile) { geoJSON = await fetchOSRMRoute(p1.lat, p1.lng, p2.lat, p2.lng, profile); }
+      if (!geoJSON) { geoJSON = straightLineGeoJSON(p1.lat, p1.lng, p2.lat, p2.lng); if (!isFerry && profile) dash = '5, 5'; }
       const polyline = L.geoJSON(geoJSON, {
-        style: {
-          color: color,
-          weight: weight,
-          opacity: 0.85,
-          dashArray: dash,
-          lineCap: 'round',
-          lineJoin: 'round'
-        }
+        style: { color, weight, opacity: 0.85, dashArray: dash, lineCap: 'round', lineJoin: 'round' }
       }).addTo(map);
-
       routeLayers.push(polyline);
     }
   }
-
   document.getElementById('map-loading').style.display = 'none';
 }
 
-// ═══════════ BUILD TIMELINE ═══════════
 const tl = document.getElementById('timeline');
 DAYS.forEach((day, idx) => {
   const node = document.createElement('div');
   node.className = 'tl-node';
   node.dataset.dayId = day.id;
-  node.innerHTML = `
-    <div class="tl-dot">${day.icon}</div>
-    <div class="tl-info">
-      <div class="tl-date">${day.date} · ${day.dow}</div>
-      <div class="tl-label">${day.label}</div>
-      <div class="tl-spots">${day.spots}</div>
-    </div>
-  `;
+  node.innerHTML = `<div class="tl-dot">${day.icon}</div><div class="tl-info"><div class="tl-date">${day.date} · ${day.dow}</div><div class="tl-label">${day.label}</div><div class="tl-spots">${day.spots}</div></div>`;
   node.addEventListener('click', () => selectDay(day.id));
   tl.appendChild(node);
 });
 
-// ═══════════ SELECT DAY ═══════════
 function selectDay(dayId) {
   const day = DAYS.find(d => d.id === dayId);
   if (!day || currentDay === day) return;
   currentDay = day;
-
-  document.querySelectorAll('.tl-node').forEach(n => {
-    n.classList.toggle('active', n.dataset.dayId === dayId);
-  });
-
+  document.querySelectorAll('.tl-node').forEach(n => { n.classList.toggle('active', n.dataset.dayId === dayId); });
   const activeNode = document.querySelector(`.tl-node[data-day-id="${dayId}"]`);
   if (activeNode) {
-    if (window.innerWidth <= 768) {
-      activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    } else {
-      activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    if (window.innerWidth <= 768) activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    else activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
-
   document.getElementById('day-info-title').textContent = `${day.date} ${day.dow} · ${day.label}`;
-  document.getElementById('day-info-spots').textContent = day.points
-    .map((p, i) => (i === 0 ? '⭑ ' : '') + p.name)
-    .join(' → ');
-
+  document.getElementById('day-info-spots').textContent = day.points.map((p, i) => (i === 0 ? '⭑ ' : '') + p.name).join(' → ');
   renderDay(day);
 }
 
-// ═══════════ MODE TOGGLE ═══════════
 document.querySelectorAll('.mode-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -998,18 +764,13 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
   });
 });
 
-// ═══════════ KEYBOARD NAV ═══════════
 document.addEventListener('keydown', (e) => {
   if (!currentDay) return;
   const idx = DAYS.findIndex(d => d.id === currentDay.id);
-  if (e.key === 'ArrowDown' && idx < DAYS.length - 1) {
-    selectDay(DAYS[idx + 1].id);
-  } else if (e.key === 'ArrowUp' && idx > 0) {
-    selectDay(DAYS[idx - 1].id);
-  }
+  if (e.key === 'ArrowDown' && idx < DAYS.length - 1) selectDay(DAYS[idx + 1].id);
+  else if (e.key === 'ArrowUp' && idx > 0) selectDay(DAYS[idx - 1].id);
 });
 
-// ═══════════ INIT ═══════════
 setTimeout(() => selectDay('d0'), 600);
 setTimeout(() => map.invalidateSize(), 200);
 </script>
