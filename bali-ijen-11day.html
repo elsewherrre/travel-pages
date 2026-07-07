@@ -41,6 +41,15 @@
   .overview h2{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;text-align:center}
   .overview .sub{font-size:11px;color:var(--muted);text-align:center;margin-bottom:12px}
   #map-overview{width:100%;height:320px;border-radius:14px;border:1px solid var(--border);background:#0b0b0b}
+  .overview .hint{font-size:11px;color:var(--green-glow);text-align:center;margin:-4px 0 10px}
+  .leaflet-popup-content-wrapper{background:#171717;color:var(--text);border:1px solid var(--border);border-radius:10px}
+  .leaflet-popup-tip{background:#171717;border:1px solid var(--border)}
+  .leaflet-popup-content{margin:10px 12px;font-family:inherit}
+  .ov-pop-h{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;text-align:center}
+  .ov-leg{font-size:12px;color:var(--text);line-height:1.55;padding:5px 0;border-top:1px solid rgba(255,255,255,.08)}
+  .ov-leg:first-of-type{border-top:none}
+  .ov-d{color:var(--green-glow);font-weight:700}
+  .ov-a{color:var(--gold);font-weight:700}
   .legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:11px;color:var(--muted);margin:12px 0 4px}
   .legend span{display:inline-flex;align-items:center;gap:5px}
   .lg-line{width:18px;height:0;border-top:2px solid var(--gold);border-top-style:dashed}
@@ -148,11 +157,12 @@
 
 <!-- OVERVIEW FLIGHT MAP -->
 <section class="overview container">
-  <h2>✈️ 国际航班总览 · 大弧线</h2>
+  <h2>✈️ 国际航班总览 · 航线</h2>
   <div class="sub">HKG → MNL → DPS（落地巴厘岛）｜ DPS → SIN → HKG（返程中转）</div>
+  <div class="hint">👆 点击地图上的机场节点，查看该站航班号与起降时间</div>
   <div id="map-overview"></div>
   <div class="legend">
-    <span><span class="lg-line"></span> 航班航线（大圆弧）</span>
+    <span><span class="lg-line"></span> 航班航线（弧线）</span>
     <span><span class="lg-dot"></span> 机场节点</span>
     <span>✈️ 航段中点</span>
   </div>
@@ -230,20 +240,51 @@ function initDayMap(el, day){
   setTimeout(()=>map.invalidateSize(), 220);
 }
 
+// ===== 国际航班总览：航旅纵横风格弧线 + 可点击航班弹窗 =====
+const FLIGHTS = [
+  {from:'HKG', to:'MNL', airline:'酷航 Scoot', no:'?', dep:'9/25 22:40', arr:'?'},
+  {from:'MNL', to:'DPS', airline:'酷航 Scoot', no:'?', dep:'?', arr:'9/26 07:50'},
+  {from:'DPS', to:'SIN', airline:'酷航 Scoot', no:'?', dep:'?', arr:'?'},
+  {from:'SIN', to:'HKG', airline:'酷航 Scoot', no:'?', dep:'?', arr:'10/5 19:00'}
+];
+// 二次贝塞尔弧：控制点垂直抬升 bow*距离，统一向北鼓起 → 航旅纵横式外凸航线
+function arcPts(a, b, bow){
+  const s=[a[0],a[1]], e=[b[0],b[1]];
+  const mid=[(s[0]+e[0])/2,(s[1]+e[1])/2];
+  const dx=e[1]-s[1], dy=e[0]-s[0];
+  const len=Math.hypot(dx,dy)||1e-6;
+  let nx=-dy/len, ny=dx/len;
+  if(nx<0){nx=-nx;ny=-ny;}
+  const off=bow*len, cx=mid[0]+nx*off, cy=mid[1]+ny*off;
+  const N=48, pts=[];
+  for(let i=0;i<=N;i++){const t=i/N,u=1-t;
+    pts.push([u*u*s[0]+2*u*t*cx+t*t*e[0], u*u*s[1]+2*u*t*cy+t*t*e[1]]);}
+  return pts;
+}
+function flightPopup(name){
+  const dep=FLIGHTS.filter(f=>f.from===name), arr=FLIGHTS.filter(f=>f.to===name);
+  let h='<div class="ov-pop-h">'+name+' 机场</div>';
+  dep.forEach(f=>{ h+='<div class="ov-leg"><span class="ov-d">✈️ 出发</span> → <b>'+f.to+'</b><br>'+f.airline+(f.no&&f.no!=='?'?' · <b>'+f.no+'</b>':'')+'<br>'+(f.dep&&f.dep!=='?'?f.dep+' 起飞':'起飞时间待补充')+'</div>'; });
+  arr.forEach(f=>{ h+='<div class="ov-leg"><span class="ov-a">🛬 到达</span> ← <b>'+f.from+'</b><br>'+f.airline+(f.no&&f.no!=='?'?' · <b>'+f.no+'</b>':'')+'<br>'+(f.arr&&f.arr!=='?'?f.arr+' 落地':'落地时间待补充')+'</div>'; });
+  return h;
+}
+
 function initOverview(){
   const map = L.map('map-overview', {scrollWheelZoom:false, attributionControl:false, zoomControl:true});
   L.tileLayer(TILE, {subdomains:'abcd', maxZoom:6}).addTo(map);
+  const coord = {}; OVERVIEW.points.forEach(p=>coord[p.name]=[p.lat,p.lng]);
   OVERVIEW.legs.forEach(leg=>{
-    L.polyline(leg.path, {color:'#c9a96e', weight:2, opacity:.85, dashArray:'4 7'}).addTo(map);
-    L.marker(leg.mid, {icon:planeIcon}).addTo(map)
-      .bindPopup('<b>'+leg.from+' → '+leg.to+'</b>');
+    const a=coord[leg.from], b=coord[leg.to];
+    L.polyline(arcPts(a,b,0.32), {color:'#c9a96e', weight:2.2, opacity:.92}).addTo(map);
+    L.marker(leg.mid, {icon:planeIcon}).addTo(map);
   });
   OVERVIEW.points.forEach(p=>{
-    L.circleMarker([p.lat,p.lng], {radius:6, color:'#fff', weight:2, fillColor:'#c9a96e', fillOpacity:1}).addTo(map)
-      .bindPopup('<b>'+p.name+'</b>');
+    L.circleMarker([p.lat,p.lng], {radius:7, color:'#fff', weight:2, fillColor:'#c9a96e', fillOpacity:1}).addTo(map)
+      .bindPopup(flightPopup(p.name), {className:'ov-pop'});
   });
   const b = L.latLngBounds(OVERVIEW.points.map(p=>[p.lat,p.lng]));
-  map.fitBounds(b, {padding:[20,20]});
+  map.fitBounds(b, {padding:[30,30]});
+  setTimeout(()=>map.invalidateSize(), 220);
 }
 
 // render day blocks
