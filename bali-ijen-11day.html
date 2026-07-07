@@ -179,7 +179,7 @@
   <h2>预算 <span class="pending">💡 价格待你核对更新</span></h2>
   <div class="sub">以下为估算，最终数字以你查到的为准，确定后我直接替换</div>
   <div class="bgrid">
-    <div class="bcard"><div class="lab">✈️ 国际机票</div><div class="amt">¥5,500</div><div class="det">HKG⇆DPS 两人含税 · 酷航 · ¥2,750/人</div></div>
+    <div class="bcard"><div class="lab">✈️ 国际机票</div><div class="amt">¥5,541</div><div class="det">HKG⇆DPS 两人含税 · 香港快运+宿务太平洋+新航 · ¥2,771/人</div></div>
     <div class="bcard"><div class="lab">🏨 住宿 9 晚</div><div class="amt">¥2,500–4,000</div><div class="det">Nusa Veranda+Penida Paradiso+Dewani 4晚+Anja 2晚+HARRIS 1晚</div></div>
     <div class="bcard"><div class="lab">🔥 伊真 Klook 通宵团</div><div class="amt">¥1,200–1,800</div><div class="det">含交通+渡轮+向导+防毒面具</div></div>
     <div class="bcard"><div class="lab">🌿 Twin Lakes 雨林</div><div class="amt">¥1,200–1,600</div><div class="det">含接送+向导+独木舟+湖午餐</div></div>
@@ -242,10 +242,10 @@ function initDayMap(el, day){
 
 // ===== 国际航班总览：航旅纵横风格弧线 + 可点击航班弹窗 =====
 const FLIGHTS = [
-  {from:'HKG', to:'MNL', airline:'酷航 Scoot', no:'?', dep:'9/25 22:40', arr:'?'},
-  {from:'MNL', to:'DPS', airline:'酷航 Scoot', no:'?', dep:'?', arr:'9/26 07:50'},
-  {from:'DPS', to:'SIN', airline:'酷航 Scoot', no:'?', dep:'?', arr:'?'},
-  {from:'SIN', to:'HKG', airline:'酷航 Scoot', no:'?', dep:'?', arr:'10/5 19:00'}
+  {from:'HKG', to:'MNL', airline:'香港快运 HK Express', no:'UO516', dep:'9/25 22:40', arr:'9/26 01:00', terminal:'T2'},
+  {from:'MNL', to:'DPS', airline:'宿务太平洋 Cebu Pacific', no:'5J279', dep:'9/26 03:45', arr:'9/26 07:50'},
+  {from:'DPS', to:'SIN', airline:'新加坡航空 Singapore Airlines', no:'SQ949', dep:'10/5 07:15', arr:'10/5 10:00'},
+  {from:'SIN', to:'HKG', airline:'新加坡航空 Singapore Airlines', no:'SQ898', dep:'10/5 19:00', arr:'10/5 23:00'}
 ];
 // 二次贝塞尔弧：控制点垂直抬升 bow*距离，统一向北鼓起 → 航旅纵横式外凸航线
 function arcPts(a, b, bow){
