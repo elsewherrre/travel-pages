@@ -6,111 +6,115 @@
 <title>巴厘岛 + 伊真火山 · 9天行程</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
 <style>
   :root{
-    /* Type scale — geometric steps */
     --t-xs:11px; --t-sm:13px; --t-md:15px; --t-lg:18px; --t-xl:24px; --t-xxl:34px;
-    /* Surfaces — 3-step luminance gradient for depth */
-    --bg:#0a0b0a; --surface-1:#141614; --surface-2:#1c1e1c; --hover:#222422;
-    --text:#e8eae8; --muted:#8d908c; --faint:#5a5d59;
-    /* Color system — green=brand, gold=sole accent, red=warning only */
-    --green:#5d8a5e; --green-glow:#7ab07c; --gold:#c9a96e; --red:#d9726a;
-    --border:#242624; --line:#2e302e;
-    --inset: inset 0 1px 0 rgba(255,255,255,.05);
-    --shadow: 0 3px 16px rgba(0,0,0,.4);
-    --done:rgba(93,138,94,.16); --done-b:rgba(93,138,94,.45);
-    --todo:rgba(141,144,140,.08); --todo-b:rgba(141,144,140,.28);
+    --bg:#faf7f2; --card:#ffffff; --surf:#f3efe8;
+    --text:#1e1e1e; --sub:#555; --muted:#8a8a8a;
+    --green:#4a7c59; --green-lt:#6a9e74; --blue:#4a8ba7; --gold:#c4956a;
+    --border:#e4ded4; --line:#ede8de;
+    --shadow:0 2px 12px rgba(0,0,0,.06);
+    --shadow-lg:0 6px 24px rgba(0,0,0,.09);
+    --done-bg:rgba(74,124,89,.08); --done-bd:rgba(74,124,89,.3);
+    --warn-bg:rgba(196,149,106,.08); --warn-bd:rgba(196,149,106,.3);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{overflow-x:hidden}
+  html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Noto Sans SC",sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased}
   .container{max-width:880px;margin:0 auto;padding:0 18px}
-  a{color:inherit}
+  a{color:var(--blue);text-decoration:none}
 
-  /* HERO */
-  .hero{position:relative;padding:88px 18px 54px;text-align:center;background-image:linear-gradient(180deg, rgba(8,10,9,.6) 0%, rgba(8,10,9,.84) 68%, rgba(10,11,10,.98) 100%), url('images/hero-bali-ijen.png');background-size:cover;background-position:center 38%;border-bottom:1px solid var(--border)}
-  .badge{display:inline-block;padding:5px 15px;border-radius:20px;background:rgba(93,138,94,.18);border:1px solid rgba(93,138,94,.35);color:var(--green-glow);font-size:var(--t-xs);letter-spacing:1.5px;margin-bottom:16px;font-weight:600}
-  .hero h1{font-size:var(--t-xxl);font-weight:800;letter-spacing:-.5px;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.55)}
-  .hero .sub{font-size:var(--t-sm);color:#cfd2cf;margin-top:10px}
-  .xp-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:20px 0 24px}
-  .xp{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:10px;background:rgba(20,22,20,.68);border:1px solid var(--border);font-size:var(--t-sm);font-weight:600;backdrop-filter:blur(4px);transition:.2s}
-  .xp:hover{border-color:#3a3d3a;transform:translateY(-1px)}
+  /* ── HERO ── */
+  .hero{position:relative;padding:80px 18px 48px;text-align:center;background:linear-gradient(165deg, #e8f0e4 0%, #f4efe5 40%, #faf7f2 100%);border-bottom:1px solid var(--border)}
+  .badge{display:inline-block;padding:5px 16px;border-radius:20px;background:rgba(74,124,89,.1);border:1px solid rgba(74,124,89,.25);color:var(--green);font-size:var(--t-xs);letter-spacing:1.5px;margin-bottom:16px;font-weight:600}
+  .hero h1{font-size:var(--t-xxl);font-weight:800;letter-spacing:-.5px;color:#1a1a1a}
+  .hero .sub{font-size:var(--t-sm);color:var(--sub);margin-top:8px}
+  .xp-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 22px}
+  .xp{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:10px;background:var(--card);border:1px solid var(--border);font-size:var(--t-sm);font-weight:600;box-shadow:var(--shadow);transition:.2s}
+  .xp:hover{border-color:var(--green-lt);transform:translateY(-1px)}
   .xp .e{font-size:15px}
-  .flight{display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap;justify-content:center;background:rgba(20,22,20,.7);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:var(--t-sm);overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;scrollbar-width:none;backdrop-filter:blur(4px)}
+  .flight{display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap;justify-content:center;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 16px;font-size:var(--t-sm);overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;scrollbar-width:none;box-shadow:var(--shadow)}
   .flight::-webkit-scrollbar{display:none}
-  .flight b{color:#fff;font-size:var(--t-md)}
+  .flight b{color:#1a1a1a;font-size:var(--t-md)}
   .flight .sep{color:var(--green);font-size:var(--t-sm)}
   .flight .pri{color:var(--gold);font-weight:700;margin-left:6px}
   .flight .note{color:var(--muted);font-size:var(--t-xs)}
 
-  /* OVERVIEW MAP */
-  .overview{padding:24px 0 8px}
-  .overview h2{font-size:var(--t-md);font-weight:700;color:#fff;margin-bottom:4px;text-align:center}
-  .overview .sub{font-size:var(--t-xs);color:var(--muted);text-align:center;margin-bottom:12px}
-  #map-overview{width:100%;height:260px;border-radius:14px;border:1px solid var(--border);background:#0a0b0a;box-shadow:var(--inset),var(--shadow);filter:saturate(.82) brightness(.9)}
+  /* ── TAB NAV ── */
+  .tabnav{position:sticky;top:0;z-index:50;background:rgba(250,247,242,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .tabnav-inner{display:flex;gap:6px;overflow-x:auto;padding:10px 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabnav-inner::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 12px;border-radius:10px;border:1px solid transparent;background:transparent;cursor:pointer;transition:.18s;min-width:52px;font-family:inherit}
+  .tab .tn{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.5px}
+  .tab .td{font-size:var(--t-sm);color:var(--sub);font-weight:600;white-space:nowrap}
+  .tab:hover{background:var(--surf);border-color:var(--border)}
+  .tab.active{background:rgba(74,124,89,.08);border-color:rgba(74,124,89,.3)}
+  .tab.active .tn{color:var(--green)}
+  .tab.active .td{color:var(--green)}
+
+  /* ── CONTENT PANELS ── */
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* ── OVERVIEW MAP ── */
+  .overview{padding:28px 0 8px}
+  .overview h2{font-size:var(--t-md);font-weight:700;color:var(--text);margin-bottom:4px;text-align:center}
+  .overview .sub{font-size:var(--t-xs);color:var(--muted);text-align:center;margin-bottom:10px}
+  #map-overview{width:100%;height:280px;border-radius:14px;border:1px solid var(--border);background:#f0ece4;box-shadow:var(--shadow)}
   @media(max-width:480px){#map-overview{height:220px}}
-  .overview .hint{font-size:var(--t-xs);color:var(--green-glow);text-align:center;margin:-4px 0 10px}
-  .leaflet-popup-content-wrapper{background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow)}
-  .leaflet-popup-tip{background:var(--surface-2);border:1px solid var(--border)}
-  .leaflet-popup-content{margin:10px 12px;font-family:inherit}
-  .ov-pop-h{font-size:var(--t-sm);font-weight:700;color:#fff;margin-bottom:6px;text-align:center}
-  .ov-leg{font-size:var(--t-sm);color:var(--text);line-height:1.55;padding:5px 0;border-top:1px solid rgba(255,255,255,.08)}
-  .ov-leg:first-of-type{border-top:none}
-  .ov-d{color:var(--green-glow);font-weight:700}
-  .ov-a{color:var(--gold);font-weight:700}
+  .overview .hint{font-size:var(--t-xs);color:var(--green);text-align:center;margin:-2px 0 10px}
   .legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:var(--t-xs);color:var(--muted);margin:12px 0 4px}
   .legend span{display:inline-flex;align-items:center;gap:5px}
   .lg-line{width:18px;height:0;border-top:2px dashed var(--gold)}
   .lg-dot{width:9px;height:9px;border-radius:50%;background:var(--gold)}
-  .plane-ic{font-size:18px;line-height:22px;text-align:center}
 
-  /* STICKY DAY NAV */
-  .daynav{position:sticky;top:0;z-index:50;background:rgba(10,11,10,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-  .daynav-inner{display:flex;gap:7px;overflow-x:auto;padding:9px 14px;scrollbar-width:none}
-  .daynav-inner::-webkit-scrollbar{display:none}
-  .dchip{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 11px;border-radius:10px;border:1px solid transparent;background:var(--surface-1);cursor:pointer;transition:.18s;min-width:58px}
-  .dchip .dn{font-size:10px;color:var(--faint);font-weight:700;letter-spacing:.5px}
-  .dchip .dd{font-size:var(--t-sm);color:var(--muted);font-weight:600;white-space:nowrap}
-  .dchip:hover{border-color:var(--line);background:var(--hover)}
-  .dchip.active{border-color:var(--green);background:var(--done)}
+  /* ── DAY BLOCK ── */
+  .day{padding:24px 0 28px;border-bottom:1px solid var(--line)}
+  .day-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .day-num{font-size:var(--t-xs);font-weight:800;letter-spacing:1.5px;color:var(--green);text-transform:uppercase}
+  .day-title{font-size:var(--t-xl);font-weight:700;color:var(--text);line-height:1.25;word-break:break-word;flex:1 1 200px}
+  .day-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .day-date{font-size:var(--t-sm);color:var(--muted)}
+  .hotel{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:8px;font-size:var(--t-xs);font-weight:600;white-space:nowrap}
+  .hotel.done{background:var(--done-bg);border:1px solid var(--done-bd);color:var(--green)}
+  .hotel.todo{background:rgba(138,138,138,.06);border:1px solid rgba(138,138,138,.2);color:var(--muted)}
+  .hotel.none{background:transparent;border:1px dashed var(--border);color:var(--muted)}
+  .gmap-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;background:rgba(74,124,89,.06);border:1px solid rgba(74,124,89,.2);color:var(--green);font-size:10.5px;font-weight:600;text-decoration:none;flex-shrink:0;transition:.2s}
+  .gmap-btn:hover{background:rgba(74,124,89,.14);transform:translateY(-1px)}
 
-  /* DAY BLOCK — mobile-first vertical head */
-  .day{padding:30px 0;border-bottom:1px solid var(--border);scroll-margin-top:60px}
-  .day-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-  .day-thumb{width:64px;height:64px;border-radius:14px;object-fit:cover;flex-shrink:0;border:1px solid var(--border);box-shadow:var(--inset);transition:transform .25s ease}
-  .day:hover .day-thumb{transform:scale(1.04)}
-  .day-titles{flex:1 1 120px;min-width:0}
-  .day-num{font-size:var(--t-xs);font-weight:800;letter-spacing:1.5px;color:var(--green-glow);text-transform:uppercase}
-  .day-title{font-size:var(--t-lg);font-weight:700;color:#fff;line-height:1.25;word-break:break-word}
-  .day-date{font-size:var(--t-sm);color:var(--muted);margin-top:2px}
-  .hotel{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:var(--t-xs);font-weight:600;white-space:nowrap;flex-shrink:0}
-  .hotel.done{background:var(--done);border:1px solid var(--done-b);color:var(--green-glow)}
-  .hotel.todo{background:var(--todo);border:1px solid var(--todo-b);color:var(--muted)}
-  .hotel.none{background:transparent;border:1px dashed var(--line);color:var(--faint)}
-  .gmap-btn{display:inline-flex;align-items:center;gap:4px;margin-left:6px;padding:4px 9px;border-radius:8px;background:rgba(93,138,94,.1);border:1px solid rgba(93,138,94,.25);color:var(--green-glow);font-size:10.5px;font-weight:600;text-decoration:none;flex-shrink:0;transition:.2s}
-  .gmap-btn:hover{background:rgba(93,138,94,.2);transform:translateY(-1px)}
+  /* ── GALLERY ── */
+  .gallery{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;-webkit-overflow-scrolling:touch}
+  .gallery::-webkit-scrollbar{height:4px}
+  .gallery::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+  .gallery img{width:240px;height:160px;border-radius:12px;object-fit:cover;flex-shrink:0;scroll-snap-align:start;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform .2s}
+  .gallery img:hover{transform:scale(1.03)}
+  @media(max-width:480px){.gallery img{width:200px;height:140px}}
 
-  .daymap{width:100%;height:220px;border-radius:12px;border:1px solid var(--border);background:#0a0b0a;margin-bottom:12px;z-index:1;box-shadow:var(--inset),var(--shadow);filter:saturate(.82) brightness(.9)}
-  .leaflet-container{background:#0a0b0a;font-family:inherit}
-  .leaflet-popup-content-wrapper{background:var(--surface-2);color:var(--text);border-radius:10px;box-shadow:var(--shadow)}
-  .leaflet-popup-tip{background:var(--surface-2)}
+  /* ── MAP ── */
+  .daymap{width:100%;height:220px;border-radius:12px;border:1px solid var(--border);background:#f0ece4;margin-bottom:12px;box-shadow:var(--shadow)}
+  .leaflet-container{background:#f0ece4!important;font-family:inherit}
+  .leaflet-popup-content-wrapper{background:#fff;color:var(--text);border-radius:10px;box-shadow:var(--shadow-lg)}
+  .leaflet-popup-tip{background:#fff;box-shadow:var(--shadow-lg)}
   .leaflet-popup-content{font-size:var(--t-sm);line-height:1.5;margin:10px 12px}
-  .leaflet-popup-content a{color:var(--green-glow);font-weight:600}
-  .leaflet-bar a{background:var(--surface-2);color:#fff;border-color:#333}
+  .leaflet-popup-content a{color:var(--green);font-weight:600}
+  .leaflet-bar a{background:#fff;color:var(--text);border-color:var(--border)}
+  .leaflet-bar a:hover{background:var(--surf)}
 
-  .stay{display:flex;align-items:center;gap:12px;background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:12px;box-shadow:var(--inset);transition:.2s}
-  .stay:hover{border-color:#333;transform:translateY(-1px)}
+  /* ── STAY CARD ── */
+  .stay{display:flex;align-items:center;gap:12px;background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:12px;transition:.2s}
+  .stay:hover{border-color:var(--gold);transform:translateY(-1px)}
   .stay .pin{font-size:20px}
-  .stay .st-t{font-size:var(--t-md);font-weight:700;color:#fff}
-  .stay .st-d{font-size:var(--t-sm);color:var(--muted)}
+  .stay .st-t{font-size:var(--t-md);font-weight:700;color:var(--text)}
+  .stay .st-d{font-size:var(--t-sm);color:var(--sub)}
 
+  /* ── TAGS ── */
   .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-  .tag{padding:4px 11px;border-radius:7px;font-size:var(--t-xs);background:rgba(93,138,94,.1);color:var(--green-glow);border:1px solid rgba(93,138,94,.18)}
+  .tag{padding:4px 11px;border-radius:7px;font-size:var(--t-xs);background:rgba(74,124,89,.06);color:var(--green);border:1px solid rgba(74,124,89,.15);font-weight:500}
 
-  details.tl{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--inset);transition:.2s}
-  details.tl:hover{border-color:#333}
-  details.tl summary{list-style:none;cursor:pointer;padding:13px 16px;font-size:var(--t-sm);font-weight:600;color:#fff;display:flex;align-items:center;gap:8px;user-select:none}
+  /* ── TIMELINE ── */
+  details.tl{background:var(--surf);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:.2s}
+  details.tl:hover{border-color:var(--green-lt)}
+  details.tl summary{list-style:none;cursor:pointer;padding:13px 16px;font-size:var(--t-sm);font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;user-select:none}
   details.tl summary::-webkit-details-marker{display:none}
   details.tl summary .chev{margin-left:auto;color:var(--muted);transition:.2s;font-size:11px}
   details.tl[open] summary .chev{transform:rotate(180deg)}
@@ -120,42 +124,47 @@
   .tl-row{display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
   .tl-row:first-child{border-top:none}
   .tl-w{font-size:var(--t-xs);font-weight:700;color:var(--gold);min-width:42px;flex-shrink:0;padding-top:1px}
-  .tl-c{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .tl-c{font-size:12.5px;color:var(--sub);line-height:1.55}
   .tl-c b{color:var(--text);font-weight:600}
-  .warnbox{margin-top:10px;padding:11px 14px;border-radius:10px;background:rgba(217,114,106,.1);border:1px solid rgba(217,114,106,.3);font-size:var(--t-sm);color:#e8b4b0;line-height:1.5}
+  .warnbox{margin-top:10px;padding:11px 14px;border-radius:10px;background:var(--warn-bg);border:1px solid var(--warn-bd);font-size:var(--t-sm);color:#a0704a;line-height:1.5}
 
-  /* BUDGET / TIPS */
-  .sec{padding:36px 0 10px}
-  .sec h2{font-size:var(--t-xl);font-weight:800;color:#fff;margin-bottom:6px}
+  /* ── BUDGET ── */
+  .sec{padding:28px 0 10px}
+  .sec h2{font-size:var(--t-xl);font-weight:800;color:var(--text);margin-bottom:6px}
   .sec .sub{font-size:var(--t-sm);color:var(--muted);margin-bottom:18px}
   .bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   @media(max-width:480px){.bgrid{grid-template-columns:1fr}}
-  .bcard{background:var(--surface-1);border:1px solid var(--border);border-radius:11px;padding:15px 17px;text-align:center;box-shadow:var(--inset);transition:.2s}
-  .bcard:hover{border-color:#333;transform:translateY(-2px)}
+  .bcard{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px 17px;text-align:center;box-shadow:var(--shadow);transition:.2s}
+  .bcard:hover{border-color:var(--gold);transform:translateY(-2px)}
   .bcard .lab{font-size:var(--t-xs);color:var(--muted)}
   .bcard .amt{font-size:var(--t-xl);font-weight:800;color:var(--gold);margin:4px 0 3px}
-  .bcard .det{font-size:10.5px;color:var(--faint);line-height:1.4}
-  .pending{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:3px 10px;border-radius:8px;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.3);font-size:var(--t-xs);color:var(--gold);font-weight:600;vertical-align:middle}
+  .bcard .det{font-size:10.5px;color:var(--muted);line-height:1.4}
+  .pending{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:3px 10px;border-radius:8px;background:rgba(196,149,106,.1);border:1px solid rgba(196,149,106,.25);font-size:var(--t-xs);color:var(--gold);font-weight:600;vertical-align:middle}
   .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
   @media(max-width:480px){.tgrid{grid-template-columns:1fr 1fr}}
-  .tcard{background:var(--surface-1);border:1px solid var(--border);border-radius:11px;padding:13px;font-size:var(--t-sm);box-shadow:var(--inset);transition:.2s}
-  .tcard:hover{border-color:#333;transform:translateY(-2px)}
+  .tcard{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;font-size:var(--t-sm);box-shadow:var(--shadow);transition:.2s}
+  .tcard:hover{border-color:var(--green-lt);transform:translateY(-2px)}
   .tcard .ti{font-size:17px;margin-bottom:5px}
-  .tcard h4{font-size:var(--t-sm);color:#fff;margin-bottom:3px;font-weight:600}
-  .tcard p{color:var(--muted);line-height:1.5}
+  .tcard h4{font-size:var(--t-sm);color:var(--text);margin-bottom:3px;font-weight:600}
+  .tcard p{color:var(--sub);line-height:1.5}
 
-  /* Mobile refinements */
+  /* ── OVERVIEW POPUP ── */
+  .ov-pop-h{font-size:var(--t-sm);font-weight:700;color:var(--text);margin-bottom:6px;text-align:center}
+  .ov-leg{font-size:var(--t-sm);color:var(--sub);line-height:1.55;padding:5px 0;border-top:1px solid var(--line)}
+  .ov-leg:first-of-type{border-top:none}
+  .ov-d{color:var(--green);font-weight:700}
+  .ov-a{color:var(--gold);font-weight:700}
+  .plane-ic{font-size:18px;line-height:22px;text-align:center}
+
+  /* ── FOOTER ── */
+  .footer{text-align:center;padding:24px 0 22px;color:var(--muted);font-size:11px;border-top:1px solid var(--line);margin-top:20px}
+
   @media(max-width:480px){
-    .hero{padding:64px 14px 40px;background-position:center 30%}
+    .hero{padding:56px 14px 36px}
     .hero h1{font-size:28px}
-    .xp-tags{gap:6px}
-    .xp{padding:5px 10px;font-size:12px}
-    .day{padding:24px 0 18px}
-    .day-head{gap:8px}
-    .day-thumb{width:56px;height:56px;border-radius:12px}
-    .day-title{font-size:18px}
+    .day{padding:18px 0 22px}
+    .day-title{font-size:20px}
     .daymap{height:200px;border-radius:10px}
-    .gmap-btn{font-size:9.5px;padding:3px 7px}
     .sec h2{font-size:20px}
     .bcard{padding:13px 14px}
     .bcard .amt{font-size:21px}
@@ -163,18 +172,12 @@
     .stay{padding:10px 13px}
     .tl-row{gap:8px;padding:7px 0}
   }
-  .footer{text-align:center;padding:30px 0 26px;color:var(--faint);font-size:11px;border-top:1px solid var(--border);margin-top:20px}
-
-  /* Back to top */
-  .btt{position:fixed;bottom:22px;right:16px;z-index:90;width:42px;height:42px;border-radius:50%;background:var(--surface-1);border:1px solid var(--border);color:var(--green-glow);font-size:18px;display:none;align-items:center;justify-content:center;cursor:pointer;transition:.2s;box-shadow:var(--shadow);backdrop-filter:blur(6px)}
-  .btt.show{display:flex}
-  .btt:hover{background:var(--hover);transform:scale(1.08)}
 </style>
 </head>
 <body>
 
 <!-- HERO -->
-<div class="hero">
+<div class="hero" id="tab-overview">
   <div class="badge">2026 国庆 · 9/25 → 10/5</div>
   <h1>巴厘岛 + 伊真火山</h1>
   <div class="sub">9 天 8 晚 · 跳岛 → 稻田海滩 → 蓝火 → 山脊 → 雨林</div>
@@ -194,63 +197,88 @@
   </div>
 </div>
 
-<!-- OVERVIEW FLIGHT MAP -->
-<section class="overview container">
-  <h2>✈️ 国际航班总览 · 航线</h2>
-  <div class="sub">HKG → MNL → DPS（落地巴厘岛）｜ DPS → SIN → HKG（返程中转）</div>
-  <div class="hint">👆 点击地图上的机场节点，查看该站航班号与起降时间</div>
-  <div id="map-overview"></div>
-  <div class="legend">
-    <span><span class="lg-line"></span> 航班航线（弧线）</span>
-    <span><span class="lg-dot"></span> 机场节点</span>
-    <span>✈️ 航段中点</span>
-  </div>
-</section>
+<!-- OVERVIEW FLIGHT MAP (part of overview) -->
+<div class="container" id="panel-overview">
+  <section class="overview">
+    <h2>✈️ 国际航班总览 · 航线</h2>
+    <div class="sub">HKG → MNL → DPS（落地巴厘岛）｜ DPS → SIN → HKG（返程中转）</div>
+    <div class="hint">👆 点击地图上的机场节点，查看该站航班号与起降时间</div>
+    <div id="map-overview"></div>
+    <div class="legend">
+      <span><span class="lg-line"></span> 航班航线（弧线）</span>
+      <span><span class="lg-dot"></span> 机场节点</span>
+      <span>✈️ 航段中点</span>
+    </div>
+  </section>
+</div>
 
-<!-- STICKY DAY NAV -->
-<nav class="daynav"><div class="daynav-inner" id="daynav"></div></nav>
+<!-- STICKY TAB NAV -->
+<nav class="tabnav"><div class="tabnav-inner" id="tabnav"></div></nav>
 
-<!-- DAY BLOCKS -->
+<!-- DAY CONTENT PANELS -->
 <main class="container" id="days"></main>
 
-<!-- BUDGET -->
-<section class="sec container">
-  <h2>预算 <span class="pending">💡 价格待你核对更新</span></h2>
-  <div class="sub">以下为估算，最终数字以你查到的为准，确定后我直接替换</div>
-  <div class="bgrid">
-    <div class="bcard"><div class="lab">✈️ 国际机票</div><div class="amt">¥5,541</div><div class="det">HKG⇆DPS 两人含税 · 香港快运+宿务太平洋+新航 · ¥2,771/人</div></div>
-    <div class="bcard"><div class="lab">🏨 住宿 9 晚</div><div class="amt">¥2,500–4,000</div><div class="det">Nusa Veranda+Penida Paradiso+Dewani 4晚+Anja 2晚+HARRIS 1晚</div></div>
-    <div class="bcard"><div class="lab">🔥 伊真 Klook 通宵团</div><div class="amt">¥1,200–1,800</div><div class="det">含交通+渡轮+向导+防毒面具</div></div>
-    <div class="bcard"><div class="lab">🌿 Twin Lakes 雨林</div><div class="amt">¥1,200–1,600</div><div class="det">含接送+向导+独木舟+湖午餐</div></div>
-    <div class="bcard"><div class="lab">🍽️ 餐饮 9 天</div><div class="amt">¥1,800–3,600</div><div class="det">含 1 顿 fine dining</div></div>
-    <div class="bcard"><div class="lab">🚗 交通+⛴️跳岛</div><div class="amt">¥1,100–1,800</div><div class="det">Grab+快船+摩托+乌布↔双湖</div></div>
-  </div>
-</section>
+<!-- BUDGET PANEL -->
+<div class="container" id="panel-budget">
+  <section class="sec">
+    <h2>预算 <span class="pending">💡 价格待你核对更新</span></h2>
+    <div class="sub">以下为估算，最终数字以你查到的为准，确定后我直接替换</div>
+    <div class="bgrid">
+      <div class="bcard"><div class="lab">✈️ 国际机票</div><div class="amt">¥5,541</div><div class="det">HKG⇆DPS 两人含税 · 香港快运+宿务太平洋+新航 · ¥2,771/人</div></div>
+      <div class="bcard"><div class="lab">🏨 住宿 9 晚</div><div class="amt">¥2,500–4,000</div><div class="det">Nusa Veranda+Penida Paradiso+Dewani 4晚+Anja 2晚+HARRIS 1晚</div></div>
+      <div class="bcard"><div class="lab">🔥 伊真 Klook 通宵团</div><div class="amt">¥1,200–1,800</div><div class="det">含交通+渡轮+向导+防毒面具</div></div>
+      <div class="bcard"><div class="lab">🌿 Twin Lakes 雨林</div><div class="amt">¥1,200–1,600</div><div class="det">含接送+向导+独木舟+湖午餐</div></div>
+      <div class="bcard"><div class="lab">🍽️ 餐饮 9 天</div><div class="amt">¥1,800–3,600</div><div class="det">含 1 顿 fine dining</div></div>
+      <div class="bcard"><div class="lab">🚗 交通+⛴️跳岛</div><div class="amt">¥1,100–1,800</div><div class="det">Grab+快船+摩托+乌布↔双湖</div></div>
+    </div>
+  </section>
+  <section class="sec">
+    <h2>落地贴士</h2>
+    <div class="tgrid">
+      <div class="tcard"><div class="ti">📱</div><h4>App</h4><p>Gojek + Grab 都装。佩妮达几乎叫不到车，租摩托；蓝梦岛步行+自行车够用。</p></div>
+      <div class="tcard"><div class="ti">💰</div><h4>换汇</h4><p>机场只换 ¥500 应急，Canggu/Ubud 汇率最好，BCA ATM 银联可取。</p></div>
+      <div class="tcard"><div class="ti">🎒</div><h4>伊真必带</h4><p>运动鞋+薄外套(10°C)+头灯+N95+充电宝。日包，行李锁 Dewani 房。</p></div>
+      <div class="tcard"><div class="ti">🏨</div><h4>Dewani 订房</h4><p>订 9/28-10/2 连续 4 晚，中间 9/30 伊真晚白付但房间保留。</p></div>
+    </div>
+  </section>
+</div>
 
-<!-- TIPS -->
-<section class="sec container">
-  <h2>落地贴士</h2>
-  <div class="tgrid">
-    <div class="tcard"><div class="ti">📱</div><h4>App</h4><p>Gojek + Grab 都装。佩妮达几乎叫不到车，租摩托；蓝梦岛步行+自行车够用。</p></div>
-    <div class="tcard"><div class="ti">💰</div><h4>换汇</h4><p>机场只换 ¥500 应急，Canggu/Ubud 汇率最好，BCA ATM 银联可取。</p></div>
-    <div class="tcard"><div class="ti">🎒</div><h4>伊真必带</h4><p>运动鞋+薄外套(10°C)+头灯+N95+充电宝。日包，行李锁 Dewani 房。</p></div>
-    <div class="tcard"><div class="ti">🏨</div><h4>Dewani 订房</h4><p>订 9/28-10/2 连续 4 晚，中间 9/30 伊真晚白付但房间保留。</p></div>
-  </div>
-</section>
+<div class="footer container">巴厘岛 + 伊真火山 + 佩妮达 + Twin Lakes 雨林 · 2026 国庆 · elsewherrre.github.io/travel-pages</div>
 
-<div class="footer">巴厘岛 + 伊真火山 + 佩妮达 + Twin Lakes 雨林 · 2026 国庆 · elsewherrre.github.io/travel-pages</div>
-<button class="btt" id="btt" aria-label="返回顶部">▲</button>
-
-<!-- Leaflet (hardened: unpkg primary, cdnjs fallback) -->
+<!-- Leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>window.L||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"><\/script>');</script>
 
 <script>
-const DAYS = [{"n": 1, "date": "9/26 周六", "title": "蓝梦岛 · 到埠跳岛", "thumb": "images/Devils_Tear_Nusa_Lembongan_Bal_2026-06-23T07-05-15.png", "hotel": {"t": "Nusa Veranda", "s": "done"}, "tags": ["Devil's Tears", "蘑菇海滩浮潜", "Yellow Bridge"], "points": [{"name": "DPS 机场", "lat": -8.7482, "lng": 115.1675, "type": "start"}, {"name": "沙努尔码头", "lat": -8.688, "lng": 115.261, "type": ""}, {"name": "Jungutbatu 码头", "lat": -8.684, "lng": 115.4525, "type": ""}, {"name": "Nusa Veranda", "lat": -8.678, "lng": 115.45, "type": ""}, {"name": "蘑菇海滩", "lat": -8.684, "lng": 115.453, "type": ""}, {"name": "Devil's Tears", "lat": -8.6905, "lng": 115.4535, "type": ""}, {"name": "Yellow Bridge", "lat": -8.6935, "lng": 115.4575, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.745964, 115.166353], [-8.745145, 115.166295], [-8.745003, 115.176689], [-8.744403, 115.177213], [-8.745018, 115.181743], [-8.744441, 115.182507], [-8.740754, 115.18053], [-8.731979, 115.178558], [-8.72142, 115.182519], [-8.721904, 115.191717], [-8.715825, 115.208444], [-8.717299, 115.217213], [-8.712172, 115.226319], [-8.711957, 115.231426], [-8.708324, 115.241624], [-8.70443, 115.246779], [-8.70406, 115.257585], [-8.702497, 115.258672], [-8.688401, 115.258621], [-8.688312, 115.261006]]}, {"mode": "ferry", "path": [[-8.688, 115.261], [-8.684, 115.4525]]}, {"mode": "walk", "path": [[-8.684, 115.4525], [-8.678, 115.45]]}, {"mode": "walk", "path": [[-8.678, 115.45], [-8.684, 115.453]]}, {"mode": "walk", "path": [[-8.684, 115.453], [-8.6905, 115.4535]]}, {"mode": "walk", "path": [[-8.6905, 115.4535], [-8.6935, 115.4575]]}], "detail": [["上午", "<b>07:50 落地 DPS</b> → 落地签 → Grab 去沙努尔码头(30min) → 快船去蓝梦岛"], ["下午", "入住 Nusa Veranda → 蘑菇海滩浮潜 → <b>Devil's Tears</b> 巨浪拍崖"], ["傍晚", "Yellow Bridge 日落，岛上随意晚饭"]], "stay": null, "warn": null}, {"n": 2, "date": "9/27 周日", "title": "佩妮达 · 魔鬼鱼 🐟", "thumb": "images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png", "hotel": {"t": "Penida Paradiso", "s": "done"}, "tags": ["Manta Point 🐟", "Kelingking", "日落"], "points": [{"name": "Nusa Veranda", "lat": -8.678, "lng": 115.45, "type": "start"}, {"name": "Penida 码头", "lat": -8.693, "lng": 115.546, "type": ""}, {"name": "Manta Point", "lat": -8.733, "lng": 115.448, "type": ""}, {"name": "Kelingking", "lat": -8.757, "lng": 115.479, "type": ""}, {"name": "Penida Paradiso", "lat": -8.712, "lng": 115.53, "type": "end"}], "segs": [{"mode": "ferry", "path": [[-8.678, 115.45], [-8.693, 115.546]]}, {"mode": "car", "path": [[-8.692831, 115.547569], [-8.689878, 115.54747], [-8.68996, 115.544342], [-8.691681, 115.544077], [-8.691129, 115.542955], [-8.696627, 115.543417], [-8.70036, 115.541314], [-8.701505, 115.541915], [-8.706347, 115.54221], [-8.706875, 115.543306], [-8.709511, 115.544004], [-8.711983, 115.546155], [-8.714542, 115.546051], [-8.715997, 115.544136], [-8.715995, 115.542562], [-8.717726, 115.540494], [-8.717659, 115.538661], [-8.719138, 115.537854], [-8.719743, 115.52817], [-8.720677, 115.527189], [-8.721514, 115.527775], [-8.722669, 115.526697], [-8.724235, 115.523716], [-8.725796, 115.52387], [-8.726142, 115.521385], [-8.727135, 115.519919], [-8.728256, 115.519913], [-8.728104, 115.518786], [-8.728764, 115.519132], [-8.734423, 115.517693], [-8.739433, 115.517683], [-8.744643, 115.507667], [-8.742681, 115.507002], [-8.743088, 115.504334], [-8.741276, 115.503157], [-8.741154, 115.501715], [-8.739876, 115.499874], [-8.739046, 115.500062], [-8.738129, 115.497327], [-8.738769, 115.495868], [-8.738431, 115.494669], [-8.737792, 115.495376], [-8.735771, 115.494216], [-8.735687, 115.493572], [-8.736623, 115.493063], [-8.738541, 115.493754], [-8.739709, 115.492038], [-8.73981, 115.490726], [-8.741419, 115.49133], [-8.740343, 115.487161], [-8.740596, 115.484333], [-8.738825, 115.4827], [-8.737746, 115.478282], [-8.735082, 115.477469], [-8.734505, 115.476464], [-8.734884, 115.475708], [-8.733093, 115.474803], [-8.731943, 115.471994], [-8.731632, 115.468667], [-8.729221, 115.462393], [-8.729375, 115.459641], [-8.728278, 115.45924], [-8.727435, 115.457058], [-8.727659, 115.453654], [-8.729909, 115.453382], [-8.730359, 115.452175], [-8.731162, 115.45208], [-8.731682, 115.450594], [-8.731296, 115.449778], [-8.73289, 115.447961]]}, {"mode": "car", "path": [[-8.73289, 115.447961], [-8.731296, 115.449778], [-8.731682, 115.450594], [-8.731162, 115.45208], [-8.730359, 115.452175], [-8.729909, 115.453382], [-8.727659, 115.453654], [-8.727435, 115.457058], [-8.728278, 115.45924], [-8.729375, 115.459641], [-8.729221, 115.462393], [-8.731632, 115.468667], [-8.731943, 115.471994], [-8.733093, 115.474803], [-8.734884, 115.475708], [-8.734505, 115.476464], [-8.735082, 115.477469], [-8.737746, 115.478282], [-8.738825, 115.4827], [-8.740523, 115.484117], [-8.740343, 115.487161], [-8.741629, 115.491971], [-8.74412, 115.492787], [-8.745897, 115.492393], [-8.746145, 115.489906], [-8.747185, 115.491073], [-8.747306, 115.489952], [-8.748126, 115.489235], [-8.751065, 115.491509], [-8.753217, 115.490981], [-8.754728, 115.489569], [-8.75526, 115.487165], [-8.754777, 115.486106], [-8.75642, 115.483673], [-8.756642, 115.482166]]}, {"mode": "car", "path": [[-8.756642, 115.482166], [-8.75642, 115.483673], [-8.754777, 115.486106], [-8.75526, 115.487165], [-8.754728, 115.489569], [-8.752532, 115.491228], [-8.7529, 115.494571], [-8.750605, 115.495123], [-8.749816, 115.497036], [-8.748988, 115.497555], [-8.749392, 115.498714], [-8.748593, 115.49942], [-8.748845, 115.504188], [-8.74726, 115.506955], [-8.745751, 115.506681], [-8.745364, 115.507765], [-8.744349, 115.507926], [-8.739433, 115.517683], [-8.734423, 115.517693], [-8.728764, 115.519132], [-8.72805, 115.518817], [-8.728256, 115.519913], [-8.727135, 115.519919], [-8.726142, 115.521385], [-8.725796, 115.52387], [-8.724235, 115.523716], [-8.722669, 115.526697], [-8.721514, 115.527775], [-8.720677, 115.527189], [-8.719681, 115.528258], [-8.719032, 115.536743], [-8.714039, 115.536247], [-8.7127, 115.535066], [-8.710558, 115.535127], [-8.710753, 115.53419]]}], "detail": [["上午", "10:00 快船蓝梦岛→佩妮达(30min)，码头接上 snorkeling tour"], ["中午", "<b>Manta Point 浮潜看魔鬼鱼</b> + 水晶湾 + Gamat Bay（3-3.5h, Klook ¥180-250/人）"], ["下午", "Kelingking 精灵坠崖（下沙滩量力）→ 傍晚入住 Penida Paradiso 西岸日落"]], "stay": null, "warn": null}, {"n": 3, "date": "9/28 周一", "title": "佩妮达 → Canggu", "thumb": "images/Canggu_Bali_Batu_Bolong_beach__2026-06-23T08-00-28.png", "hotel": {"t": "Dewani Villa", "s": "done"}, "tags": ["Diamond Beach", "Atuh Beach", "La Brisa"], "points": [{"name": "Penida Paradiso", "lat": -8.712, "lng": 115.53, "type": "start"}, {"name": "Diamond Beach", "lat": -8.728, "lng": 115.544, "type": ""}, {"name": "Atuh Beach", "lat": -8.73, "lng": 115.5455, "type": ""}, {"name": "沙努尔码头", "lat": -8.688, "lng": 115.261, "type": ""}, {"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "end"}], "segs": [{"mode": "walk", "path": [[-8.712, 115.53], [-8.728, 115.544]]}, {"mode": "walk", "path": [[-8.728, 115.544], [-8.73, 115.5455]]}, {"mode": "ferry", "path": [[-8.73, 115.5455], [-8.688, 115.261]]}, {"mode": "car", "path": [[-8.688312, 115.261006], [-8.688231, 115.260555], [-8.682442, 115.260475], [-8.682248, 115.259199], [-8.678763, 115.25855], [-8.674265, 115.259536], [-8.667041, 115.255564], [-8.659058, 115.253526], [-8.643388, 115.255337], [-8.637507, 115.253089], [-8.63535, 115.250874], [-8.636183, 115.237846], [-8.635464, 115.224462], [-8.635784, 115.218129], [-8.639043, 115.207597], [-8.639199, 115.204673], [-8.636997, 115.196887], [-8.648885, 115.195289], [-8.651527, 115.195464], [-8.650733, 115.186496], [-8.648762, 115.186468], [-8.646308, 115.171701], [-8.645181, 115.168605], [-8.646798, 115.167821], [-8.645272, 115.159288], [-8.642501, 115.154975], [-8.648743, 115.149107], [-8.649308, 115.149781], [-8.655999, 115.148]]}], "detail": [["上午", "Diamond Beach 钻石海滩（人少）→ 步行 Atuh Beach"], ["中午", "12:30 快船回沙努尔 → Grab 去 Dewani(45min)"], ["傍晚", "Batu Bolong 街闲逛 → La Brisa / The Slow 晚饭"]], "stay": null, "warn": null}, {"n": 4, "date": "9/29 周二", "title": "Canggu · 全日瘫", "thumb": "images/Canggu_Bali_Batu_Bolong_beach__2026-06-23T08-00-28.png", "hotel": {"t": "Dewani Villa", "s": "done"}, "tags": ["冲浪课", "稻田骑行", "Tanah Lot"], "points": [{"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "start"}, {"name": "Batu Bolong Beach", "lat": -8.647, "lng": 115.141, "type": ""}, {"name": "Tanah Lot", "lat": -8.621, "lng": 115.086, "type": ""}, {"name": "Echo Beach", "lat": -8.646, "lng": 115.13, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.655999, 115.148], [-8.649308, 115.149781], [-8.648743, 115.149107], [-8.642501, 115.154975], [-8.636767, 115.147123], [-8.642009, 115.142318], [-8.6436, 115.142111], [-8.647322, 115.139933], [-8.64764, 115.140948], [-8.647009, 115.141107]]}, {"mode": "car", "path": [[-8.647009, 115.141107], [-8.64764, 115.140948], [-8.647322, 115.139933], [-8.6436, 115.142111], [-8.642009, 115.142318], [-8.636767, 115.147123], [-8.635968, 115.145847], [-8.636401, 115.145064], [-8.636022, 115.143131], [-8.634279, 115.138795], [-8.626144, 115.125273], [-8.622252, 115.119928], [-8.619895, 115.117415], [-8.610933, 115.11368], [-8.60757, 115.110373], [-8.604804, 115.105699], [-8.604144, 115.104348], [-8.614925, 115.095491], [-8.616142, 115.090663], [-8.618117, 115.088387], [-8.617441, 115.087553], [-8.618233, 115.086832], [-8.619306, 115.087043]]}, {"mode": "car", "path": [[-8.619306, 115.087043], [-8.618233, 115.086832], [-8.617441, 115.087553], [-8.618117, 115.088387], [-8.616142, 115.090663], [-8.614925, 115.095491], [-8.604144, 115.104348], [-8.60757, 115.110373], [-8.611032, 115.113746], [-8.620156, 115.117639], [-8.626086, 115.125184], [-8.631526, 115.134239], [-8.635896, 115.133051], [-8.644032, 115.128393], [-8.645231, 115.130058], [-8.645972, 115.130036]]}], "detail": [["上午", "Batu Bolong 冲浪体验课(2h, ¥120-150/人)"], ["中午", "租摩托稻田骑行 → Crate Cafe 早午餐"], ["下午", "瘫泳池 → 16:30 骑摩托去 Tanah Lot 海神庙日落"]], "stay": {"pin": "🏖️", "t": "Dewani Villa Resort 基地日", "d": "不出远门，海滩+稻田+泳池慢节奏"}, "warn": null}, {"n": 5, "date": "9/30 周三", "title": "伊真出发 ⛰️", "thumb": "images/Kawah_Ijen_volcano_blue_fire_p_2026-06-23T07-41-01.png", "hotel": {"t": "车上 / 伊真", "s": "none"}, "tags": ["午睡必杀", "19:00 出发", "Klook 接送"], "points": [{"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "start"}, {"name": "Gilimanuk 码头", "lat": -8.162, "lng": 114.433, "type": ""}, {"name": "Ketapang 码头(爪哇)", "lat": -8.143, "lng": 114.37, "type": ""}, {"name": "Ijen Paltuding 登山口", "lat": -8.106, "lng": 114.255, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.655999, 115.148], [-8.649308, 115.149781], [-8.648743, 115.149107], [-8.642501, 115.154975], [-8.641355, 115.152918], [-8.640803, 115.153271], [-8.641911, 115.155381], [-8.639083, 115.157345], [-8.636567, 115.1587], [-8.633003, 115.159539], [-8.632513, 115.160745], [-8.626744, 115.161917], [-8.625812, 115.163147], [-8.626194, 115.165058], [-8.624817, 115.165786], [-8.620411, 115.165673], [-8.61586, 115.168254], [-8.616082, 115.169375], [-8.614085, 115.170842], [-8.610769, 115.171657], [-8.610886, 115.17593], [-8.609518, 115.180891], [-8.605193, 115.181785], [-8.605247, 115.185816], [-8.590613, 115.186777], [-8.58242, 115.188242], [-8.578189, 115.183205], [-8.576437, 115.178265], [-8.568726, 115.181351], [-8.567253, 115.177886], [-8.566755, 115.174068], [-8.564699, 115.173697], [-8.563846, 115.171189], [-8.561497, 115.157794], [-8.559116, 115.149261], [-8.556874, 115.14574], [-8.554278, 115.139492], [-8.549519, 115.122372], [-8.54572, 115.115558], [-8.544589, 115.114361], [-8.536732, 115.110601], [-8.533833, 115.111778], [-8.534052, 115.109928], [-8.530644, 115.10532], [-8.528507, 115.100793], [-8.522194, 115.09856], [-8.521427, 115.097006], [-8.519795, 115.095767], [-8.518153, 115.091474], [-8.512733, 115.090575], [-8.508683, 115.078272], [-8.507834, 115.072123], [-8.505136, 115.071826], [-8.504617, 115.069756], [-8.502705, 115.068805], [-8.502385, 115.064945], [-8.501172, 115.06122], [-8.499968, 115.059608], [-8.499083, 115.056281], [-8.498219, 115.056053], [-8.494874, 115.047626], [-8.492242, 115.04738], [-8.495561, 115.045106], [-8.496595, 115.043598], [-8.495568, 115.040968], [-8.493387, 115.041348], [-8.492205, 115.040605], [-8.491533, 115.039105], [-8.491726, 115.037002], [-8.494354, 115.036028], [-8.496474, 115.033588], [-8.50049, 115.034215], [-8.504076, 115.031451], [-8.502668, 115.025309], [-8.499323, 115.024443], [-8.498015, 115.019607], [-8.500951, 115.018064], [-8.50273, 115.018424], [-8.512492, 115.016394], [-8.524873, 115.008084], [-8.52813, 115.003755], [-8.527798, 115.001477], [-8.528538, 114.999743], [-8.528404, 114.996903], [-8.524779, 114.994954], [-8.520949, 114.988425], [-8.517724, 114.987915], [-8.516798, 114.986629], [-8.514472, 114.985684], [-8.512952, 114.981487], [-8.510296, 114.977806], [-8.507033, 114.976696], [-8.503823, 114.972952], [-8.500727, 114.971114], [-8.500478, 114.969754], [-8.498676, 114.967283], [-8.495281, 114.966059], [-8.494186, 114.962888], [-8.492802, 114.961163], [-8.492437, 114.958142], [-8.488828, 114.950917], [-8.48457, 114.949147], [-8.485375, 114.944789], [-8.48317, 114.944201], [-8.480111, 114.940258], [-8.477429, 114.940019], [-8.477982, 114.936978], [-8.472399, 114.927639], [-8.469892, 114.926373], [-8.469627, 114.925489], [-8.470452, 114.924396], [-8.467529, 114.916888], [-8.466175, 114.915829], [-8.465969, 114.914542], [-8.459592, 114.905433], [-8.455587, 114.896326], [-8.45117, 114.89054], [-8.449859, 114.885863], [-8.445058, 114.882802], [-8.444844, 114.881397], [-8.442526, 114.878326], [-8.442555, 114.873117], [-8.440573, 114.866556], [-8.435838, 114.861835], [-8.433032, 114.86058], [-8.43218, 114.857924], [-8.433531, 114.856051], [-8.431575, 114.853408], [-8.429883, 114.848827], [-8.428308, 114.847556], [-8.428909, 114.84335], [-8.426812, 114.835756], [-8.426056, 114.829291], [-8.420218, 114.821749], [-8.418103, 114.820886], [-8.416637, 114.821785], [-8.415706, 114.821457], [-8.415122, 114.818728], [-8.420186, 114.812059], [-8.419634, 114.808288], [-8.416859, 114.806378], [-8.411665, 114.805332], [-8.412088, 114.803186], [-8.405562, 114.795728], [-8.403835, 114.795249], [-8.402514, 114.792944], [-8.400859, 114.786089], [-8.399435, 114.784406], [-8.400994, 114.782215], [-8.401647, 114.771297], [-8.399935, 114.766872], [-8.392853, 114.756439], [-8.389177, 114.743827], [-8.390239, 114.734962], [-8.388027, 114.712101], [-8.386019, 114.707068], [-8.382687, 114.704345], [-8.382826, 114.702656], [-8.378949, 114.69484], [-8.378623, 114.688556], [-8.376749, 114.683102], [-8.37358, 114.682839], [-8.369562, 114.673577], [-8.357796, 114.633835], [-8.356838, 114.618753], [-8.354679, 114.612032], [-8.354217, 114.606498], [-8.351884, 114.601657], [-8.34825, 114.578851], [-8.347312, 114.575379], [-8.345519, 114.572971], [-8.343252, 114.567306], [-8.339133, 114.562179], [-8.33255, 114.548862], [-8.331647, 114.548123], [-8.330355, 114.548149], [-8.330113, 114.546256], [-8.325248, 114.541376], [-8.322817, 114.534981], [-8.318791, 114.528809], [-8.313161, 114.526542], [-8.307831, 114.520026], [-8.301336, 114.515297], [-8.292105, 114.510367], [-8.289685, 114.506395], [-8.285779, 114.50409], [-8.281083, 114.503356], [-8.278866, 114.501095], [-8.274428, 114.499079], [-8.27335, 114.495006], [-8.268173, 114.491006], [-8.255549, 114.485668], [-8.254105, 114.484282], [-8.253977, 114.480864], [-8.239197, 114.468305], [-8.23776, 114.463819], [-8.23135, 114.46065], [-8.228056, 114.455574], [-8.21919, 114.450593], [-8.191789, 114.443395], [-8.18679, 114.440067], [-8.166699, 114.434494], [-8.165389, 114.434756], [-8.163068, 114.436725], [-8.162347, 114.435223]]}, {"mode": "ferry", "path": [[-8.162, 114.433], [-8.143, 114.37]]}, {"mode": "car", "path": [[-8.141943, 114.370561], [-8.139665, 114.364356], [-8.142497, 114.364098], [-8.143515, 114.362446], [-8.147665, 114.360981], [-8.149643, 114.361829], [-8.161589, 114.361149], [-8.171185, 114.357582], [-8.172489, 114.358118], [-8.178802, 114.357238], [-8.183597, 114.355651], [-8.194311, 114.358154], [-8.210146, 114.356286], [-8.215052, 114.354919], [-8.213135, 114.350566], [-8.21297, 114.347456], [-8.2142, 114.346787], [-8.214324, 114.345061], [-8.214084, 114.342356], [-8.213014, 114.339671], [-8.215785, 114.337862], [-8.216363, 114.332684], [-8.215676, 114.327408], [-8.216415, 114.325042], [-8.215925, 114.320453], [-8.216278, 114.317029], [-8.218274, 114.312914], [-8.218881, 114.308408], [-8.221471, 114.304466], [-8.219383, 114.297016], [-8.216796, 114.292063], [-8.214634, 114.289641], [-8.214111, 114.287415], [-8.212982, 114.286691], [-8.21213, 114.284441], [-8.210648, 114.284509], [-8.210305, 114.282788], [-8.206888, 114.280451], [-8.205901, 114.278568], [-8.201814, 114.27675], [-8.197153, 114.272676], [-8.19662, 114.271197], [-8.194869, 114.270059], [-8.193067, 114.266627], [-8.191531, 114.265157], [-8.190791, 114.26548], [-8.188383, 114.260358], [-8.186966, 114.25998], [-8.185384, 114.256229], [-8.18057, 114.252915], [-8.179063, 114.252604], [-8.178383, 114.253397], [-8.174013, 114.252168], [-8.172051, 114.252608], [-8.170067, 114.251526], [-8.168254, 114.252061], [-8.16731, 114.251625], [-8.164482, 114.253562], [-8.162616, 114.25361], [-8.16223, 114.254257], [-8.159012, 114.253873], [-8.158329, 114.255808], [-8.156223, 114.257298], [-8.150054, 114.257227], [-8.146743, 114.256377], [-8.146593, 114.254868], [-8.144386, 114.254746], [-8.14248, 114.253734], [-8.139449, 114.253823], [-8.136097, 114.249541], [-8.134722, 114.248642], [-8.131456, 114.24936], [-8.128578, 114.248535], [-8.127741, 114.247776], [-8.121637, 114.246154], [-8.117026, 114.24291], [-8.107872, 114.240483], [-8.107076, 114.241861], [-8.105298, 114.241875], [-8.104316, 114.241043], [-8.101748, 114.243782]]}], "detail": [["白天", "睡到自然醒，12:00 退房行李留房，泳池继续瘫"], ["15:00", "<b>必须补午睡</b>，今晚熬通宵"], ["19:00", "简单晚饭 → Klook 来接（Canggu 免费接送）→ 夜车+渡轮去伊真"]], "stay": {"pin": "🚗", "t": "Dewani 休整 + 19:00 出发", "d": "白天瘫泳池养精蓄锐，夜里通宵去伊真"}, "warn": "⚠️ 伊真每月第一个周五闭山（清洁日），10/2 是周五，故选 <b>9/30 出发 ✓</b>。Klook 含全部交通+渡轮+向导+防毒面具。"}, {"n": 6, "date": "10/1 周四", "title": "伊真蓝火 → 回 Canggu 💙", "thumb": "images/Kawah_Ijen_crater_lake_panoram_2026-06-23T08-00-27.png", "hotel": {"t": "Dewani Villa", "s": "done"}, "tags": ["蓝火 💙", "火山湖", "Canggu 夜"], "points": [{"name": "Ijen Paltuding 登山口", "lat": -8.106, "lng": 114.255, "type": "start"}, {"name": "Ketapang 码头", "lat": -8.143, "lng": 114.37, "type": ""}, {"name": "Gilimanuk 码头", "lat": -8.162, "lng": 114.433, "type": ""}, {"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.101748, 114.243782], [-8.104316, 114.241043], [-8.105298, 114.241875], [-8.107076, 114.241861], [-8.107872, 114.240483], [-8.117026, 114.24291], [-8.121637, 114.246154], [-8.127741, 114.247776], [-8.128578, 114.248535], [-8.131456, 114.24936], [-8.134722, 114.248642], [-8.136097, 114.249541], [-8.139449, 114.253823], [-8.14248, 114.253734], [-8.144386, 114.254746], [-8.146593, 114.254868], [-8.146743, 114.256377], [-8.150054, 114.257227], [-8.156223, 114.257298], [-8.158329, 114.255808], [-8.159012, 114.253873], [-8.16223, 114.254257], [-8.162616, 114.25361], [-8.164482, 114.253562], [-8.16731, 114.251625], [-8.168254, 114.252061], [-8.170067, 114.251526], [-8.172051, 114.252608], [-8.174013, 114.252168], [-8.178383, 114.253397], [-8.179063, 114.252604], [-8.18057, 114.252915], [-8.185384, 114.256229], [-8.186966, 114.25998], [-8.188383, 114.260358], [-8.190791, 114.26548], [-8.191531, 114.265157], [-8.193067, 114.266627], [-8.194869, 114.270059], [-8.19662, 114.271197], [-8.197153, 114.272676], [-8.201814, 114.27675], [-8.205901, 114.278568], [-8.206888, 114.280451], [-8.210305, 114.282788], [-8.210648, 114.284509], [-8.21213, 114.284441], [-8.212982, 114.286691], [-8.214111, 114.287415], [-8.214634, 114.289641], [-8.216796, 114.292063], [-8.219383, 114.297016], [-8.221471, 114.304466], [-8.218881, 114.308408], [-8.218274, 114.312914], [-8.216278, 114.317029], [-8.215925, 114.320453], [-8.216415, 114.325042], [-8.215676, 114.327408], [-8.216363, 114.332684], [-8.215785, 114.337862], [-8.213014, 114.339671], [-8.214153, 114.342648], [-8.214326, 114.345292], [-8.2142, 114.346787], [-8.21297, 114.347456], [-8.212981, 114.350213], [-8.215035, 114.354847], [-8.210161, 114.356195], [-8.194311, 114.358154], [-8.183597, 114.355651], [-8.178802, 114.357238], [-8.172489, 114.358118], [-8.171185, 114.357582], [-8.161589, 114.361149], [-8.149643, 114.361829], [-8.147665, 114.360981], [-8.143515, 114.362446], [-8.142497, 114.364098], [-8.139665, 114.364356], [-8.141943, 114.370561]]}, {"mode": "ferry", "path": [[-8.143, 114.37], [-8.162, 114.433]]}, {"mode": "car", "path": [[-8.162347, 114.435223], [-8.162638, 114.436166], [-8.161515, 114.437967], [-8.16208, 114.438079], [-8.165312, 114.434829], [-8.166703, 114.43461], [-8.18679, 114.440067], [-8.191789, 114.443395], [-8.218804, 114.450456], [-8.228056, 114.455574], [-8.23135, 114.46065], [-8.23776, 114.463819], [-8.239197, 114.468305], [-8.253977, 114.480864], [-8.254105, 114.484282], [-8.255549, 114.485668], [-8.268173, 114.491006], [-8.27335, 114.495006], [-8.274428, 114.499079], [-8.278866, 114.501095], [-8.281083, 114.503356], [-8.285779, 114.50409], [-8.289685, 114.506395], [-8.292105, 114.510367], [-8.301336, 114.515297], [-8.307831, 114.520026], [-8.313161, 114.526542], [-8.318791, 114.528809], [-8.322817, 114.534981], [-8.325248, 114.541376], [-8.330113, 114.546256], [-8.330339, 114.548247], [-8.331872, 114.548243], [-8.33255, 114.548862], [-8.339133, 114.562179], [-8.343252, 114.567306], [-8.345519, 114.572971], [-8.347312, 114.575379], [-8.34825, 114.578851], [-8.351884, 114.601657], [-8.354174, 114.606499], [-8.354599, 114.612048], [-8.356758, 114.618765], [-8.35773, 114.633944], [-8.361145, 114.643866], [-8.369562, 114.673577], [-8.37358, 114.682839], [-8.376749, 114.683102], [-8.378623, 114.688556], [-8.378949, 114.69484], [-8.382826, 114.702656], [-8.382687, 114.704345], [-8.386019, 114.707068], [-8.388027, 114.712101], [-8.390239, 114.734962], [-8.389177, 114.743827], [-8.392853, 114.756439], [-8.399935, 114.766872], [-8.401647, 114.771297], [-8.400994, 114.782215], [-8.399435, 114.784406], [-8.400859, 114.786089], [-8.402514, 114.792944], [-8.403835, 114.795249], [-8.405562, 114.795728], [-8.412088, 114.803186], [-8.411665, 114.805332], [-8.416859, 114.806378], [-8.419634, 114.808288], [-8.420186, 114.812059], [-8.415122, 114.818728], [-8.415706, 114.821457], [-8.416637, 114.821785], [-8.418103, 114.820886], [-8.420218, 114.821749], [-8.426056, 114.829291], [-8.426812, 114.835756], [-8.428909, 114.84335], [-8.428308, 114.847556], [-8.429883, 114.848827], [-8.431575, 114.853408], [-8.433531, 114.856051], [-8.43218, 114.857924], [-8.433032, 114.86058], [-8.435838, 114.861835], [-8.440573, 114.866556], [-8.442555, 114.873117], [-8.442526, 114.878326], [-8.444844, 114.881397], [-8.445058, 114.882802], [-8.449859, 114.885863], [-8.45117, 114.89054], [-8.455587, 114.896326], [-8.459592, 114.905433], [-8.465969, 114.914542], [-8.466175, 114.915829], [-8.467529, 114.916888], [-8.470452, 114.924396], [-8.469627, 114.925489], [-8.469892, 114.926373], [-8.472399, 114.927639], [-8.477982, 114.936978], [-8.477429, 114.940019], [-8.480111, 114.940258], [-8.48317, 114.944201], [-8.485375, 114.944789], [-8.48457, 114.949147], [-8.488828, 114.950917], [-8.492437, 114.958142], [-8.492802, 114.961163], [-8.494186, 114.962888], [-8.495281, 114.966059], [-8.498676, 114.967283], [-8.500478, 114.969754], [-8.500727, 114.971114], [-8.503823, 114.972952], [-8.507033, 114.976696], [-8.510296, 114.977806], [-8.512952, 114.981487], [-8.514472, 114.985684], [-8.516798, 114.986629], [-8.517724, 114.987915], [-8.520949, 114.988425], [-8.524779, 114.994954], [-8.528404, 114.996903], [-8.528538, 114.999743], [-8.527798, 115.001477], [-8.52813, 115.003755], [-8.524873, 115.008084], [-8.512492, 115.016394], [-8.50273, 115.018424], [-8.500951, 115.018064], [-8.498015, 115.019607], [-8.499323, 115.024443], [-8.502668, 115.025309], [-8.504076, 115.031451], [-8.50049, 115.034215], [-8.496474, 115.033588], [-8.494354, 115.036028], [-8.491726, 115.037002], [-8.491477, 115.039466], [-8.492205, 115.040605], [-8.493387, 115.041348], [-8.495568, 115.040968], [-8.496595, 115.043598], [-8.495561, 115.045106], [-8.492242, 115.04738], [-8.494874, 115.047626], [-8.498219, 115.056053], [-8.499083, 115.056281], [-8.499968, 115.059608], [-8.501172, 115.06122], [-8.502385, 115.064945], [-8.502705, 115.068805], [-8.504617, 115.069756], [-8.5051, 115.071802], [-8.507307, 115.072016], [-8.508683, 115.078272], [-8.512733, 115.090575], [-8.51823, 115.091538], [-8.519795, 115.095767], [-8.521427, 115.097006], [-8.522194, 115.09856], [-8.52871, 115.101024], [-8.530644, 115.10532], [-8.534052, 115.109928], [-8.533833, 115.111778], [-8.536579, 115.110587], [-8.544895, 115.114546], [-8.548646, 115.12079], [-8.550565, 115.125169], [-8.554447, 115.140368], [-8.559066, 115.149124], [-8.560494, 115.153672], [-8.563722, 115.170511], [-8.562105, 115.170895], [-8.561514, 115.172066], [-8.564437, 115.173609], [-8.566623, 115.173829], [-8.567253, 115.177886], [-8.568839, 115.181444], [-8.576437, 115.178265], [-8.578189, 115.183205], [-8.582367, 115.188232], [-8.590613, 115.186777], [-8.605247, 115.185816], [-8.605193, 115.181785], [-8.609518, 115.180891], [-8.610886, 115.17593], [-8.610769, 115.171657], [-8.614085, 115.170842], [-8.616082, 115.169375], [-8.61586, 115.168254], [-8.620411, 115.165673], [-8.624817, 115.165786], [-8.626194, 115.165058], [-8.625812, 115.163147], [-8.626508, 115.162061], [-8.632615, 115.160707], [-8.633003, 115.159539], [-8.636567, 115.1587], [-8.639034, 115.157375], [-8.643719, 115.153961], [-8.648743, 115.149107], [-8.649308, 115.149781], [-8.655999, 115.148]]}], "detail": [["凌晨", "03:00 登顶 → <b>05:00 💙 蓝色硫磺火焰</b> → 06:00 火山口湖日出 → 下山"], ["白天", "Jagir 瀑布打卡 → 渡轮回巴厘岛 → <b>约 17:00 回 Dewani</b>（行李在房）"], ["傍晚", "洗澡睡 2h → 出门 La Brisa 日落 → Betelnut → Old Man's 喝一杯"]], "stay": null, "warn": null}, {"n": 7, "date": "10/2 周五", "title": "乌布 · 山脊与手信", "thumb": "images/Ubud_Sacred_Monkey_Forest_Bali_2026-06-23T08-00-27.png", "hotel": {"t": "Anja Villas Ubud", "s": "done"}, "tags": ["Anja Villas", "猴林", "Rasia Wood 🪵", "Kerthi Art", "Ridge Walk"], "points": [{"name": "Dewani 退房", "lat": -8.656, "lng": 115.148, "type": "start"}, {"name": "Anja Villas Ubud", "lat": -8.5069, "lng": 115.2624, "type": ""}, {"name": "圣猴森林", "lat": -8.5188, "lng": 115.259, "type": ""}, {"name": "乌布皇宫", "lat": -8.507, "lng": 115.262, "type": ""}, {"name": "Rasia Wood", "lat": -8.49, "lng": 115.27, "type": ""}, {"name": "Campuhan Ridge", "lat": -8.5021, "lng": 115.2619, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.655999, 115.148], [-8.649308, 115.149781], [-8.648743, 115.149107], [-8.642501, 115.154975], [-8.641355, 115.152918], [-8.640803, 115.153271], [-8.641911, 115.155381], [-8.639083, 115.157345], [-8.636567, 115.1587], [-8.633003, 115.159539], [-8.632513, 115.160745], [-8.626744, 115.161917], [-8.625812, 115.163147], [-8.626194, 115.165058], [-8.624817, 115.165786], [-8.620411, 115.165673], [-8.61586, 115.168254], [-8.616082, 115.169375], [-8.614085, 115.170842], [-8.610769, 115.171657], [-8.610886, 115.17593], [-8.609518, 115.180891], [-8.605193, 115.181785], [-8.605247, 115.185816], [-8.590613, 115.186777], [-8.58242, 115.188242], [-8.587075, 115.20338], [-8.586432, 115.215787], [-8.58444, 115.214712], [-8.581231, 115.216674], [-8.563913, 115.220795], [-8.558249, 115.218612], [-8.549366, 115.220195], [-8.551018, 115.23047], [-8.550028, 115.2328], [-8.549706, 115.238067], [-8.548135, 115.240857], [-8.54781, 115.251787], [-8.54702, 115.254287], [-8.545467, 115.255204], [-8.545634, 115.258905], [-8.540986, 115.259188], [-8.541279, 115.262075], [-8.533599, 115.263024], [-8.533018, 115.263943], [-8.52092, 115.262817], [-8.518121, 115.263447], [-8.518258, 115.260416], [-8.517616, 115.259369], [-8.506849, 115.262422]]}, {"mode": "walk", "path": [[-8.5069, 115.2624], [-8.5188, 115.259]]}, {"mode": "walk", "path": [[-8.5188, 115.259], [-8.507, 115.262]]}, {"mode": "walk", "path": [[-8.507, 115.262], [-8.49, 115.27]]}, {"mode": "walk", "path": [[-8.49, 115.27], [-8.5021, 115.2619]]}], "detail": [["上午", "Dewani 退房 → Grab 去 Anja Villas(1.5h) → 圣猴森林(¥40) → 乌布皇宫"], ["下午", "<b>Rasia Wood</b>(Jl.Raya Andong 木雕) → Kerthi Art Shop 手工艺品"], ["傍晚", "17:00 <b>Campuhan Ridge Walk</b> 山脊日落 → Sage / Melting Wok 晚饭"]], "stay": null, "warn": null}, {"n": 8, "date": "10/3 周六", "title": "Twin Lakes 雨林 🌿", "thumb": "images/Bali_Tegalalang_rice_terraces__2026-06-23T06-29-06.png", "hotel": {"t": "Anja Villas Ubud", "s": "done"}, "tags": ["雨林徒步", "独木舟", "双湖古庙", "告别晚餐"], "points": [{"name": "Anja Villas Ubud", "lat": -8.5069, "lng": 115.2624, "type": "start"}, {"name": "Lake Buyan 双湖", "lat": -8.2413, "lng": 115.108, "type": ""}, {"name": "雨林穿越", "lat": -8.255, "lng": 115.085, "type": ""}, {"name": "Tamblingan 独木舟", "lat": -8.258, "lng": 115.078, "type": ""}, {"name": "回 Anja Villas", "lat": -8.5069, "lng": 115.2624, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.506849, 115.262422], [-8.508177, 115.26534], [-8.520777, 115.262827], [-8.52596, 115.263629], [-8.527604, 115.259876], [-8.527319, 115.255315], [-8.528653, 115.254194], [-8.528744, 115.252277], [-8.526903, 115.239048], [-8.523465, 115.239155], [-8.523183, 115.235505], [-8.522596, 115.235027], [-8.524826, 115.233517], [-8.53116, 115.231392], [-8.530396, 115.226954], [-8.524873, 115.228075], [-8.520966, 115.209488], [-8.50526, 115.210466], [-8.495952, 115.209644], [-8.485548, 115.210325], [-8.478534, 115.207913], [-8.476678, 115.208141], [-8.476551, 115.205739], [-8.474357, 115.202146], [-8.4731, 115.198094], [-8.472676, 115.188888], [-8.469238, 115.189519], [-8.468807, 115.18536], [-8.456732, 115.186868], [-8.444107, 115.192374], [-8.443242, 115.193583], [-8.435178, 115.197547], [-8.426833, 115.200372], [-8.423186, 115.200724], [-8.416312, 115.198208], [-8.391827, 115.195195], [-8.381555, 115.195201], [-8.37186, 115.192681], [-8.359465, 115.190897], [-8.357537, 115.19001], [-8.35145, 115.188967], [-8.349406, 115.18915], [-8.347596, 115.187877], [-8.34456, 115.187791], [-8.341968, 115.188838], [-8.339416, 115.188779], [-8.337134, 115.187389], [-8.324513, 115.185644], [-8.320594, 115.183961], [-8.314714, 115.182825], [-8.303253, 115.175741], [-8.300441, 115.176075], [-8.300125, 115.177515], [-8.299451, 115.177758], [-8.299834, 115.178759], [-8.298575, 115.178515], [-8.298584, 115.176165], [-8.299235, 115.174893], [-8.297636, 115.176336], [-8.295851, 115.175778], [-8.296425, 115.175225], [-8.294709, 115.17337], [-8.294691, 115.172514], [-8.289976, 115.168438], [-8.287672, 115.167904], [-8.285878, 115.169494], [-8.286334, 115.165435], [-8.285348, 115.165262], [-8.285042, 115.163656], [-8.283543, 115.163104], [-8.283547, 115.161749], [-8.28031, 115.162919], [-8.280612, 115.164933], [-8.279691, 115.165653], [-8.273736, 115.163762], [-8.270036, 115.16333], [-8.264266, 115.16507], [-8.263241, 115.164874], [-8.256818, 115.161406], [-8.255764, 115.159453], [-8.25376, 115.157664], [-8.253229, 115.1561], [-8.249268, 115.15215], [-8.246746, 115.151434], [-8.242795, 115.148561], [-8.241082, 115.145828], [-8.240976, 115.144647], [-8.238763, 115.144107], [-8.23751, 115.138063], [-8.23705, 115.141095], [-8.236693, 115.126061], [-8.238025, 115.120611], [-8.237711, 115.114414], [-8.23933, 115.108657], [-8.240459, 115.107112]]}, {"mode": "walk", "path": [[-8.2413, 115.108], [-8.255, 115.085]]}, {"mode": "car", "path": [[-8.254902, 115.08535], [-8.256052, 115.086642], [-8.257244, 115.089995], [-8.260869, 115.089087], [-8.261629, 115.088249], [-8.261233, 115.084838], [-8.260164, 115.083166], [-8.259589, 115.079303], [-8.258606, 115.077565]]}, {"mode": "car", "path": [[-8.258606, 115.077565], [-8.259589, 115.079303], [-8.260164, 115.083166], [-8.261233, 115.084838], [-8.261629, 115.088249], [-8.260869, 115.089087], [-8.254853, 115.090694], [-8.251464, 115.093095], [-8.248797, 115.095784], [-8.246985, 115.099871], [-8.244502, 115.101957], [-8.243592, 115.10377], [-8.239663, 115.107966], [-8.237711, 115.114414], [-8.238025, 115.120611], [-8.236799, 115.124097], [-8.236637, 115.127568], [-8.23705, 115.141095], [-8.23751, 115.138063], [-8.238679, 115.143996], [-8.240976, 115.144647], [-8.241082, 115.145828], [-8.242795, 115.148561], [-8.246746, 115.151434], [-8.249268, 115.15215], [-8.253229, 115.1561], [-8.25376, 115.157664], [-8.256973, 115.161525], [-8.263899, 115.16507], [-8.269878, 115.163325], [-8.275834, 115.16427], [-8.277744, 115.165432], [-8.279579, 115.165669], [-8.281317, 115.16501], [-8.282697, 115.166511], [-8.284247, 115.170643], [-8.285696, 115.170199], [-8.287204, 115.168096], [-8.288534, 115.167977], [-8.2925, 115.170226], [-8.293326, 115.17169], [-8.294691, 115.172514], [-8.294709, 115.17337], [-8.296425, 115.175225], [-8.295851, 115.175778], [-8.297636, 115.176336], [-8.299235, 115.174893], [-8.298584, 115.176165], [-8.298575, 115.178515], [-8.299834, 115.178759], [-8.299451, 115.177758], [-8.300125, 115.177515], [-8.300441, 115.176075], [-8.303253, 115.175741], [-8.314461, 115.182723], [-8.320594, 115.183961], [-8.324513, 115.185644], [-8.336992, 115.187358], [-8.340582, 115.188944], [-8.34456, 115.187791], [-8.347596, 115.187877], [-8.349406, 115.18915], [-8.35145, 115.188967], [-8.357537, 115.19001], [-8.359465, 115.190897], [-8.37186, 115.192681], [-8.381555, 115.195201], [-8.391827, 115.195195], [-8.416312, 115.198208], [-8.422089, 115.200641], [-8.426467, 115.200463], [-8.434992, 115.197623], [-8.443242, 115.193583], [-8.444107, 115.192374], [-8.456732, 115.186868], [-8.468867, 115.185349], [-8.472366, 115.183289], [-8.473078, 115.197974], [-8.474357, 115.202146], [-8.476551, 115.205739], [-8.476678, 115.208141], [-8.478534, 115.207913], [-8.485548, 115.210325], [-8.495952, 115.209644], [-8.50526, 115.210466], [-8.520966, 115.209488], [-8.524873, 115.228075], [-8.530396, 115.226954], [-8.53115, 115.231545], [-8.524826, 115.233517], [-8.522596, 115.235027], [-8.523183, 115.235505], [-8.523465, 115.239155], [-8.526903, 115.239048], [-8.528392, 115.24859], [-8.528719, 115.254004], [-8.527357, 115.25511], [-8.527604, 115.259876], [-8.52596, 115.263629], [-8.52092, 115.262817], [-8.518121, 115.263447], [-8.518258, 115.260416], [-8.517616, 115.259369], [-8.506849, 115.262422]]}], "detail": [["06:30", "出发 → 08:00 到 Buyan & Tamblingan 双湖"], ["上午", "向导带队雨林穿越(3-4h)：原始森林+草药辨识+林间古庙+独木舟划湖"], ["中午", "湖上午餐 → 15:30 回乌布 → <b>Hujan Locale 猪肋排</b> 告别晚餐"]], "stay": null, "warn": null}, {"n": 9, "date": "10/4 周日", "title": "机场收尾 + 纪念品 🛍️", "thumb": "images/Bamboo_treehouse_eco_lodge_in__2026-06-23T07-04-47.png", "hotel": {"t": "HARRIS Kuta Tuban", "s": "done"}, "tags": ["Daun Gift 🛍️", "Kuta Square", "HARRIS", "早睡"], "points": [{"name": "Anja Villas Ubud", "lat": -8.5069, "lng": 115.2624, "type": "start"}, {"name": "Daun Gift Shop", "lat": -8.718, "lng": 115.173, "type": ""}, {"name": "HARRIS Hotel", "lat": -8.745, "lng": 115.171, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.506849, 115.262422], [-8.508177, 115.26534], [-8.52092, 115.262817], [-8.532826, 115.263949], [-8.533599, 115.263024], [-8.541279, 115.262075], [-8.555349, 115.262042], [-8.561809, 115.261261], [-8.566555, 115.261899], [-8.575764, 115.258903], [-8.57553, 115.257316], [-8.576873, 115.257296], [-8.577142, 115.256255], [-8.583203, 115.255502], [-8.585057, 115.254299], [-8.604838, 115.252845], [-8.617261, 115.254264], [-8.632243, 115.260079], [-8.633229, 115.259071], [-8.634105, 115.255708], [-8.636618, 115.255428], [-8.63922, 115.253773], [-8.63634, 115.252226], [-8.635164, 115.249777], [-8.636181, 115.237987], [-8.635464, 115.224462], [-8.635784, 115.218129], [-8.639043, 115.207597], [-8.639199, 115.204673], [-8.637093, 115.196731], [-8.653529, 115.195079], [-8.654214, 115.193437], [-8.656631, 115.191806], [-8.663306, 115.1909], [-8.665888, 115.189242], [-8.671095, 115.191385], [-8.673991, 115.189789], [-8.67739, 115.1908], [-8.681265, 115.189323], [-8.681794, 115.197014], [-8.689386, 115.191683], [-8.69191, 115.189079], [-8.697041, 115.186087], [-8.703882, 115.184614], [-8.707138, 115.181665], [-8.710293, 115.181193], [-8.70995, 115.172349], [-8.712178, 115.172979], [-8.712386, 115.17153], [-8.717396, 115.172352], [-8.717437, 115.173002]]}, {"mode": "car", "path": [[-8.717437, 115.173002], [-8.717595, 115.174474], [-8.72232, 115.175575], [-8.722256, 115.178088], [-8.726457, 115.177868], [-8.726568, 115.176754], [-8.744746, 115.17912], [-8.743926, 115.174075], [-8.743956, 115.173192], [-8.744836, 115.173734], [-8.74496, 115.170998]]}], "detail": [["上午", "Anja 退房 → Grab 去 Kuta(1h) → <b>🛍️ Daun Gift Shop</b>(Kuta Square, 4.9★ 手工纪念品)"], ["下午", "采购手信：手工皂/藤编/木雕/精油 → 入住 HARRIS(机场 5min)"], ["晚上", "瘫/打包/泳池 → 21:00 早睡"]], "stay": null, "warn": null}, {"n": 10, "date": "10/5 周一", "title": "飞 · 新加坡中转 🇸🇬", "thumb": "images/Singapore_Marina_Bay_skyline_a_2026-06-23T07-41-00.png", "hotel": {"t": "✈️ 返程", "s": "none"}, "tags": ["5:30 起床", "樟宜 9h", "Jewel 瀑布"], "points": [], "segs": [], "detail": [["05:30", "起床 → 05:45 Grab 去机场(10min) → 06:15 办登机"], ["白天", "<b>07:15 DPS→SIN</b> → 10:00 抵樟宜，9h 中转：Jewel 雨漩涡 + 海南鸡饭 + 滨海湾"], ["晚上", "16:30 前回机场 → <b>19:00 SIN→HKG</b>（中国护照 96h 过境免签，行李直达）"]], "stay": null, "warn": null}];
-const OVERVIEW = {"points": [{"name": "HKG", "lat": 22.308, "lng": 113.918}, {"name": "MNL", "lat": 14.509, "lng": 121.019}, {"name": "DPS", "lat": -8.748, "lng": 115.167}, {"name": "SIN", "lat": 1.359, "lng": 103.989}], "legs": [{"from": "HKG", "to": "MNL", "path": [[22.308, 113.918], [22.034405054219278, 114.18361561309013], [21.760383543443858, 114.44820573963644], [21.485942937107414, 114.71178678066873], [21.211090620829793, 114.97437501741258], [20.935833897968095, 115.23598661237813], [20.66017999115106, 115.49663761048966], [20.384136043796886, 115.7563439402541], [20.10770912161454, 116.01512141496517], [19.830906214088657, 116.2729857339426], [19.553734235948, 116.52995248380279], [19.276200028617858, 116.78603713976051], [18.99831036165618, 117.04125506695856], [18.720071934173834, 117.29562152182451], [18.44149137623898, 117.54915165345243], [18.162575250265785, 117.8018605050081], [17.88333005238759, 118.0537630151562], [17.60376221381474, 118.30487401950818], [17.32387810217722, 118.55520825208889], [17.043684022852283, 118.80478034682162], [16.76318622027725, 119.05360483902915], [16.48239087924777, 119.30169616695068], [16.201304126201528, 119.54906867327264], [15.919932030487859, 119.79573660667306], [15.638280605623297, 120.04171412337782], [15.356355810533351, 120.28701528872824], [15.074163550780705, 120.53165407875905], [14.791709679780089, 120.77564438178564], [14.509, 121.01900000000002]], "mid": [18.44149137623898, 117.54915165345243]}, {"from": "MNL", "to": "DPS", "path": [[14.509, 121.01900000000002], [13.679574421086656, 120.80045795953497], [12.849958644792835, 120.58345083517733], [12.020165827959127, 120.3678727659226], [11.19020880985639, 120.15362038694707], [10.360100137805215, 119.9405926296314], [9.529852091700901, 119.72869052985808], [8.699476707546282, 119.51781704382047], [7.868985800088218, 119.30787687062484], [7.038390984648282, 119.09877628100674], [6.207703698233066, 118.89042295151896], [5.376935220005181, 118.68272580357954], [4.5460966911921785, 118.47559484679616], [3.715199134507287, 118.26894102600788], [2.8842534731528997, 118.06267607150554], [2.053270549475317, 117.85671235191082], [1.2222611433372166, 117.6509627292077], [0.3912359902726671, 117.44534041543344], [-0.43979420051182955, 117.23975883054379], [-1.270818728227513, 117.03413146097535], [-2.10182688262279, 116.82837171843023], [-2.932807926069793, 116.62239279841062], [-3.7637510755560615, 116.41610753802867], [-4.594645484518594, 116.20942827261392], [-5.425480224456676, 116.00226669063265], [-6.256244266258602, 115.79453368642561], [-7.086926461175713, 115.58613921025727], [-7.917515521375118, 115.37699211515512], [-8.748, 115.167]], "mid": [2.8842534731528997, 118.06267607150554]}, {"from": "DPS", "to": "SIN", "path": [[-8.748, 115.167], [-8.390504174995494, 114.76149489520022], [-8.032594819872296, 114.35673591890779], [-7.674290525539373, 113.95269033302435], [-7.3156097762349654, 113.54932548133417], [-6.956570954438363, 113.14660878660914], [-6.597192345767197, 112.74450774759916], [-6.237492143860417, 112.34298993591422], [-5.8774884552473905, 111.94202299280553], [-5.517199304203455, 111.54157462585202], [-5.156642637592401, 111.14161260555812], [-4.79583632969638, 110.74210476186981], [-4.434798187033795, 110.34301898061398], [-4.07354595316577, 109.94432319986755], [-3.7120973134918067, 109.54598540626161], [-3.350469900035359, 109.14797363122607], [-2.988681296219957, 108.75025594718034], [-2.6267490416366863, 108.35280046367514], [-2.264690636803747, 107.95557532349044], [-1.902523547918901, 107.55854869869471], [-1.5402652116056073, 107.16168878667023], [-1.1779330396536951, 106.7649638061094], [-0.815544423755419, 106.36834199298679], [-0.4531167402377354, 105.97179159651145], [-0.0906673547917172, 105.57528087506451], [0.27178637280005347, 105.1787780921262], [0.634227083937191, 104.78225151219739], [0.9966374164754521, 104.38566939671988], [1.359, 103.989]], "mid": [-3.7120973134918067, 109.54598540626161]}, {"from": "SIN", "to": "HKG", "path": [[1.359, 103.989], [2.1114274224541805, 104.32463370157618], [2.8637823866206555, 104.66059256502083], [3.616038924134865, 104.99699307510484], [4.368170933730866, 105.33395226705832], [5.120152145690231, 105.67158787347653], [5.871956085846716, 106.0100184728224], [6.623556039050512, 106.34936363986813], [7.374925011993548, 106.689744098424], [8.126035695294968, 107.03128187671004], [8.876860424742627, 107.37410046573325], [9.627371141583225, 107.71832498104291], [10.3775393517497, 108.06408232824604], [11.127336083910146, 108.41150137267627], [11.876731846217698, 108.76071311362183], [12.625696581635466, 109.11185086353167], [13.374199621704587, 109.46505043263288], [14.1222096386171, 109.82045031940842], [14.869694595448209, 110.17819190740103], [15.616621694394603, 110.53841966882635], [16.36295732285742, 110.90128137549796], [17.108666997198828, 111.26692831758652], [17.853715303991763, 111.63551553075625], [18.598065838571173, 112.00720203224445], [19.341681140683882, 112.38215106647193], [20.084522627021386, 112.76053036079716], [20.826550520406528, 113.14251239205002], [21.567723775390384, 113.52827466450775], [22.308, 113.918]], "mid": [11.876731846217698, 108.76071311362183]}]};
-const TILE = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-const modeColor = { ferry:'#6fa8dc' };
+// ===== GALLERY IMAGES PER DAY =====
+const GALLERY = {
+  1: ['images/devil-tears.png','images/mushroom-beach.png','images/yellow-bridge.png'],
+  2: ['images/manta-point.png','images/kelingking.png'],
+  3: ['images/diamond-beach.png','images/atuh-beach.png','images/la-brisa.png'],
+  4: ['images/batu-bolong.png','images/tanah-lot.png'],
+  5: ['images/hero-bali-ijen.png'],
+  6: ['images/ijen-blue-fire.png','images/ijen-crater-lake.png'],
+  7: ['images/monkey-forest.png','images/campuhan-ridge.png','images/tegallalang.png'],
+  8: ['images/buyan-lake.png','images/tamblingan.png'],
+  9: ['images/kuta-beach.png'],
+  10: ['images/jewel-changi.png']
+};
+
+// ===== DAYS DATA =====
+const DAYS = [{"n": 1, "date": "9/26 周六", "title": "蓝梦岛 · 到埠跳岛", "thumb": "images/Devils_Tear_Nusa_Lembongan_Bal_2026-06-23T07-05-15.png", "hotel": {"t": "Nusa Veranda", "s": "done"}, "tags": ["Devil's Tears", "蘑菇海滩浮潜", "Yellow Bridge"], "points": [{"name": "DPS 机场", "lat": -8.7482, "lng": 115.1675, "type": "start"}, {"name": "沙努尔码头", "lat": -8.688, "lng": 115.261, "type": ""}, {"name": "Jungutbatu 码头", "lat": -8.684, "lng": 115.4525, "type": ""}, {"name": "Nusa Veranda", "lat": -8.678, "lng": 115.45, "type": ""}, {"name": "蘑菇海滩", "lat": -8.684, "lng": 115.453, "type": ""}, {"name": "Devil's Tears", "lat": -8.6905, "lng": 115.4535, "type": ""}, {"name": "Yellow Bridge", "lat": -8.6935, "lng": 115.4575, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.745964, 115.166353], [-8.745145, 115.166295], [-8.745003, 115.176689], [-8.744403, 115.177213], [-8.745018, 115.181743], [-8.744441, 115.182507], [-8.740754, 115.18053], [-8.731979, 115.178558], [-8.72142, 115.182519], [-8.721904, 115.191717], [-8.715825, 115.208444], [-8.717299, 115.217213], [-8.712172, 115.226319], [-8.711957, 115.231426], [-8.708324, 115.241624], [-8.70443, 115.246779], [-8.70406, 115.257585], [-8.702497, 115.258672], [-8.688401, 115.258621], [-8.688312, 115.261006]]}, {"mode": "ferry", "path": [[-8.688, 115.261], [-8.684, 115.4525]]}, {"mode": "walk", "path": [[-8.684, 115.4525], [-8.678, 115.45]]}, {"mode": "walk", "path": [[-8.678, 115.45], [-8.684, 115.453]]}, {"mode": "walk", "path": [[-8.684, 115.453], [-8.6905, 115.4535]]}, {"mode": "walk", "path": [[-8.6905, 115.4535], [-8.6935, 115.4575]]}], "detail": [["上午", "<b>07:50 落地 DPS</b> → 落地签 → Grab 去沙努尔码头(30min) → 快船去蓝梦岛"], ["下午", "入住 Nusa Veranda → 蘑菇海滩浮潜 → <b>Devil's Tears</b> 巨浪拍崖"], ["傍晚", "Yellow Bridge 日落，岛上随意晚饭"]], "stay": null, "warn": null}, {"n": 2, "date": "9/27 周日", "title": "佩妮达 · 魔鬼鱼 🐟", "thumb": "images/Kelingking_Beach_Nusa_Penida_B_2026-06-23T07-03-22.png", "hotel": {"t": "Penida Paradiso", "s": "done"}, "tags": ["Manta Point 🐟", "Kelingking 日落"], "points": [{"name": "Nusa Veranda", "lat": -8.678, "lng": 115.45, "type": "start"}, {"name": "Manta Point", "lat": -8.724, "lng": 115.458, "type": ""}, {"name": "Kelingking Beach", "lat": -8.749, "lng": 115.453, "type": "end"}, {"name": "Penida Paradiso", "lat": -8.712, "lng": 115.53, "type": ""}], "segs": [{"mode": "ferry", "path": [[-8.678, 115.45], [-8.724, 115.458]]}, {"mode": "car", "path": [[-8.724, 115.458], [-8.749, 115.453]]}, {"mode": "car", "path": [[-8.749, 115.453], [-8.712, 115.53]]}], "detail": [["上午", "10:00 快船蓝梦岛→佩妮达(30min)，码头接上 snorkeling tour"], ["中午", "<b>Manta Point 浮潜看魔鬼鱼</b> + 水晶湾 + Gamat Bay（3-3.5h, Klook ¥180-250/人）"], ["下午", "Kelingking 精灵坠崖（下沙滩量力）→ 傍晚入住 Penida Paradiso 西岸日落"]], "stay": null, "warn": null}, {"n": 3, "date": "9/28 周一", "title": "佩妮达 → Canggu", "thumb": "images/Seminyak_Beach_Bali_sunset__co_2026-06-23T07-05-45.png", "hotel": {"t": "Dewani Villa", "s": "done"}, "tags": ["Diamond Beach", "Atuh Beach", "La Brisa"], "points": [{"name": "Penida Paradiso", "lat": -8.712, "lng": 115.53, "type": "start"}, {"name": "Diamond Beach", "lat": -8.721, "lng": 115.468, "type": ""}, {"name": "Atuh Beach", "lat": -8.715, "lng": 115.465, "type": ""}, {"name": "沙努尔码头", "lat": -8.688, "lng": 115.261, "type": ""}, {"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.712, 115.53], [-8.721, 115.468]]}, {"mode": "walk", "path": [[-8.721, 115.468], [-8.715, 115.465]]}, {"mode": "ferry", "path": [[-8.721, 115.468], [-8.688, 115.261]]}, {"mode": "car", "path": [[-8.688, 115.261], [-8.656, 115.148]]}], "detail": [["上午", "Diamond Beach 钻石海滩（人少）→ 步行 Atuh Beach"], ["中午", "12:30 快船回沙努尔 → Grab 去 Dewani(45min)"], ["傍晚", "Batu Bolong 街闲逛 → La Brisa / The Slow 晚饭"]], "stay": null, "warn": null}, {"n": 4, "date": "9/29 周二", "title": "Canggu · 全日瘫", "thumb": "images/Seminyak_Beach_Bali_sunset__co_2026-06-23T07-05-45.png", "hotel": {"t": "Dewani Villa", "s": "done"}, "tags": ["🏖️ Dewani 基地日", "冲浪课", "稻田骑行", "Tanah Lot"], "points": [{"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "start"}, {"name": "Batu Bolong Beach", "lat": -8.659, "lng": 115.138, "type": ""}, {"name": "Tanah Lot", "lat": -8.621, "lng": 115.087, "type": "end"}], "segs": [{"mode": "walk", "path": [[-8.656, 115.148], [-8.659, 115.138]]}, {"mode": "car", "path": [[-8.659, 115.138], [-8.621, 115.087]]}], "detail": [["上午", "Batu Bolong 冲浪体验课(2h, ¥120-150/人)"], ["中午", "租摩托稻田骑行 → Crate Cafe 早午餐"], ["下午", "瘫泳池 → 16:30 骑摩托去 <b>Tanah Lot 海神庙日落</b>"]], "stay": {"pin": "🏖️", "t": "Dewani Villa Resort 基地日", "d": "不出远门，海滩+稻田+泳池慢节奏"}, "warn": null}, {"n": 5, "date": "9/30 周三", "title": "伊真出发 ⛰️", "thumb": "images/Kawah_Ijen_volcano_blue_fire_p_2026-06-23T07-41-01.png", "hotel": {"t": "Dewani Villa", "s": "done"}, "tags": ["🚗 Dewani 休整", "19:00 出发", "Klook 接送"], "points": [{"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "start"}], "segs": [], "detail": [["白天", "睡到自然醒，12:00 退房行李留房，泳池继续瘫"], ["15:00", "<b>必须补午睡</b>，今晚熬通宵"], ["19:00", "简单晚饭 → Klook 来接（Canggu 免费接送）→ 夜车+渡轮去伊真"]], "stay": {"pin": "🚗", "t": "Canggu → 伊真火山", "d": "Klook 含全部交通+渡轮+向导+防毒面具"}, "warn": "⚠️ 伊真每月第一个周五闭山（清洁日），10/2 是周五，故选 <b>9/30 出发 ✓</b>。Klook 含交通+渡轮+向导+防毒面具。"}, {"n": 6, "date": "10/1 周四", "title": "伊真蓝火 → Canggu 💙", "thumb": "images/Mount_Semeru_volcano_summit_at_2026-06-23T07-41-01.png", "hotel": {"t": "Dewani Villa", "s": "done"}, "tags": ["蓝火 💙", "火山湖", "Canggu 夜"], "points": [{"name": "伊真火山口", "lat": -8.058, "lng": 114.242, "type": "start"}, {"name": "Jagir 瀑布", "lat": -8.106, "lng": 114.255, "type": ""}, {"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.058, 114.242], [-8.106, 114.255]]}, {"mode": "car", "path": [[-8.106, 114.255], [-8.656, 115.148]]}], "detail": [["凌晨", "03:00 登顶 → <b>05:00 💙 蓝色硫磺火焰</b> → 06:00 火山口湖日出 → 下山"], ["白天", "Jagir 瀑布打卡 → 渡轮回巴厘岛 → <b>约 17:00 回 Dewani</b>（行李在房）"], ["傍晚", "洗澡睡 2h → 出门 La Brisa 日落 → Betelnut → Old Man's 喝一杯"]], "stay": null, "warn": null}, {"n": 7, "date": "10/2 周五", "title": "乌布 · 山脊日落 🌾", "thumb": "images/Ubud_Sacred_Monkey_Forest_Bali_2026-06-23T08-00-27.png", "hotel": {"t": "Anja Villas Ubud", "s": "done"}, "tags": ["Anja Villas", "猴林", "Rasia Wood 🪵", "Kerthi Art", "Ridge Walk"], "points": [{"name": "Dewani Villa", "lat": -8.656, "lng": 115.148, "type": "start"}, {"name": "圣猴森林", "lat": -8.519, "lng": 115.259, "type": ""}, {"name": "乌布皇宫", "lat": -8.507, "lng": 115.262, "type": ""}, {"name": "Rasia Wood", "lat": -8.523, "lng": 115.281, "type": ""}, {"name": "Campuhan Ridge", "lat": -8.504, "lng": 115.256, "type": "end"}, {"name": "Anja Villas", "lat": -8.5069, "lng": 115.2624, "type": ""}], "segs": [{"mode": "car", "path": [[-8.656, 115.148], [-8.519, 115.259]]}, {"mode": "car", "path": [[-8.519, 115.259], [-8.507, 115.262]]}, {"mode": "car", "path": [[-8.507, 115.262], [-8.523, 115.281]]}, {"mode": "car", "path": [[-8.523, 115.281], [-8.504, 115.256]]}, {"mode": "car", "path": [[-8.504, 115.256], [-8.5069, 115.2624]]}], "detail": [["", "Dewani 退房 → Grab 去 Anja Villas(1.5h) → 圣猴森林(¥40) → 乌布皇宫"], ["", "<b>Rasia Wood</b>(Jl.Raya Andong 木雕) → Kerthi Art Shop 手工艺品"], ["17:00", "<b>Campuhan Ridge Walk</b> 山脊日落 → Sage / Melting Wok 晚饭"]], "stay": null, "warn": null}, {"n": 8, "date": "10/3 周六", "title": "Twin Lakes 雨林 🌿", "thumb": "images/Ranu_Kumbolo_alpine_lake_at_Mo_2026-06-23T07-41-00.png", "hotel": {"t": "Anja Villas Ubud", "s": "done"}, "tags": ["雨林徒步", "独木舟", "双湖古庙", "告别晚餐"], "points": [{"name": "Anja Villas", "lat": -8.5069, "lng": 115.2624, "type": "start"}, {"name": "Buyan Lake", "lat": -8.25, "lng": 115.098, "type": ""}, {"name": "Tamblingan Lake", "lat": -8.257, "lng": 115.098, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.5069, 115.2624], [-8.25, 115.098]]}, {"mode": "walk", "path": [[-8.25, 115.098], [-8.257, 115.098]]}], "detail": [["06:30", "出发 → 08:00 到 Buyan & Tamblingan 双湖"], ["上午", "向导带队雨林穿越(3-4h)：原始森林+草药辨识+林间古庙+独木舟划湖"], ["中午", "湖上午餐 → 15:30 回乌布 → <b>Hujan Locale 猪肋排</b> 告别晚餐"]], "stay": null, "warn": null}, {"n": 9, "date": "10/4 周日", "title": "Kuta · 纪念品日 🛍️", "thumb": "images/Kuta_Beach_Bali__wide_sandy_be_2026-07-07T10-02-47.png", "hotel": {"t": "HARRIS Hotel Kuta", "s": "done"}, "tags": ["Daun Gift Shop", "Kuta 海滩", "最后一晚"], "points": [{"name": "Anja Villas", "lat": -8.5069, "lng": 115.2624, "type": "start"}, {"name": "Daun Gift Shop", "lat": -8.723, "lng": 115.172, "type": ""}, {"name": "HARRIS Hotel", "lat": -8.726, "lng": 115.172, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.5069, 115.2624], [-8.723, 115.172]]}, {"mode": "walk", "path": [[-8.723, 115.172], [-8.726, 115.172]]}], "detail": [["", "Anja 退房 → Grab 去 Kuta(1h) → <b>🛍️ Daun Gift Shop</b>(Kuta Square, 4.9★ 手工纪念品)"]], "stay": null, "warn": null}, {"n": 10, "date": "10/5 周一", "title": "返程 · 新加坡中转 🇸🇬", "thumb": "images/Singapore_Marina_Bay_skyline_a_2026-06-23T07-41-00.png", "hotel": {"t": "—", "s": "none"}, "tags": ["樟宜 Jewel", "海南鸡饭", "滨海湾"], "points": [{"name": "HARRIS Hotel", "lat": -8.726, "lng": 115.172, "type": "start"}, {"name": "DPS 机场", "lat": -8.748, "lng": 115.167, "type": "end"}], "segs": [{"mode": "car", "path": [[-8.726, 115.172], [-8.748, 115.167]]}], "detail": [["", "起床 → 05:45 Grab 去机场(10min) → 06:15 办登机"], ["", "<b>07:15 DPS→SIN</b> → 10:00 抵樟宜，9h 中转：Jewel 雨漩涡 + 海南鸡饭 + 滨海湾"], ["", "16:30 前回机场 → <b>19:00 SIN→HKG</b>（中国护照 96h 过境免签，行李直达）"]], "stay": null, "warn": null}];
+
+// ===== OVERVIEW DATA =====
+const OVERVIEW = {"points": [{"name": "HKG", "lat": 22.308, "lng": 113.918}, {"name": "MNL", "lat": 14.509, "lng": 121.019}, {"name": "DPS", "lat": -8.748, "lng": 115.167}, {"name": "SIN", "lat": 1.359, "lng": 103.989}], "legs": [{"from": "HKG", "to": "MNL", "path": [[22.308, 113.918], [22.034405054219278, 114.18361561309013], [21.760383543443858, 114.44820573963644], [21.485942937107414, 114.71178678066873], [21.211090620829793, 114.97437501741258], [20.935833897968095, 115.23598661237813], [20.66017999115106, 115.49663761048966], [20.384136043796886, 115.7563439402541], [20.10770912161454, 116.01512141496517], [19.830906214088657, 116.2729857339426], [19.553734235948, 116.52995248380279], [19.276200028617858, 116.78603713976051], [18.99831036165618, 117.04125506695856], [18.720071934173834, 117.29562152182451], [18.44149137623898, 117.54915165345243], [18.162575250265785, 117.8018605050081], [17.88333005238759, 118.0537630151562], [17.60376221381474, 118.30487401950818], [17.32387810217722, 118.55520825208889], [17.043684022852283, 118.80478034682162], [16.76318622027725, 119.05360483902915], [16.48239087924777, 119.30169616695068], [16.201304126201528, 119.54906867327264], [15.919932030487859, 119.79573660667306], [15.638280605623297, 120.04171412337782], [15.356355810533351, 120.28701528872824], [15.074163550780705, 120.53165407875905], [14.791709679780089, 120.77564438178564], [14.509, 121.01900000000002]], "mid": [18.44149137623898, 117.54915165345243]}, {"from": "MNL", "to": "DPS", "path": [[14.509, 121.01900000000002], [13.679574421086656, 120.80045795953497], [12.849958644792835, 120.58345083517733], [12.020165827959127, 120.3678727659226], [11.19020880985639, 120.15362038694707], [10.360100137805215, 119.9405926296314], [9.529852091700901, 119.72869052985808], [8.699476707546282, 119.51781704382047], [7.868985800088218, 119.30787687062484], [7.038390984648282, 119.09877628100674], [6.207703698233066, 118.89042295151896], [5.376935220005181, 118.68272580357089], [4.546096983727023, 118.47559060696703], [3.7152010188313443, 118.26892489739958], [2.8842593055059354, 118.06263771506896], [2.053283778780658, 117.85663980946509], [1.2222863326545743, 117.65084393684767], [0.39127882424932204, 117.44516512974018], [-0.4397268664908717, 117.23952095679038], [-1.2707188363740222, 117.03383075794082], [-2.1016851483967497, 116.82801586199166], [-2.9326138201143805, 116.6219997777102], [-3.763492812004657, 116.41570836316737], [-4.59431001563633, 116.20906996952217], [-5.425053241731291, 116.00201556738937], [-6.255710208115722, 115.79447886329772], [-7.086268527469526, 115.5863963990972], [-7.916715694983843, 115.37770764627584], [-8.748, 115.167]], "mid": [2.8517761115687394, 118.11037237178615]}, {"from": "DPS", "to": "SIN", "path": [[-8.748, 115.167], [-8.718, 115.036], [-8.414, 114.639], [-7.906, 114.045], [-7.257, 113.317], [-6.528, 112.514], [-5.779, 111.694], [-5.068, 110.913], [-4.453, 110.226], [-3.539, 109.489], [-2.575, 108.776], [-1.561, 108.0904], [-0.497, 107.4304], [0.616, 106.798], [1.359, 103.989]], "mid": [-3.539, 109.489]}, {"from": "SIN", "to": "HKG", "path": [[1.359, 103.989], [1.934, 104.436], [2.578, 104.919], [3.285, 105.435], [4.051, 105.981], [4.869, 106.555], [5.736, 107.153], [6.645, 107.774], [7.593, 108.415], [8.573, 109.074], [9.582, 109.749], [10.615, 110.437], [11.668, 111.137], [12.736, 111.846], [13.816, 112.563], [14.903, 113.287], [15.994, 114.014], [17.085, 114.744], [18.173, 115.474], [19.254, 116.203], [20.323, 116.928], [21.378, 117.647], [22.308, 118.358]], "mid": [11.668, 111.137]}]};
+
+const FLIGHTS = [
+  {from:'HKG', to:'MNL', airline:'香港快运 HK Express', no:'UO516', dep:'9/25 22:40', arr:'9/26 01:00', terminal:'T2'},
+  {from:'MNL', to:'DPS', airline:'宿务太平洋 Cebu Pacific', no:'5J279', dep:'9/26 03:45', arr:'9/26 07:50'},
+  {from:'DPS', to:'SIN', airline:'新加坡航空 Singapore Airlines', no:'SQ949', dep:'10/5 07:15', arr:'10/5 10:00'},
+  {from:'SIN', to:'HKG', airline:'新加坡航空 Singapore Airlines', no:'SQ898', dep:'10/5 19:00', arr:'10/5 23:00'}
+];
+
+const TILE = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
 const planeIcon = L.divIcon({html:'✈️',className:'plane-ic',iconSize:[22,22],iconAnchor:[11,11]});
 
 function gmaps(lat,lng){ return 'https://www.google.com/maps/search/?api=1&query='+lat+','+lng; }
@@ -262,13 +290,13 @@ function initDayMap(el, day){
   const grp = [];
   day.segs.forEach(s=>{
     const opts = s.mode==='ferry'
-      ? {color:'#6fa8dc', weight:3, opacity:.9, dashArray:'5 6'}
-      : {color:'#7ab07c', weight:4, opacity:.95};
+      ? {color:'#4a8ba7', weight:3, opacity:.9, dashArray:'5 6'}
+      : {color:'#4a7c59', weight:4, opacity:.95};
     L.polyline(s.path, opts).addTo(map);
     grp.push(L.polyline(s.path).getBounds());
   });
   day.points.forEach((p,i)=>{
-    const fill = p.type==='start' ? '#5d8a5e' : p.type==='end' ? '#c9a96e' : '#333';
+    const fill = p.type==='start' ? '#4a7c59' : p.type==='end' ? '#c4956a' : '#555';
     const m = L.circleMarker([p.lat,p.lng], {radius:6, color:'#fff', weight:2, fillColor:fill, fillOpacity:1}).addTo(map);
     m.bindPopup('<b>'+(i+1)+'. '+p.name+'</b><br><a href="'+gmaps(p.lat,p.lng)+'" target="_blank" rel="noopener">📍 在 Google 地图打开</a>');
   });
@@ -280,14 +308,6 @@ function initDayMap(el, day){
   setTimeout(()=>map.invalidateSize(), 220);
 }
 
-// ===== 国际航班总览：航旅纵横风格弧线 + 可点击航班弹窗 =====
-const FLIGHTS = [
-  {from:'HKG', to:'MNL', airline:'香港快运 HK Express', no:'UO516', dep:'9/25 22:40', arr:'9/26 01:00', terminal:'T2'},
-  {from:'MNL', to:'DPS', airline:'宿务太平洋 Cebu Pacific', no:'5J279', dep:'9/26 03:45', arr:'9/26 07:50'},
-  {from:'DPS', to:'SIN', airline:'新加坡航空 Singapore Airlines', no:'SQ949', dep:'10/5 07:15', arr:'10/5 10:00'},
-  {from:'SIN', to:'HKG', airline:'新加坡航空 Singapore Airlines', no:'SQ898', dep:'10/5 19:00', arr:'10/5 23:00'}
-];
-// 二次贝塞尔弧：控制点垂直抬升 bow*距离，统一向北鼓起 → 航旅纵横式外凸航线
 function arcPts(a, b, bow){
   const s=[a[0],a[1]], e=[b[0],b[1]];
   const mid=[(s[0]+e[0])/2,(s[1]+e[1])/2];
@@ -301,6 +321,7 @@ function arcPts(a, b, bow){
     pts.push([u*u*s[0]+2*u*t*cx+t*t*e[0], u*u*s[1]+2*u*t*cy+t*t*e[1]]);}
   return pts;
 }
+
 function flightPopup(name){
   const dep=FLIGHTS.filter(f=>f.from===name), arr=FLIGHTS.filter(f=>f.to===name);
   let h='<div class="ov-pop-h">'+name+' 机场</div>';
@@ -315,11 +336,11 @@ function initOverview(){
   const coord = {}; OVERVIEW.points.forEach(p=>coord[p.name]=[p.lat,p.lng]);
   OVERVIEW.legs.forEach(leg=>{
     const a=coord[leg.from], b=coord[leg.to];
-    L.polyline(arcPts(a,b,0.32), {color:'#c9a96e', weight:2.2, opacity:.92}).addTo(map);
+    L.polyline(arcPts(a,b,0.32), {color:'#c4956a', weight:2.2, opacity:.92}).addTo(map);
     L.marker(leg.mid, {icon:planeIcon}).addTo(map);
   });
   OVERVIEW.points.forEach(p=>{
-    L.circleMarker([p.lat,p.lng], {radius:7, color:'#fff', weight:2, fillColor:'#c9a96e', fillOpacity:1}).addTo(map)
+    L.circleMarker([p.lat,p.lng], {radius:7, color:'#fff', weight:2, fillColor:'#c4956a', fillOpacity:1}).addTo(map)
       .bindPopup(flightPopup(p.name), {className:'ov-pop'});
   });
   const b = L.latLngBounds(OVERVIEW.points.map(p=>[p.lat,p.lng]));
@@ -327,11 +348,21 @@ function initOverview(){
   setTimeout(()=>map.invalidateSize(), 220);
 }
 
-// render day blocks
+// ===== RENDER DAYS =====
 const daysEl = document.getElementById('days');
 DAYS.forEach(d=>{
-  const sec = document.createElement('section');
-  sec.className = 'day'; sec.id = 'day-'+d.n;
+  // Gallery HTML
+  const galleryImgs = GALLERY[d.n] || [];
+  const galleryHTML = galleryImgs.length ? `
+    <div class="gallery">
+      ${galleryImgs.map(src=>`<img src="${src}" alt="" loading="lazy" onerror="this.style.display='none'">`).join('')}
+    </div>` : '';
+
+  // Panel wrapper
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  panel.id = 'panel-day'+d.n;
+
   const hotelCls = d.hotel.s==='none' ? 'hotel none' : 'hotel '+d.hotel.s;
   const hotelTxt = (d.hotel.s==='none' ? '' : '🏨 ') + d.hotel.t + (d.hotel.s==='done' ? ' ✅' : '');
   const gLink = d.points.length ? gmaps(d.points[0].lat, d.points[0].lng) : '#';
@@ -340,55 +371,80 @@ DAYS.forEach(d=>{
   const mapHTML = hasMap ? `<div class="daymap" id="map-day${d.n}"></div>` : '';
   const tlRows = d.detail.map(r=>`<div class="tl-row"><div class="tl-w">${r[0]}</div><div class="tl-c">${r[1]}</div></div>`).join('');
   const warn = d.warn ? `<div class="warnbox">${d.warn}</div>` : '';
-  sec.innerHTML = `
-    <div class="day-head">
-      <img class="day-thumb" src="${d.thumb}" alt="" onerror="this.style.display='none'">
-      <div class="day-titles">
-        <div class="day-num">DAY ${d.n}</div>
+
+  panel.innerHTML = `
+    <div class="day">
+      <div class="day-num">DAY ${d.n}</div>
+      <div class="day-head">
         <div class="day-title">${d.title}</div>
-        <div class="day-date">${d.date}</div>
+        <div class="day-meta">
+          <span class="day-date">${d.date}</span>
+          <span class="${hotelCls}">${hotelTxt}</span>
+          <a class="gmap-btn" href="${gLink}" target="_blank" rel="noopener">📍 地图</a>
+        </div>
       </div>
-      <span class="${hotelCls}">${hotelTxt}</span>
-      <a class="gmap-btn" href="${gLink}" target="_blank" rel="noopener">📍 地图</a>
-    </div>
-    ${stay}
-    ${mapHTML}
-    <div class="tags">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-    <details class="tl"><summary>完整时间线 <span class="chev">▼</span></summary>
-      <div class="tl-body">${tlRows}${warn}</div></details>`;
-  daysEl.appendChild(sec);
+      ${galleryHTML}
+      ${stay}
+      ${mapHTML}
+      <div class="tags">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <details class="tl"><summary>完整时间线 <span class="chev">▼</span></summary>
+        <div class="tl-body">${tlRows}${warn}</div></details>
+    </div>`;
+  daysEl.appendChild(panel);
 });
 
-// day nav
-const navEl = document.getElementById('daynav');
-DAYS.forEach(d=>{
-  const c = document.createElement('div');
-  c.className = 'dchip'; c.dataset.target = 'day-'+d.n;
-  c.innerHTML = `<span class="dn">DAY ${d.n}</span><span class="dd">${d.date.split(' ')[0]}</span>`;
-  c.addEventListener('click', ()=>document.getElementById('day-'+d.n).scrollIntoView({behavior:'smooth',block:'start'}));
-  navEl.appendChild(c);
+// ===== BUILD TAB NAV =====
+const tabNav = document.getElementById('tabnav');
+const tabDefs = [
+  {id:'overview', label:'总览', date:'9天'},
+  ...DAYS.map(d=>({id:'day'+d.n, label:'Day '+d.n, date:d.date.split(' ')[0]}))
+];
+tabDefs.forEach(t=>{
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (t.id==='overview'?' active':'');
+  btn.dataset.tab = t.id;
+  btn.innerHTML = `<span class="tn">${t.label}</span><span class="td">${t.date}</span>`;
+  btn.addEventListener('click', ()=>showTab(t.id));
+  tabNav.appendChild(btn);
 });
+// Also add budget tab
+const budgetTab = document.createElement('button');
+budgetTab.className = 'tab';
+budgetTab.dataset.tab = 'budget';
+budgetTab.innerHTML = '<span class="tn">预算</span><span class="td">💰</span>';
+budgetTab.addEventListener('click', ()=>showTab('budget'));
+tabNav.appendChild(budgetTab);
 
-// lazy-init per-day maps
-const mEl = (id)=>document.getElementById(id);
+// Set budget panel as a panel
+document.getElementById('panel-budget').classList.add('panel');
+document.getElementById('panel-overview').classList.add('panel','active');
+
+// ===== TAB SYSTEM =====
+function showTab(id){
+  // Deactivate all
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  // Show target
+  const panel = document.getElementById('panel-'+id);
+  if(panel) panel.classList.add('active');
+  // Hero visibility
+  document.getElementById('tab-overview').style.display = (id==='overview') ? '' : 'none';
+  // Highlight tab
+  document.querySelectorAll('.tab').forEach(t=>{ if(t.dataset.tab===id) t.classList.add('active'); });
+  // Lazy map init
+  if(id.startsWith('day')){
+    const dn = +id.replace('day','');
+    const mapEl = document.getElementById('map-day'+dn);
+    if(mapEl && DAYS[dn-1] && DAYS[dn-1].points.length) initDayMap(mapEl, DAYS[dn-1]);
+  }
+  if(id==='overview' && window.L) initOverview();
+  if(id==='budget') window.scrollTo({top:0,behavior:'smooth'});
+};
+
+// ===== INIT =====
 if(window.L){
   initOverview();
-  const io = ('IntersectionObserver' in window)
-    ? new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ const id=e.target.id; const dn=+id.replace('map-day',''); initDayMap(e.target, DAYS[dn-1]); io.unobserve(e.target); } }); }, {rootMargin:'200px'})
-    : null;
-  DAYS.forEach(d=>{ const el = mEl('map-day'+d.n); if(!el) return; if(io) io.observe(el); else initDayMap(el, d); });
-  // scroll-spy
-  const chips = [...navEl.children];
-  const obs = new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ const id=e.target.id; chips.forEach(c=>c.classList.toggle('active', c.dataset.target===id)); } }); }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
-  DAYS.forEach(d=>obs.observe(mEl('day-'+d.n)));
-} else {
-  console.warn('Leaflet failed to load');
 }
-
-// back to top
-const btt=document.getElementById('btt');
-window.addEventListener('scroll',()=>{btt.classList.toggle('show',scrollY>400)},{passive:true});
-btt.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'})});
 </script>
 </body>
 </html>
