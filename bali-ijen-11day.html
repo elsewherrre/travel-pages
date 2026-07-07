@@ -30,7 +30,8 @@
   .xp-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 22px}
   .xp{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:10px;background:var(--card);border:1px solid var(--border);font-size:13px;font-weight:600}
   .xp .e{font-size:15px}
-  .flight{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:13px}
+  .flight{display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap;justify-content:center;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:13px;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .flight::-webkit-scrollbar{display:none}
   .flight b{color:#fff;font-size:15px}
   .flight .sep{color:var(--green);font-size:13px}
   .flight .pri{color:var(--gold);font-weight:700;margin-left:6px}
@@ -40,7 +41,8 @@
   .overview{padding:22px 0 8px}
   .overview h2{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;text-align:center}
   .overview .sub{font-size:11px;color:var(--muted);text-align:center;margin-bottom:12px}
-  #map-overview{width:100%;height:320px;border-radius:14px;border:1px solid var(--border);background:#0b0b0b}
+  #map-overview{width:100%;height:260px;border-radius:14px;border:1px solid var(--border);background:#0b0b0b}
+  @media(max-width:480px){#map-overview{height:220px}}
   .overview .hint{font-size:11px;color:var(--green-glow);text-align:center;margin:-4px 0 10px}
   .leaflet-popup-content-wrapper{background:#171717;color:var(--text);border:1px solid var(--border);border-radius:10px}
   .leaflet-popup-tip{background:#171717;border:1px solid var(--border)}
@@ -68,22 +70,22 @@
   .dchip.active .dn{color:var(--green-glow)}
   .dchip.active .dd{color:#fff}
 
-  /* DAY BLOCK */
+  /* DAY BLOCK — mobile-first vertical head */
   .day{padding:28px 0;border-bottom:1px solid var(--border);scroll-margin-top:60px}
-  .day-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  .day-thumb{width:54px;height:54px;border-radius:12px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
-  .day-titles{flex:1;min-width:0}
-  .day-num{font-size:12px;font-weight:800;letter-spacing:1px;color:var(--green-glow)}
-  .day-title{font-size:18px;font-weight:700;color:#fff;line-height:1.3}
-  .day-date{font-size:12px;color:var(--muted);margin-top:1px}
-  .hotel{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0}
+  .day-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .day-thumb{width:64px;height:64px;border-radius:14px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+  .day-titles{flex:1 1 120px;min-width:0}
+  .day-num{font-size:11px;font-weight:800;letter-spacing:1px;color:var(--green-glow);text-transform:uppercase}
+  .day-title{font-size:20px;font-weight:700;color:#fff;line-height:1.25;word-break:break-word}
+  .day-date{font-size:12px;color:var(--muted);margin-top:2px}
+  .hotel{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0}
   .hotel.done{background:var(--done);border:1px solid var(--done-b);color:var(--green-glow)}
   .hotel.todo{background:var(--todo);border:1px solid var(--todo-b);color:var(--muted)}
   .hotel.none{background:transparent;border:1px dashed var(--line);color:var(--faint)}
   .gmap-btn{display:inline-flex;align-items:center;gap:4px;margin-left:6px;padding:4px 9px;border-radius:8px;background:rgba(93,138,94,.1);border:1px solid rgba(93,138,94,.25);color:var(--green-glow);font-size:10.5px;font-weight:600;text-decoration:none;flex-shrink:0}
   .gmap-btn:hover{background:rgba(93,138,94,.2)}
 
-  .daymap{width:100%;height:280px;border-radius:12px;border:1px solid var(--border);background:#0b0b0b;margin-bottom:12px;z-index:1}
+  .daymap{width:100%;height:220px;border-radius:12px;border:1px solid var(--border);background:#0b0b0b;margin-bottom:12px;z-index:1}
   .leaflet-container{background:#0b0b0b;font-family:inherit}
   .leaflet-popup-content-wrapper{background:#1a1a1a;color:var(--text);border-radius:10px}
   .leaflet-popup-tip{background:#1a1a1a}
@@ -117,19 +119,43 @@
   .sec h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
   .sec .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
   .bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  @media(max-width:560px){.bgrid{grid-template-columns:1fr}}
+  @media(max-width:480px){.bgrid{grid-template-columns:1fr}}
   .bcard{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px 17px;text-align:center}
   .bcard .lab{font-size:11px;color:var(--muted)}
   .bcard .amt{font-size:24px;font-weight:800;color:var(--gold);margin:4px 0 3px}
   .bcard .det{font-size:10.5px;color:var(--faint);line-height:1.4}
   .pending{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:3px 10px;border-radius:8px;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.3);font-size:11px;color:var(--gold);font-weight:600;vertical-align:middle}
   .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
-  @media(max-width:560px){.tgrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.tgrid{grid-template-columns:1fr 1fr}}
   .tcard{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;font-size:12px}
   .tcard .ti{font-size:17px;margin-bottom:5px}
   .tcard h4{font-size:13px;color:#fff;margin-bottom:3px;font-weight:600}
   .tcard p{color:var(--muted);line-height:1.5}
+  /* Mobile refinements */
+  @media(max-width:480px){
+    .hero{padding:34px 14px 20px}
+    .hero h1{font-size:26px}
+    .xp-tags{gap:6px}
+    .xp{padding:5px 10px;font-size:12px}
+    .day{padding:22px 0 18px}
+    .day-head{gap:8px}
+    .day-thumb{width:56px;height:56px;border-radius:12px}
+    .day-title{font-size:18px}
+    .daymap{height:200px;border-radius:10px}
+    .gmap-btn{font-size:9.5px;padding:3px 7px}
+    .sec h2{font-size:19px}
+    .bcard{padding:13px 14px}
+    .bcard .amt{font-size:21px}
+    .overview h2{font-size:14px}
+    .stay{padding:10px 13px}
+    .tl-row{gap:8px;padding:7px 0}
+  }
   .footer{text-align:center;padding:30px 0 26px;color:var(--faint);font-size:11px;border-top:1px solid var(--border);margin-top:20px}
+
+  /* Back to top */
+  .btt{position:fixed;bottom:22px;right:16px;z-index:90;width:42px;height:42px;border-radius:50%;background:var(--card);border:1px solid var(--border);color:var(--green-glow);font-size:18px;display:none;align-items:center;justify-content:center;cursor:pointer;transition:.2s;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+  .btt.show{display:flex}
+  .btt:hover{background:var(--hover);transform:scale(1.08)}
 </style>
 </head>
 <body>
@@ -151,7 +177,7 @@
     <span class="sep">→</span><span><b>DPS</b> <span class="note">9/26 07:50</span></span>
     <span class="sep">→</span><span><b>SIN</b> <span class="note">中转 9h 🇸🇬</span></span>
     <span class="sep">→</span><span><b>HKG</b> <span class="note">10/5 19:00</span></span>
-    <span class="pri">¥2,750<small class="note"> /人</small></span>
+    <span class="pri">¥2,771<small class="note"> /人</small></span>
   </div>
 </div>
 
@@ -200,6 +226,7 @@
 </section>
 
 <div class="footer">巴厘岛 + 伊真火山 + 佩妮达 + Twin Lakes 雨林 · 2026 国庆 · elsewherrre.github.io/travel-pages</div>
+<button class="btt" id="btt" aria-label="返回顶部">▲</button>
 
 <!-- Leaflet (hardened: unpkg primary, cdnjs fallback) -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -344,6 +371,11 @@ if(window.L){
 } else {
   console.warn('Leaflet failed to load');
 }
+
+// back to top
+const btt=document.getElementById('btt');
+window.addEventListener('scroll',()=>{btt.classList.toggle('show',scrollY>400)},{passive:true});
+btt.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'})});
 </script>
 </body>
 </html>
