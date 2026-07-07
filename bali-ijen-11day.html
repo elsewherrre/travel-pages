@@ -334,10 +334,10 @@ function initOverview(){
   const coord = {}; OVERVIEW.points.forEach(p=>coord[p.name]=[p.lat,p.lng]);
   OVERVIEW.legs.forEach(leg=>{
     const a=coord[leg.from], b=coord[leg.to];
-    L.polyline(arcPts(a,b,0.32), {color:'#3b7dd8', weight:1.4, opacity:.85}).addTo(map);
+    L.polyline(arcPts(a,b,0.32), {color:'#4a7c59', weight:1.4, opacity:.85}).addTo(map);
   });
   OVERVIEW.points.forEach(p=>{
-    L.circleMarker([p.lat,p.lng], {radius:7, color:'#fff', weight:2, fillColor:'#3b7dd8', fillOpacity:1}).addTo(map)
+    L.circleMarker([p.lat,p.lng], {radius:7, color:'#fff', weight:2, fillColor:'#4a7c59', fillOpacity:1}).addTo(map)
       .bindPopup(flightPopup(p.name), {className:'ov-pop'});
   });
   const b = L.latLngBounds(OVERVIEW.points.map(p=>[p.lat,p.lng]));
