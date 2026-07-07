@@ -154,7 +154,7 @@
   .ov-leg:first-of-type{border-top:none}
   .ov-d{color:var(--green);font-weight:700}
   .ov-a{color:var(--gold);font-weight:700}
-  .plane-ic{font-size:18px;line-height:22px;text-align:center}
+  
 
   /* ── FOOTER ── */
   .footer{text-align:center;padding:24px 0 22px;color:var(--muted);font-size:11px;border-top:1px solid var(--line);margin-top:20px}
@@ -200,15 +200,14 @@
 <!-- OVERVIEW FLIGHT MAP (part of overview) -->
 <div class="container" id="panel-overview">
   <section class="overview">
-    <h2>✈️ 国际航班总览 · 航线</h2>
+    <h2>国际航班总览 · 航线</h2>
     <div class="sub">HKG → MNL → DPS（落地巴厘岛）｜ DPS → SIN → HKG（返程中转）</div>
     <div class="hint">👆 点击地图上的机场节点，查看该站航班号与起降时间</div>
     <div id="map-overview"></div>
     <div class="legend">
       <span><span class="lg-line"></span> 航班航线（弧线）</span>
       <span><span class="lg-dot"></span> 机场节点</span>
-      <span>✈️ 航段中点</span>
-    </div>
+          </div>
   </section>
 </div>
 
@@ -279,7 +278,6 @@ const FLIGHTS = [
 ];
 
 const TILE = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-const planeIcon = L.divIcon({html:'✈️',className:'plane-ic',iconSize:[22,22],iconAnchor:[11,11]});
 
 function gmaps(lat,lng){ return 'https://www.google.com/maps/search/?api=1&query='+lat+','+lng; }
 
@@ -325,8 +323,8 @@ function arcPts(a, b, bow){
 function flightPopup(name){
   const dep=FLIGHTS.filter(f=>f.from===name), arr=FLIGHTS.filter(f=>f.to===name);
   let h='<div class="ov-pop-h">'+name+' 机场</div>';
-  dep.forEach(f=>{ h+='<div class="ov-leg"><span class="ov-d">✈️ 出发</span> → <b>'+f.to+'</b><br>'+f.airline+(f.no&&f.no!=='?'?' · <b>'+f.no+'</b>':'')+'<br>'+(f.dep&&f.dep!=='?'?f.dep+' 起飞':'起飞时间待补充')+'</div>'; });
-  arr.forEach(f=>{ h+='<div class="ov-leg"><span class="ov-a">🛬 到达</span> ← <b>'+f.from+'</b><br>'+f.airline+(f.no&&f.no!=='?'?' · <b>'+f.no+'</b>':'')+'<br>'+(f.arr&&f.arr!=='?'?f.arr+' 落地':'落地时间待补充')+'</div>'; });
+  dep.forEach(f=>{ h+='<div class="ov-leg"><span class="ov-d">出发</span> → <b>'+f.to+'</b><br>'+f.airline+(f.no&&f.no!=='?'?' · <b>'+f.no+'</b>':'')+'<br>'+(f.dep&&f.dep!=='?'?f.dep+' 起飞':'起飞时间待补充')+'</div>'; });
+  arr.forEach(f=>{ h+='<div class="ov-leg"><span class="ov-a">到达</span> ← <b>'+f.from+'</b><br>'+f.airline+(f.no&&f.no!=='?'?' · <b>'+f.no+'</b>':'')+'<br>'+(f.arr&&f.arr!=='?'?f.arr+' 落地':'落地时间待补充')+'</div>'; });
   return h;
 }
 
@@ -336,11 +334,10 @@ function initOverview(){
   const coord = {}; OVERVIEW.points.forEach(p=>coord[p.name]=[p.lat,p.lng]);
   OVERVIEW.legs.forEach(leg=>{
     const a=coord[leg.from], b=coord[leg.to];
-    L.polyline(arcPts(a,b,0.32), {color:'#c4956a', weight:2.2, opacity:.92}).addTo(map);
-    L.marker(leg.mid, {icon:planeIcon}).addTo(map);
+    L.polyline(arcPts(a,b,0.32), {color:'#3b7dd8', weight:1.4, opacity:.85}).addTo(map);
   });
   OVERVIEW.points.forEach(p=>{
-    L.circleMarker([p.lat,p.lng], {radius:7, color:'#fff', weight:2, fillColor:'#c4956a', fillOpacity:1}).addTo(map)
+    L.circleMarker([p.lat,p.lng], {radius:7, color:'#fff', weight:2, fillColor:'#3b7dd8', fillOpacity:1}).addTo(map)
       .bindPopup(flightPopup(p.name), {className:'ov-pop'});
   });
   const b = L.latLngBounds(OVERVIEW.points.map(p=>[p.lat,p.lng]));
