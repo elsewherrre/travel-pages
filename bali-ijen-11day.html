@@ -428,11 +428,17 @@ function showTab(id){
   document.getElementById('tab-overview').style.display = (id==='overview') ? '' : 'none';
   // Highlight tab
   document.querySelectorAll('.tab').forEach(t=>{ if(t.dataset.tab===id) t.classList.add('active'); });
-  // Lazy map init
+  // Lazy map init — defer until panel is actually visible
   if(id.startsWith('day')){
     const dn = +id.replace('day','');
     const mapEl = document.getElementById('map-day'+dn);
-    if(mapEl && DAYS[dn-1] && DAYS[dn-1].points.length) initDayMap(mapEl, DAYS[dn-1]);
+    if(mapEl && DAYS[dn-1] && DAYS[dn-1].points.length && !mapEl._inited){
+      requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{
+          initDayMap(mapEl, DAYS[dn-1]);
+        });
+      });
+    }
   }
   if(id==='overview' && window.L) initOverview();
   if(id==='budget') window.scrollTo({top:0,behavior:'smooth'});
