@@ -1,0 +1,311 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Mona//Bali Trip Itinerary//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:巴厘岛11天行程
+X-WR-TIMEZONE:Asia/Singapore
+BEGIN:VTIMEZONE
+TZID:Asia/Singapore
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0800
+TZOFFSETTO:+0800
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:57a7a308-61ae-4684-a0da-0b02ccdbf67d
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20260926
+DTEND;VALUE=DATE:20260927
+SUMMARY:住：Nusa Veranda Sunset Villas
+DESCRIPTION:📍 Jl Ceningan Kawan\, Ceningan Island\, 80771\, Indonesia\n🏨 努萨
+ 维兰达日落别墅 (Nusa Veranda Sunset Villas)
+LOCATION:Jl Ceningan Kawan\, Ceningan Island\, 80771\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:4402cf48-0f42-49a9-abbd-af1722026db9
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20260927
+DTEND;VALUE=DATE:20260928
+SUMMARY:住：Eco-tourist Dream Beach Cliff Villas
+DESCRIPTION:📍 Dusun Watas\, Desa Tanglad\, Nusa Penida\, 80771\, Indonesia\
+ n🏨 佩妮达生态悬崖别墅 (Eco-tourist Dream Beach Cliff Villas)
+LOCATION:Dusun Watas\, Desa Tanglad\, Nusa Penida\, 80771\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:59718d37-2a3f-439a-8ac7-9deb87418664
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20260928
+DTEND;VALUE=DATE:20260929
+SUMMARY:住：Kropak Canggu
+DESCRIPTION:📍 Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, Kabupaten Bad
+ ung\, Bali\, 80361\, Indonesia\n🏨 克罗帕克长谷酒店 (Kropak Canggu)
+LOCATION:Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, Kabupaten Badung\,
+  Bali\, 80361\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:173e4fde-78b1-42c6-9b20-93af74f32317
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20260929
+DTEND;VALUE=DATE:20260930
+SUMMARY:住：Kropak Canggu
+DESCRIPTION:📍 Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, Kabupaten Bad
+ ung\, Bali\, 80361\, Indonesia\n🏨 克罗帕克长谷酒店 (Kropak Canggu)
+LOCATION:Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, Kabupaten Badung\,
+  Bali\, 80361\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:2e3a836c-1e17-48bc-b432-5e65e654ae78
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20260930
+DTEND;VALUE=DATE:20261001
+SUMMARY:住：Grandmas Plus Hotel Legian
+DESCRIPTION:📍 Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia\n🏨 老太太莱佳精品旅馆
+  (Grandmas Plus Hotel Legian)
+LOCATION:Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:8f94bc37-7746-4c7b-8880-79df9d27e785
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20261001
+DTEND;VALUE=DATE:20261002
+SUMMARY:住：Grandmas Plus Hotel Legian
+DESCRIPTION:📍 Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia\n🏨 老太太莱佳精品旅馆
+  (Grandmas Plus Hotel Legian)
+LOCATION:Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:4ea3950d-32a6-4d89-ab91-a121c6fea39b
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20261002
+DTEND;VALUE=DATE:20261003
+SUMMARY:住：Anja Villas Ubud
+DESCRIPTION:📍 Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, Indonesia\n🏨
+  乌布安雅别墅酒店 (Anja Villas Ubud)
+LOCATION:Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:15efd298-f59d-4955-b1c6-c3e6561ae6be
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20261003
+DTEND;VALUE=DATE:20261004
+SUMMARY:住：Anja Villas Ubud
+DESCRIPTION:📍 Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, Indonesia\n🏨
+  乌布安雅别墅酒店 (Anja Villas Ubud)
+LOCATION:Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:01eff6a6-7948-489a-a9a1-86701259279c
+DTSTAMP:20260714T071525Z
+DTSTART;VALUE=DATE:20261004
+DTEND;VALUE=DATE:20261005
+SUMMARY:住：HARRIS Hotel Kuta Tuban Bali
+DESCRIPTION:📍 Jl. Dewi Sartika\, 80361\, Indonesia\n🏨 HARRIS库塔图班酒店 (HARRIS 
+ Hotel Kuta Tuban Bali)
+LOCATION:Jl. Dewi Sartika\, 80361\, Indonesia
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+UID:b68b9e7a-72aa-435d-a5ac-52de9f5cbea0
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20260926T020000
+DTEND;TZID=Asia/Singapore:20260926T030000
+SUMMARY:入住：Nusa Veranda Sunset Villas
+DESCRIPTION:🏨 努萨维兰达日落别墅\n📍 Jl Ceningan Kawan\, Ceningan Island\, 80771\, In
+ donesia\n⏰ 入住时间：02:00
+LOCATION:Jl Ceningan Kawan\, Ceningan Island\, 80771\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT1H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:486b25bb-fb92-4498-ac93-74254630bd5b
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20260927T140000
+DTEND;TZID=Asia/Singapore:20260927T150000
+SUMMARY:入住：Eco-tourist Dream Beach Cliff Villas
+DESCRIPTION:🏨 佩妮达生态悬崖别墅\n📍 Dusun Watas\, Desa Tanglad\, Nusa Penida\, 80771
+ \, Indonesia\n⏰ 入住时间：14:00
+LOCATION:Dusun Watas\, Desa Tanglad\, Nusa Penida\, 80771\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT1H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:5ee69c62-ed92-499d-8df4-19bd140e1296
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20260928T150000
+DTEND;TZID=Asia/Singapore:20260928T160000
+SUMMARY:入住：Kropak Canggu
+DESCRIPTION:🏨 克罗帕克长谷酒店\n📍 Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, K
+ abupaten Badung\, Bali\, 80361\, Indonesia\n⏰ 入住时间：15:00
+LOCATION:Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, Kabupaten Badung\,
+  Bali\, 80361\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT1H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9bb5b3a6-f9bc-496c-b15f-1f0837678b80
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20260930T150000
+DTEND;TZID=Asia/Singapore:20260930T160000
+SUMMARY:入住：Grandmas Plus Hotel Legian
+DESCRIPTION:🏨 老太太莱佳精品旅馆\n📍 Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia
+ \n⏰ 入住时间：15:00
+LOCATION:Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT1H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9bce8c2a-4d9c-4a52-a94b-44fc1def858f
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20261002T140000
+DTEND;TZID=Asia/Singapore:20261002T150000
+SUMMARY:入住：Anja Villas Ubud
+DESCRIPTION:🏨 乌布安雅别墅酒店\n📍 Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, 
+ Indonesia\n⏰ 入住时间：14:00
+LOCATION:Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT1H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3cf825e6-be2b-4960-9528-5b34d0fc81a5
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20261004T140000
+DTEND;TZID=Asia/Singapore:20261004T150000
+SUMMARY:入住：HARRIS Hotel Kuta Tuban Bali
+DESCRIPTION:🏨 HARRIS库塔图班酒店\n📍 Jl. Dewi Sartika\, 80361\, Indonesia\n⏰ 入住时间：
+ 14:00
+LOCATION:Jl. Dewi Sartika\, 80361\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT1H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a313d2bf-a889-4730-b5d6-468bd0a9abc6
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20260927T000000
+DTEND;TZID=Asia/Singapore:20260927T010000
+SUMMARY:退房：Nusa Veranda Sunset Villas
+DESCRIPTION:🏨 努萨维兰达日落别墅\n📍 Jl Ceningan Kawan\, Ceningan Island\, 80771\, In
+ donesia\n⏰ 退房时间：00:00
+LOCATION:Jl Ceningan Kawan\, Ceningan Island\, 80771\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:245ce492-f35c-4dbf-9b70-b362aedc6760
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20260928T120000
+DTEND;TZID=Asia/Singapore:20260928T130000
+SUMMARY:退房：Eco-tourist Dream Beach Cliff Villas
+DESCRIPTION:🏨 佩妮达生态悬崖别墅\n📍 Dusun Watas\, Desa Tanglad\, Nusa Penida\, 80771
+ \, Indonesia\n⏰ 退房时间：12:00
+LOCATION:Dusun Watas\, Desa Tanglad\, Nusa Penida\, 80771\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2829f871-4c17-483f-9588-65d5a2ebec37
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20260930T120000
+DTEND;TZID=Asia/Singapore:20260930T130000
+SUMMARY:退房：Kropak Canggu
+DESCRIPTION:🏨 克罗帕克长谷酒店\n📍 Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, K
+ abupaten Badung\, Bali\, 80361\, Indonesia\n⏰ 退房时间：12:00
+LOCATION:Gg. Kayu Mahoni\, Kerobokan\, Kec. Kuta Utara\, Kabupaten Badung\,
+  Bali\, 80361\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d35149f9-b316-4d6f-919d-a1a61e980de4
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20261002T120000
+DTEND;TZID=Asia/Singapore:20261002T130000
+SUMMARY:退房：Grandmas Plus Hotel Legian
+DESCRIPTION:🏨 老太太莱佳精品旅馆\n📍 Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia
+ \n⏰ 退房时间：12:00
+LOCATION:Jl. Sriwijaya No. 368\, 80361 Legian\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2ee8f995-c4c6-46d5-909e-b815b0c176f4
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20261004T120000
+DTEND;TZID=Asia/Singapore:20261004T130000
+SUMMARY:退房：Anja Villas Ubud
+DESCRIPTION:🏨 乌布安雅别墅酒店\n📍 Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, 
+ Indonesia\n⏰ 退房时间：12:00
+LOCATION:Jl. Sentanu\, Tampaksiring\, Kec. Tampaksiring\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bfafc921-de90-46ed-8023-755aca4a0900
+DTSTAMP:20260714T071525Z
+DTSTART;TZID=Asia/Singapore:20261005T120000
+DTEND;TZID=Asia/Singapore:20261005T130000
+SUMMARY:退房：HARRIS Hotel Kuta Tuban Bali
+DESCRIPTION:🏨 HARRIS库塔图班酒店\n📍 Jl. Dewi Sartika\, 80361\, Indonesia\n⏰ 退房时间：
+ 12:00
+LOCATION:Jl. Dewi Sartika\, 80361\, Indonesia
+STATUS:CONFIRMED
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+END:VCALENDAR
